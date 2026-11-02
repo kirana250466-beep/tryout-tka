@@ -387,13 +387,31 @@ function renderQuestion() {
 
   const box = $("q-options");
   box.replaceChildren();
+  // Soal berjawaban ganda: klik pilihan untuk memilih atau membatalkan, lalu klik "Kirim jawaban".
+  const picked = new Set();
+  const sendBtn = $("q-submit");
+  sendBtn.hidden = !q.multi;
+  sendBtn.disabled = true;
+  sendBtn.onclick = q.multi ? () => submit([...picked].sort().join("")) : null;
+  $("q-hint").hidden = !q.multi;
   q.options.forEach((txt, i) => {
     const letter = "ABCDE"[i];
     const b = el("button", { class: "opt", type: "button", "data-letter": letter }, [
       el("span", { class: "letter", text: letter }),
       el("span", { text: txt }),
     ]);
-    b.addEventListener("click", () => submit(letter));
+    if (q.multi) {
+      b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", () => {
+        if (picked.has(letter)) picked.delete(letter);
+        else picked.add(letter);
+        b.classList.toggle("selected", picked.has(letter));
+        b.setAttribute("aria-pressed", String(picked.has(letter)));
+        sendBtn.disabled = picked.size === 0;
+      });
+    } else {
+      b.addEventListener("click", () => submit(letter));
+    }
     box.append(b);
   });
 
@@ -403,27 +421,33 @@ function renderQuestion() {
   S.busy = false;
 }
 
-async function submit(letter) {
+// `choice` = satu huruf ("C") atau beberapa huruf berurutan untuk soal berjawaban ganda ("ACE").
+async function submit(choice) {
   if (S.busy) return;
   S.busy = true;
   const gen = S.gen;
   const q = S.questions[S.idx];
   const buttons = [...document.querySelectorAll("#q-options .opt")];
+  const sendBtn = $("q-submit");
   buttons.forEach((b) => (b.disabled = true));
+  sendBtn.disabled = true;
 
   try {
-    const r = await api("/api/answer", { method: "POST", body: { n: q.n, choice: letter, round: S.round } });
+    const r = await api("/api/answer", { method: "POST", body: { n: q.n, choice, round: S.round } });
     if (gen !== S.gen) return; // sudah pindah ke menu; jawaban tetap tersimpan di server
     S.progress.push({ n: q.n, choice: r.choice, correct: r.correct, correctKey: r.correctKey });
+    sendBtn.hidden = true;
+    $("q-hint").hidden = true;
     buttons.forEach((b) => {
       const l = b.dataset.letter;
-      if (l === r.correctKey) b.classList.add("correct");
-      else if (l === r.choice) b.classList.add("wrong");
+      b.classList.remove("selected");
+      if (r.correctKey.includes(l)) b.classList.add("correct");
+      else if (r.choice.includes(l)) b.classList.add("wrong");
       else b.classList.add("dim");
     });
     const fb = $("q-feedback");
     fb.className = "feedback " + (r.correct ? "ok" : "bad");
-    fb.textContent = r.correct ? "Benar! 🎉" : "Belum tepat. Jawaban yang benar: " + r.correctKey;
+    fb.textContent = r.correct ? "Benar! 🎉" : "Belum tepat. Jawaban yang benar: " + r.correctKey.split("").join(", ");
     fb.hidden = false;
     $("q-score").textContent = "Benar " + scoreNow();
     $("q-bar").style.width = ((S.idx + 1) / S.total) * 100 + "%";
@@ -437,6 +461,7 @@ async function submit(letter) {
     if (code === "not_active") {
       S.status = e.data.status;
       buttons.forEach((b) => (b.disabled = false));
+      sendBtn.disabled = !document.querySelector("#q-options .opt.selected");
       renderStudent();
     } else if (code === "round_changed") {
       toast("Guru memulai sesi baru. Soal dimuat ulang.");
@@ -446,6 +471,7 @@ async function submit(letter) {
       syncStudent();
     } else {
       buttons.forEach((b) => (b.disabled = false));
+      sendBtn.disabled = !document.querySelector("#q-options .opt.selected");
       toast("Jawaban belum terkirim. Coba klik lagi.");
     }
   }
@@ -530,7 +556,7 @@ function renderTeacherQuestion() {
   box.replaceChildren();
   q.options.forEach((txt, i) => {
     const letter = "ABCDE"[i];
-    const isKey = letter === q.answer;
+    const isKey = q.answer.includes(letter);
     box.append(
       el("div", { class: "opt" + (isKey ? " correct" : "") }, [
         el("span", { class: "letter", text: letter }),
@@ -539,8 +565,10 @@ function renderTeacherQuestion() {
     );
   });
 
-  const optText = q.options["ABCDE".indexOf(q.answer)];
-  $("t-answer").textContent = q.answer + ". " + optText;
+  $("t-answer").textContent = q.answer
+    .split("")
+    .map((l) => l + ". " + q.options["ABCDE".indexOf(l)])
+    .join("   |   ");
 
   const ei = $("t-eimg");
   ei.hidden = !q.explainImage;
