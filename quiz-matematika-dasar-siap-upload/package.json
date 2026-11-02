@@ -1,8 +1,8 @@
 {
   "name": "quiz-matematika-dasar",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "Quiz matematika dasar (25 soal) untuk Cloudflare Workers, Static Assets, dan D1",
+  "description": "Latihan soal (Matematika Dasar dan Bahasa Inggris) untuk Cloudflare Workers, Static Assets, dan D1",
   "scripts": {
     "dev": "npx wrangler dev --port 8788",
     "deploy": "npx wrangler deploy"
