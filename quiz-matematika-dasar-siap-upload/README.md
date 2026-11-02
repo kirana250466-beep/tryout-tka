@@ -7,7 +7,7 @@ Halaman pertama adalah **menu pilihan kuis**. Setiap kuis punya sesi, soal, dan 
 | Kuis | Id (alamat langsung) | File soal |
 |---|---|---|
 | Matematika Dasar (25 soal) | `/#matematika` | `functions/_lib/questions-matematika.js` |
-| Bahasa Inggris | `/#inggris` | `functions/_lib/questions-inggris.js` |
+| Bahasa Inggris, Tryout 9 TKA (25 soal bacaan) | `/#inggris` | `functions/_lib/questions-inggris.js` |
 
 ## Fitur
 
@@ -21,6 +21,7 @@ Halaman pertama adalah **menu pilihan kuis**. Setiap kuis punya sesi, soal, dan 
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
 - Soal bacaan (reading) menampilkan teksnya di atas soal, bisa dilipat.
+- Soal dengan lebih dari satu jawaban benar ("Select all that apply") menampilkan petunjuk. Siswa memilih beberapa pilihan, lalu klik **Kirim jawaban**. Nilainya benar jika semua pilihan tepat dan tidak ada yang kelebihan atau kurang.
 - Pembahasan tidak ditampilkan ke siswa.
 - Setelah selesai, tombol **Pilih kuis lain** membawa kembali ke menu.
 
@@ -78,7 +79,7 @@ Buka http://localhost:8788. Data lokal disimpan di folder `.wrangler/` (tidak ik
 
 Semua soal, kunci, dan pembahasan ada di file soal tiap kuis (lihat tabel di atas). Ubah `answer` (A sampai E) atau teksnya, commit, dan Cloudflare akan deploy ulang otomatis. Gambar ada di `public/img/`. Nomor soal mengikuti urutan di daftar.
 
-**Bahasa Inggris (soal bacaan).** Tulis teks bacaan sekali di `PASSAGES`, lalu panggil dengan `passage: "namaTeks"` di setiap soal yang memakainya. Pisahkan paragraf dengan satu baris kosong. Contoh format ada di komentar dalam `questions-inggris.js`. Pilihan jawaban boleh 2 sampai 5. Begitu `QUESTIONS` terisi dan di-deploy, kartu Bahasa Inggris di menu otomatis aktif.
+**Bahasa Inggris (soal bacaan).** Tulis teks bacaan sekali di `PASSAGES`, lalu panggil dengan `passage: "namaTeks"` di setiap soal yang memakainya. Pisahkan paragraf dengan satu baris kosong. Contoh format ada di komentar dalam `questions-inggris.js`. Pilihan jawaban boleh 2 sampai 5. Untuk soal berjawaban ganda, tulis kuncinya berurutan tanpa spasi, contoh `answer: "ACE"`; soal itu otomatis tampil sebagai pilihan ganda kompleks. Gambar di soal ditulis lewat `image: "img/nama-file.png"` (contoh: grafik soal 6 sampai 10 di `public/img/inggris-chart-workshop.png`). Begitu `QUESTIONS` terisi dan di-deploy, kartu Bahasa Inggris di menu otomatis aktif.
 
 **Menambah kuis baru.** Buat file soal baru di `functions/_lib/` (salin `questions-inggris.js` sebagai contoh), impor di `functions/_lib/quizzes.js`, lalu tambahkan satu objek ke `DEFINITIONS` (id, judul, keterangan, ikon, bahasa). Kartunya muncul sendiri di menu.
 
