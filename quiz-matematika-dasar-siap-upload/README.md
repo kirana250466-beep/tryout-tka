@@ -33,6 +33,16 @@ Bagikan alamat itu ke siswa. Guru masuk dengan nama `Ferdi`, lalu klik **Mulai**
 Secara bawaan siapa pun yang mengetik nama `Ferdi` menjadi guru. Untuk mengunci:
 Settings, Variables and secrets, tambahkan `TEACHER_PIN` (tipe Secret), lalu deploy ulang. Guru akan diminta PIN saat login.
 
+## Tampilan (tema galaksi)
+
+Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
+
+- Warna utama: navy `#0c0e3d`, ungu `#6a3de8`, magenta `#b81fa0`, merah muda `#ff6fd0`, cyan `#4fd1ff`, emas `#ffd36b`. Jawaban benar memakai hijau-tosca `#43f0c6`, jawaban salah memakai merah muda `#ff86b3`, dan keduanya juga diberi tanda ✓ dan ✕.
+- Font: **Orbitron** untuk judul dan angka skor, **Nunito** untuk soal, pilihan jawaban, dan teks lain. Kedua file font ada di `public/fonts/` (lisensi SIL OFL, ikut disertakan), jadi tidak perlu internet ke Google Fonts.
+- Latar dan planet berupa gambar SVG di `public/img/` (`nebula.svg`, `stars-a.svg`, `stars-b.svg`, `planet-*.svg`), diatur di bagian "langit" pada `public/style.css`.
+- Semua warna ada di bagian `:root` paling atas `public/style.css`. Ubah di sana untuk mengganti tema.
+- Animasi (bintang berkedip, titik jeda) otomatis mati bagi pengguna yang mengaktifkan "kurangi gerakan" di perangkatnya.
+
 ## Menjalankan di komputer sendiri
 
 Butuh Node.js 18 atau lebih baru.
@@ -52,7 +62,7 @@ Semua soal, kunci, dan pembahasan ada di `functions/_lib/questions.js`. Ubah `an
 ```
 wrangler.jsonc               konfigurasi Worker (Static Assets + binding D1)
 src/worker.js                pintu masuk: /api/* ke API, sisanya ke public/
-public/                      halaman web (index.html, style.css, app.js, img/)
+public/                      halaman web (index.html, style.css, app.js, img/, fonts/)
 functions/api/[[route]].js   API (login, soal, jawaban, kontrol guru)
 functions/_lib/questions.js  bank soal, kunci, pembahasan (hanya di server)
 schema.sql                   skema tabel (opsional, dibuat otomatis)
