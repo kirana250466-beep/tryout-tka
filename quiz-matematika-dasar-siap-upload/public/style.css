@@ -253,7 +253,10 @@ input:focus-visible, button:focus-visible {
 .opt.wrong { background: var(--bad-bg); border-color: var(--bad); box-shadow: 0 0 20px rgba(255, 134, 179, 0.28); }
 .opt.wrong .letter { background: var(--bad); color: #36061d; border-color: var(--bad); }
 .opt.wrong::after { content: "✕"; margin-left: auto; padding-left: 8px; font-weight: 800; color: var(--bad); }
+.opt.selected { background: rgba(79, 209, 255, 0.14); border-color: var(--cyan); box-shadow: 0 0 18px rgba(79, 209, 255, 0.28); }
+.opt.selected .letter { background: var(--cyan); color: #04202b; border-color: var(--cyan); }
 .opt.dim { opacity: 0.55; }
+.multi-hint { margin: 10px 0 0; }
 .options.static .opt { cursor: default; }
 .options.static .opt.correct::after { content: none; }
 
