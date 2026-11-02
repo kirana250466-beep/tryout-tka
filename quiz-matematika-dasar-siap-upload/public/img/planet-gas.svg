@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+<defs>
+  <radialGradient id="body" cx="34%" cy="28%" r="82%"><stop offset="0" stop-color="#8a7cf5"/><stop offset=".42" stop-color="#3d3aae"/><stop offset="1" stop-color="#14165a"/></radialGradient>
+  <radialGradient id="shade" cx="30%" cy="26%" r="88%"><stop offset=".52" stop-color="#05062a" stop-opacity="0"/><stop offset="1" stop-color="#05062a" stop-opacity=".8"/></radialGradient>
+  <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8ff0ff" stop-opacity=".95"/><stop offset=".5" stop-color="#c36bff" stop-opacity=".3"/><stop offset="1" stop-color="#ff5cc8" stop-opacity="0"/></linearGradient>
+  <clipPath id="c"><circle cx="200" cy="200" r="190"/></clipPath>
+  <filter id="b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3.2"/></filter>
+</defs>
+<circle cx="200" cy="200" r="190" fill="url(#body)"/>
+<g clip-path="url(#c)">
+  <g transform="rotate(-24 200 200)" filter="url(#b)">
+    <rect x="-40" y="62" width="480" height="26" fill="#e07bff" opacity=".38"/>
+    <rect x="-40" y="104" width="480" height="13" fill="#7fe0ff" opacity=".3"/>
+    <rect x="-40" y="138" width="480" height="36" fill="#ff6fd0" opacity=".32"/>
+    <rect x="-40" y="190" width="480" height="18" fill="#c3b0ff" opacity=".36"/>
+    <rect x="-40" y="228" width="480" height="42" fill="#8f4de0" opacity=".38"/>
+    <rect x="-40" y="288" width="480" height="16" fill="#5fc8ff" opacity=".26"/>
+    <rect x="-40" y="322" width="480" height="30" fill="#ff8fe0" opacity=".2"/>
+  </g>
+  <circle cx="200" cy="200" r="190" fill="url(#shade)"/>
+</g>
+<circle cx="200" cy="200" r="189" fill="none" stroke="url(#rim)" stroke-width="3"/>
+</svg>

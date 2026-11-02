@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1400" preserveAspectRatio="xMidYMid slice">
+<defs>
+  <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="46"/></filter>
+  <filter id="mid" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5"/></filter>
+  <linearGradient id="cy" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2fe0d0" stop-opacity=".0"/><stop offset=".35" stop-color="#36c9f0" stop-opacity=".55"/><stop offset="1" stop-color="#6f7dff" stop-opacity=".0"/></linearGradient>
+  <linearGradient id="fadeV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b0e5c" stop-opacity=".62"/><stop offset="1" stop-color="#1b0e5c" stop-opacity=".08"/></linearGradient>
+  <linearGradient id="edgeViolet" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b05cff" stop-opacity="0"/><stop offset=".25" stop-color="#b05cff" stop-opacity=".6"/><stop offset=".75" stop-color="#d9a8ff" stop-opacity=".6"/><stop offset="1" stop-color="#b05cff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="edgeWhite" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ead2ff" stop-opacity="0"/><stop offset=".3" stop-color="#ead2ff" stop-opacity=".6"/><stop offset=".7" stop-color="#ead2ff" stop-opacity=".6"/><stop offset="1" stop-color="#ead2ff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="edgePink" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff6fd0" stop-opacity="0"/><stop offset=".3" stop-color="#ff6fd0" stop-opacity=".55"/><stop offset=".8" stop-color="#ff6fd0" stop-opacity=".55"/><stop offset="1" stop-color="#ff6fd0" stop-opacity="0"/></linearGradient>
+</defs>
+<rect width="900" height="1400" fill="#0c0e3d"/>
+<rect width="900" height="1400" fill="#121559" opacity=".55"/>
+<ellipse cx="790" cy="110" rx="360" ry="240" fill="#d33fb6" opacity=".34" filter="url(#soft)"/>
+<ellipse cx="360" cy="780" rx="280" ry="160" fill="#ffcf5f" opacity=".13" filter="url(#soft)"/>
+<ellipse cx="120" cy="1090" rx="300" ry="200" fill="#ff4fb0" opacity=".2" filter="url(#soft)"/>
+<ellipse cx="760" cy="980" rx="260" ry="220" fill="#8f4de0" opacity=".28" filter="url(#soft)"/>
+<path d="M-60 560 C 120 470, 260 560, 420 430 C 560 320, 700 380, 960 300 L 960 380 C 720 450, 600 410, 470 520 C 320 640, 150 600, -60 660 Z" fill="url(#cy)" filter="url(#mid)"/>
+<path d="M-60 540 C 120 450, 260 540, 420 410 C 560 300, 700 360, 960 280" fill="none" stroke="#7fe8ff" stroke-width="2.5" opacity=".35" filter="url(#glow)"/>
+<path d="M500 -30 C 590 70, 690 30, 770 130 C 850 230, 760 300, 940 350 L 940 -30 Z" fill="#3a1478" opacity=".6"/>
+<path d="M500 -30 C 590 70, 690 30, 770 130 C 850 230, 760 300, 940 350" fill="none" stroke="#ff6fd0" stroke-width="5" opacity=".55" filter="url(#glow)"/>
+<path d="M500 -30 C 590 70, 690 30, 770 130 C 850 230, 760 300, 940 350" fill="none" stroke="#ffd2f2" stroke-width="1.2" opacity=".55"/>
+<path d="M-60 990 C 100 900, 230 1010, 340 940 C 450 870, 540 960, 620 1040 C 700 1120, 560 1300, 640 1460 L -60 1460 Z" fill="url(#fadeV)"/>
+<path d="M-40 990 C 100 900, 230 1010, 340 940 C 450 870, 540 960, 640 1050" fill="none" stroke="url(#edgeViolet)" stroke-width="5" filter="url(#glow)"/>
+<path d="M-40 990 C 100 900, 230 1010, 340 940 C 450 870, 540 960, 640 1050" fill="none" stroke="url(#edgeWhite)" stroke-width="1.2"/>
+<path d="M500 1200 C 620 1100, 780 1200, 980 1110 L 980 1330 C 820 1340, 700 1430, 560 1350 C 470 1300, 450 1240, 500 1200 Z" fill="#2b1273" opacity=".5"/>
+<path d="M520 1190 C 640 1100, 770 1190, 960 1115" fill="none" stroke="url(#edgePink)" stroke-width="4" filter="url(#glow)"/>
+</svg>
