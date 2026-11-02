@@ -218,10 +218,14 @@ async function answer(request, env) {
 
   const body = await request.json().catch(() => ({}));
   const n = Number(body.n);
-  const choice = String(body.choice || "").toUpperCase();
   if (!Number.isInteger(n) || n < 1 || n > quiz.total) throw new HttpError(400, "bad_request");
   const q = quiz.questions[n - 1];
-  if (!LETTERS.slice(0, q.options.length).includes(choice)) throw new HttpError(400, "bad_request");
+  // Pilihan siswa berupa satu huruf ("C") atau beberapa huruf untuk soal berjawaban ganda ("ACE").
+  const allowed = LETTERS.slice(0, q.options.length);
+  const picked = [...new Set(String(body.choice || "").toUpperCase().replace(/[^A-Z]/g, "").split(""))].sort();
+  if (!picked.length || !picked.every((l) => allowed.includes(l))) throw new HttpError(400, "bad_request");
+  if (q.answer.length === 1 && picked.length !== 1) throw new HttpError(400, "bad_request");
+  const choice = picked.join("");
 
   const session = await getSession(env, quiz.id);
   if (session.status !== "active") throw new HttpError(409, "not_active", session);
