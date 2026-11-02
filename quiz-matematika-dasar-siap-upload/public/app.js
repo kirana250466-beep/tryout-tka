@@ -2,24 +2,29 @@
 
 /* ====== state ====== */
 const S = {
-  role: null, // "student" | "teacher"
+  role: null, // "student" | "teacher" (null = belum masuk ke kuis mana pun)
   name: "",
   pin: "",
+  quiz: null, // id kuis yang sedang dibuka (null = di menu)
+  info: null, // info kuis yang sedang dibuka: { id, title, subtitle, icon, lang, total }
+  quizzes: [], // daftar kuis untuk menu
   status: "off",
   round: 0,
-  total: 25,
+  total: 0,
   loaded: false, // data soal siswa sudah dimuat untuk ronde ini
   questions: [],
   progress: [], // [{n, choice, correct, correctKey}]
   idx: 0, // indeks soal yang sedang dikerjakan
   busy: false,
   timer: null,
+  gen: 0, // naik setiap pindah menu/kuis, supaya balasan server yang terlambat diabaikan
 };
 const T = { questions: [], i: 0, tab: "bahas" };
 
 const POLL_MS = 4000;
+const STORE_KEY = "quiz.login";
 const $ = (id) => document.getElementById(id);
-const VIEWS = ["login", "wait", "quiz", "result", "teacher"];
+const VIEWS = ["menu", "login", "wait", "quiz", "result", "teacher"];
 
 /* ====== util ====== */
 function show(view) {
@@ -38,6 +43,7 @@ function toast(msg) {
 
 async function api(path, { method = "GET", body } = {}) {
   const headers = { "x-name": encodeURIComponent(S.name || "") };
+  if (S.quiz) headers["x-quiz"] = S.quiz;
   if (S.pin) headers["x-pin"] = S.pin;
   if (body) headers["content-type"] = "application/json";
   const res = await fetch(path, { method, headers, body: body ? JSON.stringify(body) : undefined, cache: "no-store" });
@@ -62,9 +68,155 @@ function stopPolling() {
   S.timer = null;
 }
 
+// Nama (dan PIN guru) diingat selama tab terbuka, supaya refresh atau pindah kuis tidak perlu mengetik ulang.
+function saveLogin() {
+  try {
+    if (S.name) sessionStorage.setItem(STORE_KEY, JSON.stringify({ name: S.name, pin: S.pin, quiz: S.quiz }));
+    else sessionStorage.removeItem(STORE_KEY);
+  } catch (_) {}
+}
+function loadSaved() {
+  try {
+    return JSON.parse(sessionStorage.getItem(STORE_KEY) || "null");
+  } catch (_) {
+    return null;
+  }
+}
+
+// Bacaan (reading) dan bahasa teks soal. Bahasa Inggris diberi lang="en" supaya terbaca benar oleh pembaca layar.
+function renderPassage(prefix, passage) {
+  const box = $(prefix + "-passage");
+  if (!passage || !passage.text) {
+    box.hidden = true;
+    return;
+  }
+  $(prefix + "-passage-title").textContent = passage.title || "Teks bacaan";
+  $(prefix + "-passage-text").textContent = passage.text;
+  box.open = true;
+  box.hidden = false;
+}
+function setLang(ids) {
+  const lang = (S.info && S.info.lang) || "id";
+  ids.forEach((id) => $(id).setAttribute("lang", lang));
+}
+
+/* ====== menu pilihan kuis ====== */
+function statusChip(q) {
+  if (q.total === 0) return ["", "Soal belum diisi"];
+  if (q.status === "active") return ["on", "Sesi aktif"];
+  if (q.status === "paused") return ["paused", "Dijeda"];
+  return ["", q.round === 0 ? "Belum dimulai" : "Ditutup"];
+}
+
+function renderMenu() {
+  $("menu-hello").textContent = S.name ? "Halo, " + S.name + ". Pilih kuis yang mau dikerjakan." : "Pilih kuis yang mau dikerjakan.";
+  $("menu-logout").hidden = !S.name;
+  const list = $("menu-list");
+  list.replaceChildren();
+  S.quizzes.forEach((q) => {
+    const [cls, label] = statusChip(q);
+    const empty = q.total === 0;
+    const b = el("button", { class: "quiz-card", type: "button", "data-quiz": q.id }, [
+      el("span", { class: "quiz-icon", "aria-hidden": "true", text: q.icon || "?" }),
+      el("span", { class: "quiz-body" }, [
+        el("span", { class: "quiz-title", text: q.title }),
+        el("span", { class: "quiz-sub", text: q.subtitle || "" }),
+        el("span", { class: "quiz-meta" }, [
+          el("span", { class: "chip " + cls, text: label }),
+          empty ? null : el("span", { class: "quiz-count", text: q.total + " soal" }),
+        ]),
+      ]),
+      el("span", { class: "quiz-go", "aria-hidden": "true", text: "→" }),
+    ]);
+    if (empty) b.disabled = true;
+    else b.addEventListener("click", () => pickQuiz(q.id));
+    list.append(b);
+  });
+}
+
+let menuSig = "";
+async function loadMenu() {
+  const gen = S.gen;
+  try {
+    const r = await api("/api/quizzes");
+    if (gen !== S.gen) return false;
+    S.quizzes = r.quizzes;
+    $("menu-error").hidden = true;
+    const sig = JSON.stringify(r.quizzes) + "|" + S.name;
+    if (sig !== menuSig || !$("menu-list").children.length) {
+      menuSig = sig;
+      renderMenu();
+    }
+    return true;
+  } catch (_) {
+    if (gen !== S.gen) return false;
+    $("menu-error").textContent = "Tidak bisa terhubung ke server. Mencoba lagi...";
+    $("menu-error").hidden = false;
+    return false;
+  }
+}
+
+function resetQuizState() {
+  S.gen++;
+  Object.assign(S, { role: null, quiz: null, info: null, status: "off", round: 0, total: 0, loaded: false, questions: [], progress: [], idx: 0, busy: false });
+  T.questions = [];
+  T.i = 0;
+}
+
+async function openMenu() {
+  stopPolling();
+  resetQuizState();
+  saveLogin();
+  menuSig = "";
+  document.title = "Latihan Soal";
+  try {
+    history.replaceState(null, "", location.pathname + location.search);
+  } catch (_) {}
+  S.timer = setInterval(() => {
+    if (!$("view-menu").hidden) loadMenu();
+  }, POLL_MS);
+  renderMenu();
+  show("menu");
+  await loadMenu();
+}
+
+function pickQuiz(id) {
+  const info = S.quizzes.find((q) => q.id === id);
+  if (!info || info.total === 0) return;
+  stopPolling();
+  S.gen++;
+  S.quiz = id;
+  S.info = info;
+  S.total = info.total;
+  document.title = info.title + " · Latihan Soal";
+  try {
+    history.replaceState(null, "", "#" + id);
+  } catch (_) {}
+  showLogin();
+  if (S.name) {
+    // nama sudah dikenal dari kuis sebelumnya: langsung masuk
+    $("in-name").value = S.name;
+    $("in-pin").value = S.pin || "";
+    $("login-form").requestSubmit();
+  }
+}
+
+function showLogin() {
+  const i = S.info;
+  $("login-icon").textContent = i.icon || "?";
+  $("login-title").textContent = "Latihan Soal " + i.title;
+  $("login-desc").textContent =
+    i.total + " soal, jawaban langsung diperiksa. Masuk dengan nama kamu. Kalau masuk lagi dengan nama yang sama, pengerjaanmu dilanjutkan.";
+  $("login-error").hidden = true;
+  show("login");
+  $("in-name").focus();
+}
+
 /* ====== login / logout ====== */
 $("login-form").addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  if (!S.quiz) return;
+  const gen = S.gen;
   const err = $("login-error");
   err.hidden = true;
   const name = $("in-name").value;
@@ -72,21 +224,26 @@ $("login-form").addEventListener("submit", async (ev) => {
   $("btn-login").disabled = true;
   try {
     const r = await api("/api/login", { method: "POST", body: { name, pin } });
+    if (gen !== S.gen) return;
     S.role = r.role;
     S.name = r.name;
     S.pin = r.role === "teacher" ? pin : "";
     S.status = r.status;
     S.round = r.round;
     S.total = r.total;
-    sessionStorage.setItem("quiz.login", JSON.stringify({ name: S.name, pin: S.pin }));
+    if (r.quiz) S.info = r.quiz;
+    saveLogin();
     enter();
   } catch (e) {
+    if (gen !== S.gen) return;
     if (e.data && e.data.needPin) {
       $("pin-row").hidden = false;
       $("in-pin").focus();
       err.textContent = pin ? "PIN salah." : "Masukkan PIN guru.";
     } else if (e.data && e.data.error === "name_required") {
       err.textContent = "Nama belum diisi.";
+    } else if (e.data && e.data.error === "no_questions") {
+      err.textContent = "Soal untuk kuis ini belum tersedia. Pilih kuis lain.";
     } else {
       err.textContent = "Tidak bisa terhubung ke server. Coba lagi.";
     }
@@ -96,19 +253,25 @@ $("login-form").addEventListener("submit", async (ev) => {
   }
 });
 
+// Keluar: lupakan nama, kembali ke menu.
 function logout() {
-  stopPolling();
-  sessionStorage.removeItem("quiz.login");
-  Object.assign(S, { role: null, name: "", pin: "", loaded: false, questions: [], progress: [], idx: 0, busy: false });
+  Object.assign(S, { name: "", pin: "" });
   $("in-name").value = "";
   $("in-pin").value = "";
   $("pin-row").hidden = true;
-  show("login");
-  $("in-name").focus();
+  openMenu();
+}
+
+// Menu: kembali ke pilihan kuis, nama tetap diingat.
+function toMenu() {
+  openMenu();
 }
 
 document.addEventListener("click", (ev) => {
-  if (ev.target.closest('[data-action="logout"]')) logout();
+  const a = ev.target.closest("[data-action]");
+  if (!a) return;
+  if (a.dataset.action === "logout") logout();
+  else if (a.dataset.action === "menu") toMenu();
 });
 
 function enter() {
@@ -120,15 +283,22 @@ function enter() {
 }
 
 document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState !== "visible" || !S.role) return;
+  if (document.visibilityState !== "visible") return;
+  if (!S.quiz) {
+    if (!$("view-menu").hidden) loadMenu();
+    return;
+  }
+  if (!S.role) return;
   S.role === "student" ? syncStudent() : refreshRoster();
 });
 
 /* ====== siswa ====== */
 async function syncStudent() {
   if (S.role !== "student" || S.busy) return;
+  const gen = S.gen;
   try {
     const st = await api("/api/status");
+    if (gen !== S.gen) return;
     if (st.round !== S.round) {
       S.round = st.round;
       S.loaded = false;
@@ -136,6 +306,7 @@ async function syncStudent() {
     S.status = st.status;
     S.total = st.total;
     if (st.status === "active" && !S.loaded) await loadQuiz();
+    if (gen !== S.gen) return;
     renderStudent();
   } catch (_) {
     /* koneksi putus sebentar: coba lagi di polling berikutnya */
@@ -143,8 +314,9 @@ async function syncStudent() {
 }
 
 async function loadQuiz() {
+  const gen = S.gen;
   const q = await api("/api/quiz");
-  if (!q.ready) return;
+  if (gen !== S.gen || !q.ready) return;
   S.round = q.round;
   S.name = q.name;
   S.questions = q.questions;
@@ -163,6 +335,7 @@ function renderStudent() {
       paused: ["Sesi dijeda", "Guru sedang menjeda sesi. Tunggu sebentar."],
       active: ["Memuat soal", "Sebentar ya..."],
     }[S.status];
+    $("wait-quiz").textContent = S.info ? S.info.title : "";
     $("wait-title").textContent = t[0];
     $("wait-text").textContent = t[1];
     return show("wait");
@@ -197,9 +370,11 @@ function renderQuestion() {
   $("q-name").textContent = S.name;
   $("q-avatar").textContent = S.name.charAt(0).toUpperCase();
   $("q-score").textContent = "Benar " + scoreNow();
-  $("q-count").textContent = "Soal " + q.n + " dari " + S.total;
+  $("q-count").textContent = (S.info ? S.info.title + " · " : "") + "Soal " + q.n + " dari " + S.total;
   $("q-bar").style.width = (S.idx / S.total) * 100 + "%";
   $("q-text").textContent = q.text;
+  renderPassage("q", q.passage);
+  setLang(["q-text", "q-passage-text", "q-options"]);
 
   const img = $("q-img");
   if (q.image) {
@@ -231,12 +406,14 @@ function renderQuestion() {
 async function submit(letter) {
   if (S.busy) return;
   S.busy = true;
+  const gen = S.gen;
   const q = S.questions[S.idx];
   const buttons = [...document.querySelectorAll("#q-options .opt")];
   buttons.forEach((b) => (b.disabled = true));
 
   try {
     const r = await api("/api/answer", { method: "POST", body: { n: q.n, choice: letter, round: S.round } });
+    if (gen !== S.gen) return; // sudah pindah ke menu; jawaban tetap tersimpan di server
     S.progress.push({ n: q.n, choice: r.choice, correct: r.correct, correctKey: r.correctKey });
     buttons.forEach((b) => {
       const l = b.dataset.letter;
@@ -254,6 +431,7 @@ async function submit(letter) {
     $("q-next").focus();
     S.busy = false;
   } catch (e) {
+    if (gen !== S.gen) return;
     S.busy = false;
     const code = e.data && e.data.error;
     if (code === "not_active") {
@@ -281,6 +459,7 @@ $("q-next").addEventListener("click", () => {
 
 function renderResult() {
   const correct = scoreNow();
+  $("r-quiz").textContent = S.info ? S.info.title : "";
   $("r-name").textContent = S.name;
   $("r-correct").textContent = correct;
   $("r-total").textContent = S.total;
@@ -296,11 +475,16 @@ function renderResult() {
 
 /* ====== guru ====== */
 async function enterTeacher() {
+  const gen = S.gen;
+  T.i = 0;
+  $("t-quiz").textContent = S.info ? S.info.title : "";
   show("teacher");
   try {
     const q = await api("/api/teacher/questions");
+    if (gen !== S.gen) return;
     T.questions = q.questions;
   } catch (e) {
+    if (gen !== S.gen) return;
     if (e.status === 401) {
       toast("PIN guru tidak valid.");
       return logout();
@@ -312,6 +496,7 @@ async function enterTeacher() {
   renderTeacherQuestion();
   setTab(T.tab);
   await refreshRoster();
+  if (gen !== S.gen) return;
   S.timer = setInterval(refreshRoster, POLL_MS);
 }
 
@@ -334,6 +519,8 @@ function renderTeacherQuestion() {
   [...$("t-grid").children].forEach((c, i) => c.classList.toggle("current", i === T.i));
   $("t-qno").textContent = "Soal " + q.n + " dari " + T.questions.length;
   $("t-qtext").textContent = q.text;
+  renderPassage("t", q.passage);
+  setLang(["t-qtext", "t-passage-text", "t-options"]);
 
   const qi = $("t-qimg");
   qi.hidden = !q.image;
@@ -358,7 +545,7 @@ function renderTeacherQuestion() {
   const ei = $("t-eimg");
   ei.hidden = !q.explainImage;
   if (q.explainImage) ei.src = q.explainImage;
-  $("t-explain").innerHTML = q.explain; // konten dari server milik sendiri, bukan input pengguna
+  $("t-explain").innerHTML = q.explain || ""; // konten dari server milik sendiri, bukan input pengguna
 
   $("t-prev").disabled = T.i === 0;
   $("t-next").disabled = T.i === T.questions.length - 1;
@@ -393,13 +580,16 @@ document.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () 
 
 async function refreshRoster() {
   if (S.role !== "teacher") return;
+  const gen = S.gen;
   try {
     const r = await api("/api/teacher/roster");
+    if (gen !== S.gen) return;
     S.status = r.status;
     S.round = r.round;
     renderControls();
     renderRoster(r);
   } catch (e) {
+    if (gen !== S.gen) return;
     if (e.status === 401) logout();
   }
 }
@@ -472,14 +662,14 @@ $("t-stop").addEventListener("click", () => {
 });
 
 /* ====== awal ====== */
-(function init() {
-  show("login");
-  try {
-    const saved = JSON.parse(sessionStorage.getItem("quiz.login") || "null");
-    if (saved && saved.name) {
-      $("in-name").value = saved.name;
-      $("in-pin").value = saved.pin || "";
-      $("login-form").requestSubmit();
-    }
-  } catch (_) {}
+(async function init() {
+  const saved = loadSaved();
+  if (saved && saved.name) {
+    S.name = saved.name;
+    S.pin = saved.pin || "";
+  }
+  const fromHash = (location.hash || "").slice(1).toLowerCase(); // alamat langsung, contoh: /#inggris
+  await openMenu();
+  const want = [fromHash, saved && saved.quiz].find((id) => id && S.quizzes.some((q) => q.id === id && q.total > 0));
+  if (want) pickQuiz(want);
 })();
