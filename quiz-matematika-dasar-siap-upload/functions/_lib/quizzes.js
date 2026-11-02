@@ -37,7 +37,10 @@ function build(def) {
       if (p) passage = { title: p.title || "", text: p.text };
       else console.warn(`[${def.id}] soal ${i + 1}: teks bacaan "${q.passage}" tidak ditemukan di PASSAGES`);
     }
-    return { ...q, n: i + 1, passage };
+    // Kunci jawaban dirapikan: huruf besar, tanpa duplikat, berurutan. Contoh "C, A, E" menjadi "ACE".
+    const answer = [...new Set(String(q.answer || "").toUpperCase().replace(/[^A-E]/g, ""))].sort().join("");
+    if (!answer) console.warn(`[${def.id}] soal ${i + 1}: kunci jawaban kosong`);
+    return { ...q, n: i + 1, passage, answer };
   });
   return {
     id: def.id,
@@ -70,5 +73,6 @@ export function publicQuestions(quiz) {
     image: q.image || null,
     passage: q.passage,
     options: q.options,
+    multi: q.answer.length > 1, // lebih dari satu jawaban benar: siswa memilih beberapa, lalu klik Kirim
   }));
 }
