@@ -42,8 +42,11 @@ Settings, Variables and secrets, tambahkan `TEACHER_PIN` (tipe Secret), lalu dep
 - Gambar di `explainImage` hanya tampil di mode guru. Gambar di `image` tampil juga untuk siswa.
 - Data sesi, siswa, dan jawaban disimpan di tabel `quiz_session`, `quiz_students`, dan `quiz_answers` (dibuat otomatis). Tabel lama `session`, `students`, `answers` dari versi satu-quiz tidak dipakai lagi.
 
-### Soal Matematika TKA yang perlu diperiksa
-Dokumen sumbernya menyatakan bahwa kunci platform untuk soal **3, 8, 10, 11, 12, 13, dan 30** tidak dapat diturunkan dari redaksi soal (kemungkinan salah ketik), dan soal **2, 6, 9, dan 29** perlu diluruskan saat mengajar. Kunci di `questions-tka-mat.js` mengikuti kunci platform. Catatannya tampil di mode guru pada tiap soal. Perbaiki `text`, `options`, atau `answer` di file itu setelah soal aslinya diperiksa.
+### Kunci Matematika TKA yang sudah dikoreksi
+Kunci platform untuk soal **3, 8, 10, 11, 12, 13, dan 30** tidak sesuai dengan data soalnya (kemungkinan salah ketik). Di `questions-tka-mat.js`, opsi berkunci pada ketujuh soal itu sudah diganti dengan jawaban hasil hitung, dan angka desimal dibulatkan bila opsi lain berupa bilangan bulat (soal 3: 48 meter). Huruf kuncinya tidak berubah. Catatan kunci lama dan penggantinya tampil di mode guru pada tiap soal.
+
+- **Soal 11:** tanda operasi antara 125^(2/3) dan 32^(2/5) hilang di platform, jadi dipakai tanda **+** (jawaban 30,125). Cocokkan dengan soal aslinya. Bila tandanya lain, ubah opsi berkunci dan teks soal (tanda − memberi 22,125; × memberi 101,125; ÷ memberi 7,375).
+- **Soal 2, 6, 9, dan 29:** kunci sudah benar, tetapi redaksi atau opsinya perlu diluruskan saat mengajar.
 
 ## Tampilan (tema galaksi)
 
