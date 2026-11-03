@@ -1,356 +1,386 @@
-// Bank soal Matematika Dasar. File ini hanya dibaca server (Worker), jadi kunci jawaban
-// dan pembahasan tidak pernah dikirim ke siswa sebelum mereka menjawab.
+// Bank soal Matematika TKA, soal nomor 1 sampai 30 (4 pilihan: A sampai D).
+// Dibuat dari dokumen "Soal TKA Matematika No1-30" (pembahasan lengkap untuk pengajar).
 //
-// Untuk mengubah kunci jawaban, ganti nilai `answer` (A sampai E) lalu deploy ulang.
-// Field `image` = gambar di soal, `explainImage` = gambar di pembahasan (folder public/img).
-// Nomor soal mengikuti urutan di daftar ini (field `n` boleh dibiarkan, tetapi urutanlah yang dipakai).
+// Catatan penting dari dokumen sumber:
+//  - Kunci jawaban mengikuti "kunci platform" di dokumen.
+//  - Soal 3, 8, 10, 11, 12, 13, dan 30: dokumen menyatakan kunci platform tidak dapat diturunkan dari
+//    redaksi soal (kemungkinan salah ketik). Pembahasan guru memuat catatannya. Periksa soal aslinya
+//    sebelum dipakai di kelas; untuk memperbaikinya cukup ubah `text`, `options`, atau `answer` di bawah.
+//  - Soal 2, 6, 9, dan 29: kunci benar, tetapi redaksi atau opsi perlu diluruskan saat mengajar.
+//  - Gambar pada `explainImage` hanya tampil di mode guru, karena memuat penyelesaian.
+//
+// File ini hanya dibaca server, jadi kunci jawaban dan pembahasan tidak dikirim ke siswa sebelum mereka menjawab.
 
 export const QUESTIONS = [
   {
-    n: 1,
-    text: "Jika W, X, Y, dan Z adalah anggota bilangan riil, maka persamaan berikut ini yang berbeda dengan W(X + Y + Z) adalah ....",
-    options: ["(X + Y + Z)W", "W(X + Z) + WY", "WX + WY + WZ", "W(X + Y) + WZ", "WX + Y + Z"],
-    answer: "E",
-    explain: `
-<p>Arti <b>W(X + Y + Z)</b>: W dikalikan dengan <b>semua</b> yang ada di dalam kurung, yaitu W×X, W×Y, dan W×Z, lalu dijumlahkan. Jadi hasilnya <b>WX + WY + WZ</b>.</p>
-<p>Bayangkan W adalah harga satu permen, sedangkan X, Y, dan Z adalah jumlah permen yang dibeli tiga orang. Total bayar bisa dihitung sekaligus, yaitu W × (X + Y + Z), atau dihitung per orang lalu dijumlahkan, yaitu WX + WY + WZ. Hasilnya sama.</p>
-<p>Cek tiap pilihan:</p>
-<ul>
-<li>A. (X + Y + Z)W hanya membalik urutan perkalian. Hasilnya sama.</li>
-<li>B. W(X + Z) + WY = WX + WZ + WY. Sama.</li>
-<li>C. WX + WY + WZ. Sama persis.</li>
-<li>D. W(X + Y) + WZ = WX + WY + WZ. Sama.</li>
-<li>E. WX + Y + Z. Hanya X yang dikali W, sedangkan Y dan Z dibiarkan sendiri. <b>Ini berbeda.</b></li>
-</ul>
-<p>Bukti dengan angka: misal W = 2, X = 1, Y = 3, Z = 4. Maka W(X + Y + Z) = 2 × 8 = 16, sedangkan pilihan E = 2×1 + 3 + 4 = 9. Hasilnya tidak sama, jadi jawabannya E.</p>
-<p class="key">Intinya: angka di luar kurung harus mengalikan semua isi kurung, bukan hanya yang pertama.</p>`,
+    "n": 1,
+    "text": "Sebuah kapal selam berada pada kedalaman 150 meter di bawah permukaan laut. Kapal selam tersebut naik sejauh 80 meter, kemudian turun lagi sejauh 45 meter. Jika kapal selam kemudian naik sejauh x meter hingga berada pada kedalaman 30 meter di bawah permukaan laut, nilai x adalah ...",
+    "options": [
+      "85 meter",
+      "75 meter",
+      "65 meter",
+      "55 meter"
+    ],
+    "answer": "A",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: A</b> · ✔ terverifikasi · Materi: Bilangan Bulat · Garis Bilangan</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Permukaan laut = 0.</b> Di atas laut = bilangan positif (+), di bawah laut = bilangan negatif (−).</li><li><b>Naik = tambah (+)</b>, <b>turun = kurang (−)</b>.</li><li>Posisi akhir = posisi awal + semua perubahan posisi.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Ubah cerita menjadi bilangan bertanda.</b></span>\n<p class=\"calc\">Kedalaman 150 m  →  posisi = −150</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Kita butuh satu \"penggaris\" vertikal supaya naik-turun bisa dihitung. Titik 0 dipasang di permukaan laut; ke bawah negatif, ke atas positif.</p>\n</li>\n<li><span class=\"st\"><b>Kapal naik 80 m.</b></span>\n<p class=\"calc\">−150 + 80 = −70</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Naik berarti posisinya bertambah. Hasil −70 artinya masih 70 m di bawah permukaan.</p>\n</li>\n<li><span class=\"st\"><b>Kapal turun 45 m.</b></span>\n<p class=\"calc\">−70 − 45 = −115</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Turun berarti dikurangi. Angka makin negatif = makin dalam.</p>\n</li>\n<li><span class=\"st\"><b>Tulis persamaan untuk \"naik x meter hingga −30\".</b></span>\n<p class=\"calc\">−115 + x = −30</p>\n</li>\n<li><span class=\"st\"><b>Selesaikan: pindahkan −115 ke ruas kanan (tandanya berubah).</b></span>\n<p class=\"calc\">x = −30 + 115 = 85</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Kapal selam harus naik <b>85 meter</b>  →  jawaban <b>A</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Anggap kapal selam seperti lift di gedung basement. Posisi sekarang B-115 (115 m di bawah), tujuannya B-30. Berapa lantai yang harus dinaiki? Tinggal cari selisih kedalaman: 115 − 30 = 85. Info \"naik 80, turun 45\" hanyalah cerita bagaimana kapal sampai di −115.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Cara kilat:</b> posisi sekarang = −150 + 80 − 45 = −115. Jarak ke −30 = 115 − 30 = 85.  <b>Cek:</b> −115 + 85 = −30 ✔</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Menjawab 55: mengurangi lagi dengan 30 (85 − 30) padahal 30 m adalah posisi tujuan, bukan jarak tempuh.</li><li>Salah arah pada \"turun\": menghitung −70 + 45 = −25 (turun dianggap tambah).</li><li>Tidak mengubah kedalaman menjadi bilangan negatif sehingga semua hitungan terbalik.</li></ul></section>",
+    "explainImage": "img/tka-mat-s1.png"
   },
   {
-    n: 2,
-    text: "Seorang penjual kayu memerlukan empat balok kayu yang masing-masing berukuran 2 kaki kali 10 inci. Apabila kayu akan dijual hanya dalam ukuran kaki, maka banyaknya kayu yang harus dibeli oleh penjual kayu tersebut adalah ....",
-    options: ["Tidak dapat ditentukan", "11", "10", "12", "9"],
-    answer: "A",
-    explain: `
-<p>Penjual membutuhkan 4 balok, masing-masing berukuran 2 kaki × 10 inci. Untuk tahu berapa batang kayu yang harus dibeli, kita harus tahu <b>berapa ukuran satu batang kayu yang dijual</b> (panjangnya berapa kaki, lebarnya berapa).</p>
-<p>Soal tidak menyebutkan ukuran kayu yang dijual itu. Tanpa data tersebut, jumlah kayu yang dibeli tidak bisa dihitung.</p>
-<p>Contoh sehari-hari: kita butuh 4 potong kain berukuran 2 m × 10 cm, tetapi tidak diberi tahu kain dijual dalam gulungan selebar berapa. Kita tidak bisa memastikan harus beli berapa gulung.</p>
-<p>Angka 9, 10, 11, atau 12 hanya akan benar jika ukuran kayu yang dijual diketahui. Karena tidak diketahui, jawaban yang tepat adalah <b>tidak dapat ditentukan</b>.</p>
-<p class="key">Intinya: kalau data yang dibutuhkan tidak ada di soal, jawabannya bisa jadi "tidak dapat ditentukan".</p>`,
+    "n": 2,
+    "text": "Tiga buah lampu berkedip secara bersamaan pertama kali pada pukul 20.00. Lampu merah berkedip setiap 12 detik, lampu kuning setiap 18 detik, dan lampu hijau setiap 24 detik. Pada pukul berapa lampu ketiga tersebut akan berkedip secara bersamaan untuk ketiga kalinya?",
+    "options": [
+      "20 Februari 2024",
+      "20.03.36",
+      "20 April 2000",
+      "20 April 1948"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus note\"><b>Kunci platform: B</b> · ● cek catatan · Materi: KPK · Kejadian Berulang</p>\n<section class=\"box catatan\"><h4>Catatan untuk pengajar</h4><p><b>Redaksi ambigu.</b> Pukul 20.00.00 sudah disebut \"pertama kali\". Bila itu dihitung sebagai kedipan serempak ke-1, maka yang ke-3 jatuh pada 20.02.24 (tidak ada di opsi). Kunci platform (B = 20.03.36) menghitung <b>tiga kali serempak SETELAH pukul 20.00</b>. Saat mengajar, tegaskan tafsir ini: \"ketiga kalinya = tiga kali lagi setelah 20.00\".</p><p>Opsi A, C, D berupa tanggal/tahun — jelas pengecoh yang tidak masuk akal. Jawaban harus berbentuk jam, sehingga hanya B yang layak.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>KPK (Kelipatan Persekutuan Terkecil)</b> = bilangan terkecil yang habis dibagi semua bilangan yang dicari.</li><li><b>KPK lewat faktorisasi prima:</b> ambil setiap faktor prima, pilih yang <b>pangkatnya terbesar</b>, lalu kalikan.</li><li>Kejadian berulang dengan periode berbeda terjadi serempak setiap <b>KPK dari periodenya</b>.</li><li>Konversi: 60 detik = 1 menit.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Terjemahkan \"berkedip bersamaan\" ke bahasa matematika.</b></span>\n<p class=\"why\"><b>Kenapa begitu?  </b>Merah menyala di detik 12, 24, 36, ...; kuning di 18, 36, 54, ...; hijau di 24, 48, 72, .... Serempak terjadi di detik yang ada di ketiga daftar → kelipatan persekutuan. Yang pertama (terkecil) adalah KPK.</p>\n</li>\n<li><span class=\"st\"><b>Faktorkan ketiga bilangan menjadi bilangan prima.</b></span>\n<p class=\"calc\">12 = 2² × 3      18 = 2 × 3²      24 = 2³ × 3</p>\n</li>\n<li><span class=\"st\"><b>Ambil prima dengan pangkat TERBESAR, lalu kalikan.</b></span>\n<p class=\"calc\">KPK = 2³ × 3² = 8 × 9 = 72 detik</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Agar 72 habis dibagi 24 ia harus memuat 2³; agar habis dibagi 18 ia harus memuat 3². Dua syarat itu digabung → 2³ × 3².</p>\n</li>\n<li><span class=\"st\"><b>Ubah ke menit–detik.</b></span>\n<p class=\"calc\">72 detik = 1 menit 12 detik</p>\n</li>\n<li><span class=\"st\"><b>Tambahkan berulang mulai pukul 20.00.00.</b></span>\n<table class=\"dt\"><tr><th><b>Serempak ke-</b></th><th><b>Perhitungan</b></th><th><b>Pukul</b></th></tr><tr><td>1</td><td>20.00.00 + 1 menit 12 detik</td><td>20.01.12</td></tr><tr><td>2</td><td>20.01.12 + 1 menit 12 detik</td><td>20.02.24</td></tr><tr><td class=\"ok\">3</td><td class=\"ok\">20.02.24 + 1 menit 12 detik</td><td class=\"ok\"><b>20.03.36</b></td></tr></table>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Serempak ke-3 setelah 20.00 terjadi pada <b>20.03.36</b>  →  jawaban <b>B</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Bayangkan tiga pelari mengelilingi lintasan; masing-masing butuh 12, 18, dan 24 detik per putaran. Mereka start bersama di garis start. Kapan bertemu lagi di garis start? Setelah 72 detik: pelari merah sudah 6 putaran, kuning 4 putaran, hijau 3 putaran — semuanya bulat, jadi sama-sama tiba di garis start.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Cek cepat:</b> 72 ÷ 12 = 6 ✔,  72 ÷ 18 = 4 ✔,  72 ÷ 24 = 3 ✔ — semuanya habis dibagi, dan tidak ada bilangan lebih kecil yang lolos ketiga uji ini.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Tertukar <b>KPK dan FPB</b>: FPB(12, 18, 24) = 6 hanya menjawab \"selang yang sama\", bukan \"kapan serentak\".</li><li>Berhenti di 72 detik lalu menulis 20.01.12 sebagai kedipan \"ketiga\" (itu baru serempak pertama setelah 20.00).</li><li>Salah konversi: 72 detik ditulis 1 menit 72 detik atau 1,12 menit.</li></ul></section>"
   },
   {
-    n: 3,
-    text: "Perhatikan gambar di bawah ini. Gambar tersebut merupakan gambar sebuah persegi panjang yang lebarnya 4 cm. Rasio antara daerah yang diarsir dengan daerah yang tidak diarsir adalah ....",
-    image: "img/s03.png",
-    options: ["(4 + x)/(4 − x)", "(2 + x)/(2 − x)", "(4 + x)/8", "(2 − x)/(2 + x)", "(2 + x)/4"],
-    answer: "A",
-    explain: `
-<p>Gambar terbagi menjadi dua daerah: daerah <b>diarsir</b> (abu-abu) berbentuk <b>trapesium</b>, dan daerah <b>tidak diarsir</b> berbentuk <b>segitiga siku-siku</b>.</p>
-<p>Rumus yang dipakai:<br>Luas trapesium = ½ × (jumlah dua sisi sejajar) × tinggi<br>Luas segitiga = ½ × alas × tinggi</p>
-<p>Dua sisi sejajar trapesium adalah sisi kiri (<b>x</b>) dan sisi kanan (<b>4</b>), jadi jumlahnya <b>(4 + x)</b>. Sisi tegak segitiga adalah sisa dari sisi 4 setelah dikurangi x, yaitu <b>(4 − x)</b>. Jarak mendatar antara sisi kiri dan sisi kanan sama untuk kedua bangun. Sebut saja <b>p</b> (panjang persegi panjang).</p>
-<p>Hitung rasionya:<br>Luas arsir : Luas tidak arsir = [½ × (4 + x) × p] : [½ × (4 − x) × p]</p>
-<p>Angka ½ dan p ada di kedua bagian, sehingga bisa dicoret. Tersisa <b>(4 + x) : (4 − x)</b>, atau ditulis <b>(4 + x)/(4 − x)</b>.</p>
-<p class="key">Intinya: karena tingginya sama, yang menentukan rasio hanya jumlah sisi sejajar dibanding sisi tegak segitiga.</p>`,
+    "n": 3,
+    "text": "Pak Adi memiliki sebidang tanah berbentuk persegi panjang dengan panjang (3x + 5) meter dan lebar (2x − 1) meter. Jika luas tanah Pak Adi adalah 120 m², maka keliling tanah tersebut adalah ...",
+    "options": [
+      "46 meter",
+      "52 meter",
+      "58 meter",
+      "64 meter"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus warn\"><b>Kunci platform: B</b> · ⚠ perlu koreksi soal · Materi: Persamaan Kuadrat · Luas &amp; Keliling</p>\n<section class=\"box catatan warn\"><h4>Catatan untuk pengajar — soal ini perlu dikoreksi</h4><p><b>Soal bermasalah — kunci platform tidak dapat diturunkan.</b> Dari data yang tertulis diperoleh x ≈ 4,02 sehingga keliling ≈ <b>48,2 m</b>. Angka ini tidak ada di opsi (terdekat 46 m), sedangkan kunci platform (B = 52 m) menuntut x = 4,4 yang menghasilkan luas 141,96 m² — bukan 120 m².</p><p><b>Dugaan penyebab:</b> angka luas salah ketik. Contoh: jika x = 5 maka p = 20 m, l = 9 m, luas = 180 m² dan keliling = 58 m (ada di opsi C); jika x = 4 maka luas 119 m² (≈ 120) dan keliling 48 m.</p><p><b>Saran:</b> pakai soal ini untuk melatih alur berpikirnya (luas → persamaan kuadrat → x → keliling), tetapi koreksi angka luas sebelum dipakai sebagai soal ujian.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li>Luas persegi panjang = <b>p × l</b>   |   Keliling = <b>2 × (p + l)</b></li><li>Menjabarkan: (a + b)(c + d) = ac + ad + bc + bd</li><li>Persamaan kuadrat ax² + bx + c = 0  →  <b>Diskriminan D = b² − 4ac</b></li><li><b>Rumus abc:</b> x = (−b ± √D) / 2a</li><li>Asal rumus abc: bagi persamaan dengan a, lalu \"lengkapkan kuadrat\" → (x + b/2a)² = (b² − 4ac)/4a²; akarkan kedua ruas → x = (−b ± √D)/2a.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Tulis hubungan luas.</b></span>\n<p class=\"calc\">p × l = 120   →   (3x + 5)(2x − 1) = 120</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Luas adalah satu-satunya informasi angka, jadi dipakai untuk \"mengunci\" nilai x.</p>\n</li>\n<li><span class=\"st\"><b>Jabarkan perkalian dua kurung.</b></span>\n<p class=\"calc\">3x·2x = 6x²;   3x·(−1) = −3x;   5·2x = 10x;   5·(−1) = −5</p>\n<p class=\"calc\">6x² + 7x − 5 = 120</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Setiap suku di kurung pertama dikali setiap suku di kurung kedua (4 hasil). Suku −3x dan +10x digabung menjadi +7x.</p>\n</li>\n<li><span class=\"st\"><b>Pindahkan 120 ke kiri agar ruas kanan = 0.</b></span>\n<p class=\"calc\">6x² + 7x − 125 = 0      (a = 6,  b = 7,  c = −125)</p>\n</li>\n<li><span class=\"st\"><b>Coba faktorkan.</b></span>\n<p class=\"why\"><b>Kenapa begitu?  </b>Cari dua bilangan yang dikali a × c = 6 × (−125) = −750 dan dijumlah b = 7. Pasangan faktor 750 yang selisihnya 7 tidak ada (25 dan 30 selisih 5; 15 dan 50 selisih 35) → tidak bisa difaktorkan dengan bilangan bulat. Maka pakai rumus abc.</p>\n</li>\n<li><span class=\"st\"><b>Hitung diskriminan.</b></span>\n<p class=\"calc\">D = 7² − 4(6)(−125) = 49 + 3.000 = 3.049</p>\n<p class=\"calc\">√3.049 ≈ 55,22      (55² = 3.025 dan 56² = 3.136)</p>\n</li>\n<li><span class=\"st\"><b>Cari x, buang akar negatif.</b></span>\n<p class=\"calc\">x = (−7 + 55,22) / 12 ≈ 4,02</p>\n<p class=\"calc\">x = (−7 − 55,22) / 12 ≈ −5,19   (ditolak)</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Jika x = −5,19 maka lebar = 2x − 1 menjadi negatif; panjang sisi tidak mungkin negatif.</p>\n</li>\n<li><span class=\"st\"><b>Hitung keliling.</b></span>\n<p class=\"calc\">K = 2[(3x + 5) + (2x − 1)] = 2(5x + 4) = 10x + 8 ≈ 10(4,02) + 8 ≈ 48,2 m</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Menggabungkan bentuk aljabarnya dulu (5x + 4) membuat hitungan lebih singkat.</p>\n</li>\n</ol>\n<section class=\"box hasil\"><p><b>HASIL &amp; KUNCI  ▶  </b>Dari data soal: keliling ≈ <b>48,2 m</b> (tidak ada di opsi).  Kunci platform: <b>B (52 m)</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Soal ini \"berputar\": yang ditanya keliling, tetapi yang diberi luas. Alurnya: luas → cari x → cari panjang &amp; lebar → baru keliling. Seperti mencari alamat lewat petunjuk bertahap.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Perkiraan cepat:</b> coba x = 4 → p = 17, l = 7, luas = 119 ≈ 120. Keliling = 2(17 + 7) = 48 m. Ini sejalan dengan ≈ 48,2 m dan menunjukkan 52 m terlalu besar.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Menjabarkan (3x + 5)(2x − 1) hanya sebagian sehingga suku +10x terlewat atau −5 menjadi +5.</li><li>Memakai keliling = p × l (tertukar dengan luas).</li><li>Tidak memeriksa akar negatif, atau lupa bahwa panjang &amp; lebar harus positif.</li></ul></section>"
   },
   {
-    n: 4,
-    // Catatan: file sumber tidak memuat kalimat "luas segitiga 54" di soal, padahal pembahasan
-    // memakainya. Kalimat itu ditambahkan di sini supaya soal bisa dikerjakan.
-    text: "Cermati gambar di bawah ini. Jika luas segitiga pada gambar adalah 54, maka nilai c adalah ....",
-    image: "img/s04.png",
-    options: ["6", "9", "12", "2", "3"],
-    answer: "E",
-    explainImage: "img/s04-p.png",
-    explain: `
-<p>Segitiga pada gambar adalah segitiga siku-siku. Ketiga titik sudutnya berada di (c, c), (5c, c), dan (5c, 4c).</p>
-<p><b>Alas</b> segitiga dihitung dari c sampai 5c, yaitu 5c − c = <b>4c</b>.<br><b>Tinggi</b> segitiga dihitung dari c sampai 4c, yaitu 4c − c = <b>3c</b>.</p>
-<p>Luas segitiga = ½ × alas × tinggi = ½ × 4c × 3c = <b>6c²</b>. (Angka: ½ × 4 × 3 = 6, sedangkan c × c = c².)</p>
-<p>Luas segitiga diketahui 54, maka 6c² = 54. Bagi kedua sisi dengan 6, hasilnya c² = 9. c² = 9 artinya c adalah bilangan yang jika dikali dirinya sendiri hasilnya 9, yaitu <b>c = 3</b>.</p>
-<p class="key">Intinya: ukuran alas dan tinggi dibaca dari selisih angka pada garis kotak-kotaknya.</p>`,
+    "n": 4,
+    "text": "Harga 3 kg jeruk dan 2 kg apel adalah Rp58.000,00. Harga 2 kg jeruk dan 3 kg apel adalah Rp57.000,00. Rina membeli 1 kg jeruk dan 1 kg apel, kemudian membayar dengan uang Rp50.000,00. Kembalian yang diterima Rina adalah ...",
+    "options": [
+      "Rp26.000,00",
+      "Rp27.000,00",
+      "Rp28.000,00",
+      "Rp29.000,00"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: B</b> · ✔ terverifikasi · Materi: SPLDV · Sistem Persamaan Linear Dua Variabel</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Pemodelan:</b> beri huruf pada hal yang belum diketahui (j = harga 1 kg jeruk, a = harga 1 kg apel).</li><li><b>Eliminasi:</b> menyamakan koefisien lalu menjumlah/mengurangkan agar satu variabel hilang.</li><li><b>Substitusi:</b> menaruh nilai yang sudah ketemu ke persamaan lain.</li><li><b>Trik simetri:</b> bila koefisiennya \"tertukar\" (3, 2 dan 2, 3), menjumlahkan kedua persamaan langsung memberi (j + a).</li><li>Kembalian = uang yang dibayarkan − total belanja.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Beri nama harga.</b></span>\n<p class=\"calc\">j = harga 1 kg jeruk,      a = harga 1 kg apel</p>\n</li>\n<li><span class=\"st\"><b>Terjemahkan kalimat menjadi persamaan.</b></span>\n<p class=\"calc\">3j + 2a = 58.000    … (1)</p>\n<p class=\"calc\">2j + 3a = 57.000    … (2)</p>\n</li>\n<li><span class=\"st\"><b>Baca pertanyaannya: yang dicari bukan j dan a satu per satu, melainkan j + a.</b></span>\n<p class=\"why\"><b>Kenapa begitu?  </b>Rina hanya membeli 1 kg jeruk + 1 kg apel, jadi cukup mencari (j + a). Ini menghemat langkah.</p>\n</li>\n<li><span class=\"st\"><b>Jumlahkan persamaan (1) dan (2).</b></span>\n<p class=\"calc\">(3j + 2a) + (2j + 3a) = 58.000 + 57.000</p>\n<p class=\"calc\">5j + 5a = 115.000</p>\n</li>\n<li><span class=\"st\"><b>Bagi kedua ruas dengan 5.</b></span>\n<p class=\"calc\">j + a = 23.000</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>5j + 5a = 5(j + a). Maka membagi 5 memunculkan bentuk (j + a).</p>\n</li>\n<li><span class=\"st\"><b>Hitung kembalian.</b></span>\n<p class=\"calc\">50.000 − 23.000 = 27.000</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Kembalian Rina <b>Rp27.000,00</b>  →  jawaban <b>B</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Daripada mencari harga satu per satu, tanyakan: \"paket 1 jeruk + 1 apel harganya berapa?\" Dua belanjaan jika digabung = 5 jeruk + 5 apel = 5 paket. Total uangnya 115.000, jadi 1 paket = 23.000.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Cara baku (untuk verifikasi):</b> (1)×3 → 9j + 6a = 174.000;  (2)×2 → 4j + 6a = 114.000;  dikurangkan → 5j = 60.000 → j = 12.000. Substitusi ke (1): 36.000 + 2a = 58.000 → a = 11.000. <b>Cek (2):</b> 24.000 + 33.000 = 57.000 ✔  dan j + a = 23.000 ✔</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Berhenti di 23.000 dan menjadikannya jawaban (itu total belanja, bukan kembalian).</li><li>Merasa harus mencari j dan a dulu, lalu salah hitung di tengah jalan.</li><li>Salah tanda saat eliminasi (mengurangi padahal seharusnya menjumlah).</li></ul></section>"
   },
   {
-    n: 5,
-    text: "Selembar kertas persegi yang berukuran 6 cm akan dipotong membentuk sebuah lingkaran. Rasio luas lingkaran maksimum yang dapat dibentuk dengan luas persegi yang paling mendekati adalah ...",
-    options: ["2:3", "3:4", "1:2", "3:5", "2:7"],
-    answer: "B",
-    explainImage: "img/s05-p.png",
-    explain: `
-<p>Lingkaran <b>terbesar</b> yang bisa dipotong dari kertas persegi akan menyentuh keempat sisinya. Jadi garis tengah (diameter) lingkaran sama dengan sisi persegi, yaitu 6 cm. Jari-jarinya <b>3 cm</b>.</p>
-<p>Luas lingkaran = π × r × r = 3,14 × 3 × 3 = <b>28,26 cm²</b>.<br>Luas persegi = 6 × 6 = <b>36 cm²</b>.</p>
-<p>Rasio = 28,26 : 36. Jika dibagi, hasilnya sekitar 0,78. Pilihan yang paling dekat: 3:4 = 0,75 (pilihan lain: 2:3 ≈ 0,67; 3:5 = 0,6; 1:2 = 0,5; 2:7 ≈ 0,29).</p>
-<p><b>Cara cepat:</b> jari-jari = r, maka sisi persegi = 2r. Rasio = πr² : (2r)² = πr² : 4r² = π : 4 ≈ 3,14 : 4 ≈ <b>3 : 4</b>. Berapa pun ukuran persegi, rasionya selalu π : 4.</p>
-<p class="key">Intinya: lingkaran terbesar dalam persegi selalu memenuhi sekitar tiga perempat luas persegi.</p>`,
+    "n": 5,
+    "text": "Diketahui f(x) = ax + b. Jika f(2) = 7 dan f(−1) = −2, nilai dari f(5) + f(−3) adalah ...",
+    "options": [
+      "8",
+      "10",
+      "12",
+      "14"
+    ],
+    "answer": "A",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: A</b> · ✔ terverifikasi · Materi: Fungsi Linear</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li>Fungsi linear: <b>f(x) = ax + b</b>.  a = gradien (kenaikan f setiap x naik 1), b = nilai f saat x = 0.</li><li>f(2) artinya: ganti semua x dengan 2.</li><li><b>Eliminasi:</b> dua persamaan dikurangkan agar b hilang.</li><li>Sifat garis lurus: f(p) + f(q) = 2·f((p + q)/2).  Asalnya: f(p) + f(q) = a(p + q) + 2b = 2[a·(p + q)/2 + b].</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Ganti x pada f(x) = ax + b dengan angka yang diberikan.</b></span>\n<p class=\"calc\">f(2) = 2a + b = 7    … (1)</p>\n<p class=\"calc\">f(−1) = −a + b = −2    … (2)</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>\"f(2) = 7\" artinya \"kalau x diisi 2, hasilnya 7\". Setiap informasi menjadi satu persamaan.</p>\n</li>\n<li><span class=\"st\"><b>Kurangkan (1) − (2) supaya b hilang.</b></span>\n<p class=\"calc\">(2a + b) − (−a + b) = 7 − (−2)</p>\n<p class=\"calc\">3a = 9   →   a = 3</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>b ada di kedua persamaan dengan tanda sama, jadi saat dikurangkan b habis. Hati-hati: −(−a) = +a dan 7 − (−2) = 9.</p>\n</li>\n<li><span class=\"st\"><b>Masukkan a = 3 ke persamaan (2).</b></span>\n<p class=\"calc\">−3 + b = −2</p>\n<p class=\"calc\">b = 1</p>\n</li>\n<li><span class=\"st\"><b>Tulis bentuk fungsinya.</b></span>\n<p class=\"calc\">f(x) = 3x + 1</p>\n</li>\n<li><span class=\"st\"><b>Hitung yang diminta.</b></span>\n<p class=\"calc\">f(5) = 3(5) + 1 = 16</p>\n<p class=\"calc\">f(−3) = 3(−3) + 1 = −8</p>\n<p class=\"calc\">f(5) + f(−3) = 16 + (−8) = 8</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Nilainya <b>8</b>  →  jawaban <b>A</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Dua titik menentukan satu garis lurus. Di papan koordinat, titik (2, 7) dan (−1, −2) hanya dilalui satu garis: y = 3x + 1. Setiap x naik 1, y naik 3 — itulah a. Dari x = −1 ke 2 (naik 3), y naik 9 (dari −2 ke 7) → 9 ÷ 3 = 3.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Jalan pintas:</b> −3 dan 5 simetris terhadap 1 (rata-ratanya 1). Pada garis lurus, f(5) + f(−3) = 2·f(1) = 2(3·1 + 1) = 8 ✔</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Salah tanda saat mengurangkan: 7 − (−2) ditulis 5, bukan 9.</li><li>Menghitung f(−3) = 3(−3) + 1 sebagai −10 atau +8 (tanda minus terlewat).</li><li>Mengira a dan b bisa dicari dari satu persamaan saja (dua yang tak diketahui butuh dua persamaan).</li></ul></section>"
   },
   {
-    n: 6,
-    text: "Di kebun apel Pak Jack, perbandingan antara apel hijau dan apel merah adalah 4:3. Terdapat 75% dari apel hijau memiliki rasa yang asam. Berapakah proporsi terbesar yang mungkin dari total apel hijau dan apel merah yang memiliki rasa yang asam?",
-    options: ["7/8", "7/6", "7/5", "5/7", "6/7"],
-    answer: "E",
-    explain: `
-<p>Agar mudah, misalkan total apel ada <b>70 buah</b>. Perbandingan hijau : merah = 4 : 3 (jumlah 7 bagian), sehingga 1 bagian = 10 buah. Apel hijau = 40 buah, apel merah = 30 buah.</p>
-<p>Apel hijau yang asam = 75% × 40 = <b>30 buah</b>.</p>
-<p>Soal meminta proporsi <b>terbesar yang mungkin</b>. Proporsinya paling besar jika <b>semua apel merah</b> juga asam, yaitu 30 buah. Total apel asam paling banyak = 30 + 30 = <b>60 buah</b> dari 70 buah.</p>
-<p>Proporsi = 60/70 = <b>6/7</b>.</p>
-<p>Pilihan 7/6 mustahil karena lebih dari 1 (bagian tidak mungkin lebih besar dari keseluruhan). Pilihan 7/8 dan 7/5 juga lebih besar dari 6/7, padahal 6/7 sudah merupakan batas paling besar.</p>
-<p class="key">Intinya: untuk mencari "nilai terbesar yang mungkin", anggap semua unsur yang belum pasti berada dalam kondisi paling menguntungkan.</p>`,
+    "n": 6,
+    "text": "Suatu persegi panjang memiliki panjang yang lebih besar 5 cm dari lebarnya. Jika luas persegi panjang tersebut adalah 84 cm², maka panjang diagonalnya adalah ...",
+    "options": [
+      "√185 cm",
+      "√193 cm",
+      "√185 cm",
+      "√205 cm"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus note\"><b>Kunci platform: B</b> · ● cek catatan · Materi: Persamaan Kuadrat + Teorema Pythagoras</p>\n<section class=\"box catatan\"><h4>Catatan untuk pengajar</h4><p>Pada tampilan platform, opsi <b>A dan C sama-sama tertulis √185 cm</b>. Kunci B (√193 cm) tetap benar dan unik, tetapi kemungkinan salah satu opsi kembar itu salah ketik. Beri tahu siswa agar tidak bingung.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li>Luas persegi panjang = <b>p × l</b></li><li><b>Faktorisasi</b> x² + bx + c = (x + m)(x + n) dengan <b>m × n = c</b> dan <b>m + n = b</b>.</li><li><b>Teorema Pythagoras:</b> sisi miring² = sisi₁² + sisi₂²</li><li>Diagonal persegi panjang membelahnya menjadi <b>dua segitiga siku-siku</b>, jadi diagonal = sisi miring.</li><li>Asal Pythagoras (ringkas): empat segitiga siku-siku disusun dalam persegi besar bersisi (a + b): (a + b)² = c² + 4(½ab)  →  a² + b² = c².</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Misalkan lebar = x.</b></span>\n<p class=\"calc\">lebar = x,      panjang = x + 5</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>\"Lebih besar 5 cm dari lebar\" → panjang = lebar + 5. Memilih lebar sebagai x membuat bentuknya paling sederhana.</p>\n</li>\n<li><span class=\"st\"><b>Susun persamaan luas.</b></span>\n<p class=\"calc\">x(x + 5) = 84</p>\n<p class=\"calc\">x² + 5x − 84 = 0</p>\n</li>\n<li><span class=\"st\"><b>Faktorkan.</b></span>\n<p class=\"calc\">(x + 12)(x − 7) = 0</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Cari dua bilangan yang dikali −84 dan dijumlah +5. Coba pasangan: 12 × (−7) = −84 dan 12 + (−7) = 5 ✔.</p>\n</li>\n<li><span class=\"st\"><b>Tentukan x yang masuk akal.</b></span>\n<p class=\"calc\">x = −12   atau   x = 7</p>\n<p class=\"calc\">lebar = 7 cm,   panjang = 12 cm</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Panjang sisi tidak boleh negatif → x = −12 dibuang. Cek: 7 × 12 = 84 ✔.</p>\n</li>\n<li><span class=\"st\"><b>Hitung diagonal dengan Pythagoras.</b></span>\n<p class=\"calc\">d² = 7² + 12² = 49 + 144 = 193   →   d = √193 cm</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Panjang diagonal <b>√193 cm</b>  →  jawaban <b>B</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Tebak cerdas: cari dua bilangan yang selisihnya 5 dan hasil kalinya 84 → 7 dan 12. Setelah sisinya ketemu, diagonal adalah \"jalan pintas\" menyeberangi lapangan lewat tengah; panjangnya dihitung lewat Pythagoras.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Tidak membuang x = −12.</li><li>Mengira diagonal = 7 + 12 = 19 (diagonal bukan jumlah sisi).</li><li>Salah hitung 12² = 124 (yang benar 144) atau 7² = 14 (yang benar 49).</li></ul></section>",
+    "explainImage": "img/tka-mat-s6.png"
   },
   {
-    n: 7,
-    text: "Seorang koki mengambil 10% dari tepung cadangannya untuk memasak pesanan yang baru saja diterima. Jika koki tersebut harus mengembalikan tepung sebanyak 90 kg untuk mengembalikan tepung cadangan tersebut ke ukuran semula, maka tepung cadangan Koki awalnya adalah .....",
-    options: ["100 kg", "900 kg", "910 kg", "810 kg", "190 kg"],
-    answer: "B",
-    explain: `
-<p>Misalkan tepung awal = X kg. Koki mengambil 10% dari X, sehingga tepung berkurang sebanyak 10% × X. Agar tepung kembali seperti semula, koki harus mengembalikan tepat sejumlah yang diambil, yaitu 90 kg.</p>
-<p>Artinya <b>10% dari X = 90 kg</b>. 0,1 × X = 90, maka X = 90 ÷ 0,1 = <b>900 kg</b>.</p>
-<p>Cek: 10% dari 900 = 90 kg. Sisa tepung 900 − 90 = 810 kg, lalu ditambah 90 kg, kembali menjadi 900 kg. Sesuai.</p>
-<p>Hati-hati pilihan 810 kg: itu adalah <b>sisa tepung setelah diambil</b>, bukan tepung awal.</p>
-<p class="key">Intinya: 10% sama dengan seper sepuluh, jadi kalau 10% nilainya 90, keseluruhannya adalah 90 × 10 = 900.</p>`,
+    "n": 7,
+    "text": "Barisan bilangan berikut: 3, 8, 15, 24, 35, ... Suku ke-10 barisan tersebut adalah ...",
+    "options": [
+      "99",
+      "108",
+      "119",
+      "120"
+    ],
+    "answer": "D",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: D</b> · ✔ terverifikasi · Materi: Barisan Bilangan · Barisan Bertingkat</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Barisan bertingkat dua</b> → rumus suku ke-n berbentuk <b>U</b><b><sub>n</sub></b><b> = an² + bn + c</b>.</li><li><b>2a</b> = selisih tingkat dua;   <b>3a + b</b> = U₂ − U₁;   <b>a + b + c</b> = U₁.</li><li>Asal: U₁ = a + b + c;  U₂ = 4a + 2b + c;  U₃ = 9a + 3b + c. Selisih tingkat 1: 3a + b lalu 5a + b; selisih tingkat 2: 2a.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Cari selisih antarsuku.</b></span>\n<p class=\"calc\">3,   8,   15,   24,   35</p>\n<p class=\"calc\">selisih:   5,   7,   9,   11</p>\n<p class=\"calc\">selisih dari selisih:   2,   2,   2</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Selisih tingkat 1 belum sama, tetapi selisih tingkat 2 sudah tetap (2). Itu tanda barisan bertingkat dua → rumus kuadrat.</p>\n</li>\n<li><span class=\"st\"><b>Cari a.</b></span>\n<p class=\"calc\">2a = 2   →   a = 1</p>\n</li>\n<li><span class=\"st\"><b>Cari b.</b></span>\n<p class=\"calc\">3a + b = U₂ − U₁ = 5   →   3 + b = 5   →   b = 2</p>\n</li>\n<li><span class=\"st\"><b>Cari c.</b></span>\n<p class=\"calc\">a + b + c = U₁ = 3   →   1 + 2 + c = 3   →   c = 0</p>\n</li>\n<li><span class=\"st\"><b>Tulis rumus, lalu hitung suku ke-10.</b></span>\n<p class=\"calc\">U<sub>n</sub> = n² + 2n = n(n + 2)</p>\n<p class=\"calc\">U<sub>10</sub> = 10 × 12 = 120</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Suku ke-10 = <b>120</b>  →  jawaban <b>D</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Lihat polanya: 3 = 1×3,  8 = 2×4,  15 = 3×5,  24 = 4×6,  35 = 5×7. Jadi suku ke-n = n × (n + 2). Suku ke-10 = 10 × 12 = 120. Tanpa rumus pun siswa bisa menemukan pola ini.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Cara \"lanjutkan saja\":</b> selisih naik 2 tiap langkah → 13, 15, 17, 19, 21. Barisannya: 35, <b>48, 63, 80, 99, 120</b> (suku ke-6 sampai ke-10) ✔</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Berhenti di suku ke-9 = 99 (opsi A) karena kurang satu langkah.</li><li>Mengira barisan aritmetika (beda tetap 5): 3 + 9 × 5 = 48.</li><li>Memakai selisih tingkat dua (2) langsung sebagai a, padahal a = 2 ÷ 2 = 1.</li></ul></section>"
   },
   {
-    n: 8,
-    text: "Sebanyak 40% tong berbentuk silinder berisi air hujan. Jika tong tersebut memiliki ukuran radius 2 m dan tinggi 5 m, maka banyak air yang harus ditambahkan agar tong tersebut terisi penuh dengan air adalah .... m³.",
-    options: ["6π", "12π", "10π", "8π", "14π"],
-    answer: "B",
-    explain: `
-<p>Tong baru terisi 40%, berarti bagian yang masih kosong = 100% − 40% = <b>60%</b>.</p>
-<p>Volume tong penuh (silinder) = π × r × r × tinggi = π × 2 × 2 × 5 = <b>20π m³</b>.</p>
-<p>Air yang harus ditambahkan = bagian kosong = 60% × 20π = 0,6 × 20π = <b>12π m³</b>.</p>
-<p>Hati-hati pilihan 8π: itu adalah isi air yang <b>sudah ada</b> (40% × 20π = 8π), bukan yang harus ditambahkan.</p>
-<p class="key">Intinya: air yang perlu ditambah sama dengan bagian yang masih kosong.</p>`,
+    "n": 8,
+    "text": "Sebuah bakteri membelah diri menjadi dua setiap 30 menit. Jika pada pukul 08.00 terdapat 100 bakteri, berapa banyak bakteri pada pukul 12.00?",
+    "options": [
+      "1.600",
+      "3.200",
+      "6.400",
+      "12.800"
+    ],
+    "answer": "A",
+    "explain": "<p class=\"keystatus warn\"><b>Kunci platform: A</b> · ⚠ perlu koreksi soal · Materi: Barisan Geometri · Pertumbuhan Berganda</p>\n<section class=\"box catatan warn\"><h4>Catatan untuk pengajar — soal ini perlu dikoreksi</h4><p><b>Soal bermasalah — kunci tidak sesuai pertanyaan.</b> Dari 08.00 sampai <b>12.00</b> terjadi 8 kali pembelahan → 100 × 2<sup>8</sup> = <b>25.600</b> bakteri. Angka ini tidak ada di opsi.</p><p>Kunci platform (A = 1.600) adalah jumlah bakteri pada <b>pukul 10.00</b>. Lihat tabel pada langkah 4: keempat opsi (1.600; 3.200; 6.400; 12.800) ternyata nilai pukul 10.00, 10.30, 11.00, dan 11.30. Kuat dugaan soal aslinya bertanya \"pukul 10.00\".</p><p><b>Saran:</b> ubah pertanyaan menjadi \"pukul 10.00\" (kunci A), atau ganti opsi dengan 25.600.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Pertumbuhan berganda (barisan geometri):</b> jumlah setelah n kali membelah = <b>N₀ × 2</b><b><sup>n</sup></b>.</li><li>Banyak pembelahan n = lama waktu ÷ waktu satu kali pembelahan.</li><li>2<sup>n</sup> artinya 2 dikalikan dirinya sendiri n kali (2<sup>3</sup> = 2 × 2 × 2 = 8).</li><li>Konversi: 1 jam = 60 menit.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Hitung lama waktu.</b></span>\n<p class=\"calc\">08.00 → 12.00 = 4 jam = 240 menit</p>\n</li>\n<li><span class=\"st\"><b>Hitung banyak pembelahan.</b></span>\n<p class=\"calc\">240 ÷ 30 = 8 kali</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Satu kali pembelahan butuh 30 menit, jadi dalam 1 jam ada 2 kali pembelahan, dalam 4 jam ada 8 kali.</p>\n</li>\n<li><span class=\"st\"><b>Kalikan 2 sebanyak 8 kali.</b></span>\n<p class=\"calc\">100 × 2<sup>8</sup> = 100 × 256 = 25.600</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Setiap membelah, jumlah menjadi dua kali lipat — bukan ditambah dua. Itulah sebabnya memakai pangkat.</p>\n</li>\n<li><span class=\"st\"><b>Pastikan lewat tabel penggandaan (sekaligus menunjukkan asal kunci platform).</b></span>\n<table class=\"dt\"><tr><th><b>Pukul</b></th><th><b>Pembelahan ke-</b></th><th><b>Jumlah bakteri</b></th></tr><tr><td>08.00</td><td>0</td><td>100</td></tr><tr><td>08.30</td><td>1</td><td>200</td></tr><tr><td>09.00</td><td>2</td><td>400</td></tr><tr><td>09.30</td><td>3</td><td>800</td></tr><tr><td><b>10.00</b></td><td>4</td><td><b>1.600</b>  (kunci platform)</td></tr><tr><td>10.30</td><td>5</td><td>3.200</td></tr><tr><td>11.00</td><td>6</td><td>6.400</td></tr><tr><td>11.30</td><td>7</td><td>12.800</td></tr><tr><td class=\"ok\"><b>12.00</b></td><td class=\"ok\">8</td><td class=\"ok\"><b>25.600</b>  (yang ditanya)</td></tr></table>\n</li>\n</ol>\n<section class=\"box hasil\"><p><b>HASIL &amp; KUNCI  ▶  </b>Menurut soal: <b>25.600</b> bakteri pada pukul 12.00 (tidak ada di opsi).  Kunci platform: <b>A (1.600)</b> = nilai pukul 10.00.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Seperti kabar viral: 1 orang cerita ke 1 orang → jadi 2, lalu 4, 8, 16, ... Bukan bertambah 2 tiap putaran, melainkan berlipat 2. Itulah mengapa angkanya melonjak cepat.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Mengira 4 jam = 4 kali pembelahan (lupa bahwa membelah tiap <b>30 menit</b>) → 100 × 2⁴ = 1.600. Inilah kemungkinan sumber kunci platform.</li><li>Menjumlah, bukan mengalikan: 100 + 2 × 8 = 116, atau 100 × 8 = 800.</li><li>Menulis 2<sup>8</sup> = 16 (mengira 2 × 8) padahal 2<sup>8</sup> = 256.</li></ul></section>"
   },
   {
-    n: 9,
-    text: "Roni ingin membuat bingkai untuk foto besar yang baru saja dibelinya. Foto tersebut berbentuk persegi panjang dengan perbandingan ukuran 3: 2 serta panjang sisi yang paling pendek adalah 15 inci. Ukuran bahan yang diperlukan untuk membuat bingkai foto tersebut adalah .... inchi.",
-    options: ["75", "57", "20", "22", "78"],
-    answer: "A",
-    explain: `
-<p>Perbandingan panjang : lebar = 3 : 2. Sisi yang paling pendek adalah lebar, yaitu 2 bagian, nilainya <b>15 inci</b>.</p>
-<p>Satu bagian = 15 ÷ 2 = 7,5 inci. Panjang = 3 bagian = 3 × 7,5 = <b>22,5 inci</b>. (Bisa juga: 3/2 × 15 = 22,5.)</p>
-<p>Bingkai mengelilingi foto, sehingga bahan yang diperlukan sama dengan <b>keliling</b> persegi panjang.</p>
-<p>Keliling = 2 × (panjang + lebar) = 2 × (22,5 + 15) = 2 × 37,5 = <b>75 inci</b>.</p>
-<p class="key">Intinya: bingkai = keliling, sedangkan alas atau karpet = luas.</p>`,
+    "n": 9,
+    "text": "Dalam sebuah kotak terdapat 5 bola merah, 4 bola biru, dan 3 bola hijau. Dua bola diambil secara bersamaan. Peluang terambilnya satu bola merah dan satu bola biru adalah ...",
+    "options": [
+      "5/11",
+      "20/66",
+      "22/5",
+      "10/33"
+    ],
+    "answer": "D",
+    "explain": "<p class=\"keystatus note\"><b>Kunci platform: D</b> · ● cek catatan · Materi: Peluang · Kombinasi</p>\n<section class=\"box catatan\"><h4>Catatan untuk pengajar</h4><p>Opsi <b>B (20/66)</b> dan <b>D (10/33)</b> bernilai sama — 20/66 bila disederhanakan menjadi 10/33. Kunci platform D karena sudah bentuk paling sederhana. Biasakan siswa menyederhanakan pecahan. Opsi C (22/5) &gt; 1, mustahil sebagai peluang.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Peluang:</b> P(A) = n(A) / n(S).</li><li><b>Kombinasi (urutan tidak penting):</b> C(n, r) = n! / [ r! × (n − r)! ].  Contoh: 4! = 4 × 3 × 2 × 1 = 24.</li><li><b>Aturan perkalian:</b> memilih 1 merah <b>dan</b> 1 biru → kalikan banyak cara masing-masing.</li><li>Asal C(n, r): susunan berurutan ada n × (n − 1) × ... (r suku); tiap kelompok yang sama muncul r! kali dengan urutan berbeda, maka dibagi r!.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Hitung total bola.</b></span>\n<p class=\"calc\">5 + 4 + 3 = 12 bola</p>\n</li>\n<li><span class=\"st\"><b>Hitung semua cara mengambil 2 bola dari 12.</b></span>\n<p class=\"calc\">n(S) = C(12, 2) = 12! / (2! × 10!)</p>\n<p class=\"calc\">= (12 × 11) / (2 × 1) = 66</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>\"Diambil bersamaan\" → urutan tidak penting (merah-biru sama dengan biru-merah), jadi pakai kombinasi. 12!/10! tersisa 12 × 11 saja.</p>\n</li>\n<li><span class=\"st\"><b>Hitung cara mengambil 1 merah dan 1 biru.</b></span>\n<p class=\"calc\">n(A) = C(5, 1) × C(4, 1) = 5 × 4 = 20</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Setiap bola merah (5 pilihan) bisa dipasangkan dengan setiap bola biru (4 pilihan) → 5 × 4 pasangan.</p>\n</li>\n<li><span class=\"st\"><b>Bagi dan sederhanakan.</b></span>\n<p class=\"calc\">P = 20/66 = 10/33</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Peluang = <b>10/33</b>  →  jawaban <b>D</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Bayangkan 12 bola dipasang berpasangan: ada 66 pasangan yang mungkin. Pasangan berisi \"satu merah, satu biru\" ada 20. Peluang = pasangan yang diinginkan ÷ semua pasangan.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Cara berurutan (verifikasi):</b> P(merah lalu biru) + P(biru lalu merah) = (5/12 × 4/11) + (4/12 × 5/11) = 20/132 + 20/132 = 40/132 = 10/33 ✔</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Memakai satu urutan saja: 5/12 × 4/11 = 5/33 (lupa bahwa biru dulu lalu merah juga memenuhi).</li><li>Menjumlahkan peluang: 5/12 + 4/12 = 3/4 (itu \"merah ATAU biru\", bukan keduanya sekaligus).</li><li>Tidak menyederhanakan sehingga bimbang antara B dan D.</li></ul></section>"
   },
   {
-    n: 10,
-    text: "Jika diketahui 1 < K < 5 dan 1 < L < 5, maka hubungan antara K dan L adalah ....",
-    options: ["K > L", "K < L", "K = 0", "K = L", "L = 0"],
-    answer: "D",
-    explain: `
-<p>Tanda 1 &lt; K &lt; 5 artinya K adalah bilangan yang lebih dari 1 dan kurang dari 5. Begitu juga L: lebih dari 1 dan kurang dari 5. Jadi K dan L memiliki <b>batas dan daerah nilai yang persis sama</b>, yaitu semua bilangan di antara 1 dan 5.</p>
-<p>Dalam bentuk himpunan: {x │ 1 &lt; x &lt; 5} untuk K dan {x │ 1 &lt; x &lt; 5} untuk L. Kedua himpunan itu sama.</p>
-<p>Cek pilihan lain:</p>
-<ul>
-<li>K &gt; L dan K &lt; L: tidak ada yang membuat K lebih besar atau lebih kecil dari L, karena keduanya dibatasi dengan cara yang sama.</li>
-<li>K = 0 dan L = 0: mustahil, karena nilainya harus lebih dari 1.</li>
-</ul>
-<p>Maka hubungan yang sesuai adalah <b>K = L</b>.</p>
-<p><b>Catatan:</b> yang sama adalah <b>daerah nilainya</b>, belum tentu angka K dan L pasti sama. Karena pilihan "tidak dapat ditentukan" tidak tersedia, D adalah pilihan yang paling sesuai.</p>`,
+    "n": 10,
+    "text": "Segitiga ABC dengan titik A(1, 2), B(3, 5), dan C(4, 1) dipotong ke arah garis y = x, kemudian hasilnya dirotasi 90° berlawanan arah jarum jam ke titik asal. Koordinat akhir titik A' adalah ...",
+    "options": [
+      "(−2, 1)",
+      "(2, 1)",
+      "(−2, −1)",
+      "(2, −1)"
+    ],
+    "answer": "A",
+    "explain": "<p class=\"keystatus warn\"><b>Kunci platform: A</b> · ⚠ perlu koreksi soal · Materi: Transformasi Geometri</p>\n<section class=\"box catatan warn\"><h4>Catatan untuk pengajar — soal ini perlu dikoreksi</h4><p><b>Soal bermasalah — kunci tidak dapat diturunkan.</b> Kata \"dipotong\" tidak lazim; hampir pasti maksudnya <b>\"dicerminkan terhadap garis y = x\"</b>. Dengan tafsir itu: A(1, 2) → A₁(2, 1) → A'(<b>−1, 2</b>). Titik (−1, 2) <b>tidak ada di opsi</b>.</p><p>Kunci platform A (−2, 1) hanya dihasilkan bila A <b>cuma diputar 90°</b> tanpa pencerminan: (1, 2) → (−2, 1). Jadi ada tahap yang hilang pada soal, atau opsinya keliru.</p><p>Titik B dan C hanya pengecoh; yang ditanya hanya A'. <b>Saran:</b> koreksi soal sebelum dipakai. Langkah di bawah tetap berguna untuk melatih menyusun komposisi transformasi.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Pencerminan terhadap garis y = x:</b>  (x, y) → (y, x)  (koordinat ditukar).</li><li><b>Rotasi 90° berlawanan arah jarum jam</b>, pusat O(0, 0):  (x, y) → (−y, x).</li><li><b>Rotasi 90° searah jarum jam</b>, pusat O:  (x, y) → (y, −x).</li><li><b>Komposisi:</b> dikerjakan berurutan mulai dari transformasi yang disebut PERTAMA. Urutan berbeda → hasil berbeda.</li><li><b>Uji ingatan rotasi:</b> titik (1, 0) di sumbu-x diputar 90° berlawanan jarum jam harus jatuh di (0, 1) di sumbu-y. Rumus (−y, x) memberi (−0, 1) ✔.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Baca soal sebagai dua tahap berurutan.</b></span>\n<p class=\"why\"><b>Kenapa begitu?  </b>Tahap ① pencerminan terhadap y = x. Tahap ② rotasi 90° berlawanan jarum jam. Kerjakan sesuai urutan.</p>\n</li>\n<li><span class=\"st\"><b>Tahap ① — cerminkan A(1, 2) terhadap y = x.</b></span>\n<p class=\"calc\">(x, y) → (y, x):      A(1, 2) → A₁(2, 1)</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Garis y = x berperan sebagai cermin yang menukar absis dan ordinat.</p>\n</li>\n<li><span class=\"st\"><b>Tahap ② — putar A₁ sebesar 90° berlawanan arah jarum jam.</b></span>\n<p class=\"calc\">(x, y) → (−y, x):      A₁(2, 1) → A'(−1, 2)</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>x baru = −(y lama) = −1;  y baru = x lama = 2.</p>\n</li>\n<li><span class=\"st\"><b>Cek dengan jalan pintas.</b></span>\n<p class=\"calc\">Cermin y = x lalu putar 90° = cermin terhadap sumbu-y:  (x, y) → (−x, y)   →   (−1, 2) ✔</p>\n</li>\n</ol>\n<section class=\"box hasil\"><p><b>HASIL &amp; KUNCI  ▶  </b>Hasil perhitungan: <b>A'(−1, 2)</b> (tidak ada di opsi).  Kunci platform: <b>A (−2, 1)</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Bayangkan titik itu sebagai paku di papan. Pertama papan dibalik seperti bercermin di diagonal, lalu diputar seperempat putaran melawan arah jarum jam. Posisi akhir paku dilacak lewat dua rumus di atas.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li><b>Urutan terbalik:</b> diputar dulu → (−2, 1), baru dicerminkan → (1, −2). Hasilnya beda dari urutan yang benar.</li><li>Rumus rotasi tertukar arah: memakai (y, −x) menghasilkan (1, −2).</li><li>Lupa membalik tanda salah satu koordinat sehingga muncul (−2, −1) atau (2, −1).</li></ul></section>",
+    "explainImage": "img/tka-mat-s10.png"
   },
   {
-    n: 11,
-    text: "Banyaknya bilangan bulat yang terdiri dari dua digit serta habis dibagi dengan 5 dan 6 adalah ....",
-    options: ["4", "8", "6", "2", "3"],
-    answer: "E",
-    explain: `
-<p>Bilangan dua digit adalah bilangan dari <b>10 sampai 99</b>. "Habis dibagi 5 dan 6" artinya bilangan itu kelipatan 5 <b>sekaligus</b> kelipatan 6.</p>
-<p>Karena 5 dan 6 tidak punya faktor yang sama (selain 1), bilangan yang habis dibagi keduanya adalah kelipatan dari 5 × 6 = <b>30</b>.</p>
-<p>Kelipatan 30: 30, 60, 90, 120, ... Yang masih dua digit hanya <b>30, 60, dan 90</b> (120 sudah tiga digit).</p>
-<p>Cek: 30 ÷ 5 = 6 dan 30 ÷ 6 = 5. Begitu pula 60 (÷5 = 12, ÷6 = 10) dan 90 (÷5 = 18, ÷6 = 15).</p>
-<p>Jadi banyaknya ada <b>3 bilangan</b>.</p>`,
+    "n": 11,
+    "text": "Nilai dari 27^(2/3) × 16^(−3/4) + 125^(2/3) ▢ 32^(2/5) adalah ...\n(▢ = tanda operasi yang hilang pada soal di platform)",
+    "options": [
+      "24.125",
+      "24,5",
+      "25",
+      "25,25"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus warn\"><b>Kunci platform: B</b> · ⚠ perlu koreksi soal · Materi: Eksponen · Pangkat Pecahan</p>\n<section class=\"box catatan warn\"><h4>Catatan untuk pengajar — soal ini perlu dikoreksi</h4><p><b>Soal rusak — tanda operasi hilang.</b> Pada tampilan platform tidak ada tanda (+, −, ×, ÷) di antara 125<sup>2/3</sup> dan 32<sup>2/5</sup>, sehingga ekspresi tidak utuh. Dari beberapa kemungkinan penafsiran (tabel pada langkah 6) <b>tidak ada yang bernilai 24,5</b> ataupun opsi lain. Pembahasan bawaan platform sendiri memperlihatkan beberapa kali percobaan lalu menebak.</p><p>Yang <b>pasti</b> dan layak diajarkan: nilai tiap suku → 27<sup>2/3</sup> = 9,  16<sup>−3/4</sup> = 1/8,  125<sup>2/3</sup> = 25,  32<sup>2/5</sup> = 4.</p><p><b>Saran:</b> cek teks asli soal (minta sumbernya) sebelum dipakai; atau gunakan hanya untuk latihan menyederhanakan pangkat pecahan.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Pangkat pecahan:</b> a<sup>m/n</sup> = (ⁿ√a)<sup>m</sup>  →  penyebut = akar ke-n, pembilang = pangkat.</li><li><b>Pangkat negatif:</b> a<sup>−n</sup> = 1 / a<sup>n</sup>  (artinya \"dibalik\", bukan hasil negatif).</li><li><b>Pangkat dari pangkat:</b> (a<sup>m</sup>)<sup>n</sup> = a<sup>m × n</sup>.</li><li><b>Strategi:</b> ubah semua bilangan ke <b>basis prima</b> (27 = 3³,  16 = 2⁴,  125 = 5³,  32 = 2⁵).</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Hitung 27</b><b><sup>2/3</sup></b><b>.</b></span>\n<p class=\"calc\">27<sup>2/3</sup> = (3³)<sup>2/3</sup> = 3<sup>3 × 2/3</sup> = 3² = 9</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>27 diubah menjadi 3³ agar pangkat 3 dan penyebut 3 saling menghapus.</p>\n</li>\n<li><span class=\"st\"><b>Hitung 16</b><b><sup>−3/4</sup></b><b>.</b></span>\n<p class=\"calc\">16<sup>−3/4</sup> = (2⁴)<sup>−3/4</sup> = 2<sup>4 × (−3/4)</sup> = 2<sup>−3</sup> = 1/2³ = 1/8</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Tanda minus pada pangkat hanya membalik bilangan (menjadi 1/…); hasilnya tetap positif.</p>\n</li>\n<li><span class=\"st\"><b>Hitung 125</b><b><sup>2/3</sup></b><b>.</b></span>\n<p class=\"calc\">(5³)<sup>2/3</sup> = 5² = 25</p>\n</li>\n<li><span class=\"st\"><b>Hitung 32</b><b><sup>2/5</sup></b><b>.</b></span>\n<p class=\"calc\">(2⁵)<sup>2/5</sup> = 2² = 4</p>\n</li>\n<li><span class=\"st\"><b>Gabungkan suku pertama.</b></span>\n<p class=\"calc\">27<sup>2/3</sup> × 16<sup>−3/4</sup> = 9 × 1/8 = 9/8 = 1,125</p>\n</li>\n<li><span class=\"st\"><b>Tafsirkan tanda yang hilang.</b></span>\n<table class=\"dt\"><tr><th><b>Jika ▢ adalah</b></th><th><b>Perhitungan</b></th><th><b>Hasil</b></th></tr><tr><td>+</td><td>1,125 + 25 + 4</td><td>30,125</td></tr><tr><td>−</td><td>1,125 + 25 − 4</td><td>22,125</td></tr><tr><td>×</td><td>1,125 + 25 × 4</td><td>101,125</td></tr><tr><td>÷</td><td>1,125 + 25 ÷ 4</td><td>7,375</td></tr></table>\n</li>\n</ol>\n<section class=\"box hasil\"><p><b>HASIL &amp; KUNCI  ▶  </b>Nilai tiap suku pasti (9, 1/8, 25, 4), tetapi hasil akhir tidak dapat dipastikan karena soal tidak utuh.  Kunci platform: <b>B (24,5)</b> — tidak dapat diverifikasi.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Rumus saktinya: pecahan di pangkat = \"akar + pangkat\". 27<sup>2/3</sup>: akar pangkat tiga dari 27 itu 3, lalu dikuadratkan jadi 9. Pangkat minus = dibalik. Bila siswa hafal dua kalimat ini, semua soal sejenis selesai.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Menganggap 16<sup>−3/4</sup> = −1/8 (tanda minus pada pangkat ≠ hasil negatif).</li><li>Salah mengalikan pangkat: 27<sup>2/3</sup> dihitung 27 × 2 ÷ 3 = 18.</li><li>Tidak mengubah ke basis prima sehingga berusaha menarik akar dengan kalkulator.</li></ul></section>"
   },
   {
-    n: 12,
-    text: "Jordan memiliki berat badan dua kali dari Max. Sementara, berat badan Max adalah 60% berat badan Bren. Jika berat badan Damar adalah 50% dari berat badan Lukas dan berat badan Lukas adalah 190% berat badan Jordan, maka yang memiliki berat badan paling ringan adalah ....",
-    options: ["Jordan", "Damar", "Max", "Lukas", "Bren"],
-    answer: "C",
-    explain: `
-<p>Agar mudah, kita <b>misalkan berat Max = 100 kg</b>. Angka ini hanya pemisalan; urutan siapa paling ringan tidak berubah untuk berat berapa pun.</p>
-<p>Hitung berat yang lain satu per satu:</p>
-<ul>
-<li>Jordan = 2 × Max = 2 × 100 = <b>200 kg</b></li>
-<li>Bren: Max adalah 60% dari Bren, sehingga Bren = 100 ÷ 0,6 ≈ <b>166,7 kg</b></li>
-<li>Lukas = 190% × Jordan = 1,9 × 200 = <b>380 kg</b></li>
-<li>Damar = 50% × Lukas = 0,5 × 380 = <b>190 kg</b></li>
-</ul>
-<p>Urutkan dari yang paling ringan: Max (100) &lt; Bren (166,7) &lt; Damar (190) &lt; Jordan (200) &lt; Lukas (380).</p>
-<p>Yang paling ringan adalah <b>Max</b>.</p>
-<p class="key">Intinya: pilih satu orang sebagai patokan, lalu hitung berat yang lain berdasarkan patokan itu.</p>`,
+    "n": 12,
+    "text": "Seorang tukang dapat menyelesaikan sebuah pekerjaan dalam 12 hari. Tukang kedua dapat menyelesaikan pekerjaan yang sama dalam 18 hari. Jika mereka bekerja bersama dan seorang tukang ketiga bergabung setelah 3 hari, maka total pekerjaan selesai dalam 7 hari (dari awal). Dalam berapa hari tukang ketiga dapat menyelesaikan pekerjaan itu sendirian?",
+    "options": [
+      "9 hari",
+      "12 hari",
+      "15 hari",
+      "18 hari"
+    ],
+    "answer": "A",
+    "explain": "<p class=\"keystatus warn\"><b>Kunci platform: A</b> · ⚠ perlu koreksi soal · Materi: Perbandingan · Pekerjaan Bersama (3 Tukang)</p>\n<section class=\"box catatan warn\"><h4>Catatan untuk pengajar — soal ini perlu dikoreksi</h4><p><b>Soal bermasalah — kunci tidak dapat diturunkan.</b> Dengan data tertulis, tukang ketiga butuh <b>144 hari</b> (hanya menyumbang 1/144 pekerjaan per hari). Angka ini tidak ada di opsi.</p><p>Gambaran yang masuk akal: dalam 7 hari tukang 1 dan 2 saja sudah menyelesaikan 35/36 pekerjaan, sehingga tukang ketiga hanya perlu menyumbang 1/36 → ia sangat lambat.</p><p>Kunci platform A (9 hari) menghasilkan total waktu 5⅓ hari, bukan 7. Bila total waktunya \"6 hari\", jawabannya 18 hari (opsi D). <b>Saran:</b> koreksi angka \"7 hari\" sebelum dipakai.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Kecepatan kerja = 1 pekerjaan ÷ waktu.</b> Selesai dalam t hari → mengerjakan 1/t bagian per hari.</li><li>Bekerja bersama → <b>kecepatan dijumlahkan</b>.</li><li><b>Hasil kerja = kecepatan × waktu.</b> Seluruh pekerjaan dianggap bernilai <b>1</b>.</li><li>Menjumlah pecahan: samakan penyebut memakai KPK.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Ubah waktu menjadi kecepatan.</b></span>\n<p class=\"calc\">Tukang 1 = 1/12 per hari,      Tukang 2 = 1/18 per hari</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Kalau pekerjaan selesai dalam 12 hari, tiap hari menyelesaikan 1/12 bagian.</p>\n</li>\n<li><span class=\"st\"><b>Jumlahkan kecepatan tukang 1 dan 2.</b></span>\n<p class=\"calc\">1/12 + 1/18 = 3/36 + 2/36 = 5/36 per hari</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Penyebut disamakan memakai KPK(12, 18) = 36.</p>\n</li>\n<li><span class=\"st\"><b>Hitung hasil 3 hari pertama.</b></span>\n<p class=\"calc\">3 × 5/36 = 15/36 = 5/12</p>\n</li>\n<li><span class=\"st\"><b>Hitung sisa pekerjaan.</b></span>\n<p class=\"calc\">1 − 5/12 = 7/12</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Sisa ini dikerjakan oleh bertiga selama 7 − 3 = 4 hari.</p>\n</li>\n<li><span class=\"st\"><b>Cari kecepatan bertiga.</b></span>\n<p class=\"calc\">(7/12) ÷ 4 = 7/48 per hari</p>\n</li>\n<li><span class=\"st\"><b>Cari kecepatan tukang ketiga.</b></span>\n<p class=\"calc\">7/48 − 5/36 = 21/144 − 20/144 = 1/144 per hari</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Kecepatan bertiga dikurangi kecepatan tukang 1 dan 2 = sumbangan tukang ketiga. KPK(48, 36) = 144.</p>\n</li>\n<li><span class=\"st\"><b>Hitung waktu bila ia bekerja sendirian.</b></span>\n<p class=\"calc\">1 ÷ (1/144) = 144 hari</p>\n</li>\n</ol>\n<section class=\"box hasil\"><p><b>HASIL &amp; KUNCI  ▶  </b>Menurut data soal: <b>144 hari</b> (tidak ada di opsi).  Kunci platform: <b>A (9 hari)</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Bayangkan keran air mengisi bak. Keran 1 dan 2 sudah mengisi 35/36 bak dalam 7 hari. Sisa 1/36 bak diisi keran 3 dalam 4 hari. Jadi keran 3 hanya menetes pelan: 1/144 bak per hari.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Jalan pintas:</b> dalam 7 hari, tukang 1 + 2 mengerjakan 7 × 5/36 = 35/36. Sisa 1/36 dikerjakan tukang 3 dalam 4 hari → 1/36 ÷ 4 = 1/144 per hari → 144 hari.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Menjumlahkan waktu (12 + 18) alih-alih menjumlahkan kecepatan.</li><li>Lupa bahwa tukang 1 dan 2 tetap bekerja setelah tukang 3 bergabung.</li><li>Mengira tukang 3 bekerja 7 hari (padahal baru bergabung setelah hari ke-3 → 4 hari).</li></ul></section>"
   },
   {
-    n: 13,
-    text: "Jika nilai dari r = 1/3 s dan rs tidak sama dengan 0, maka rasio antara r dan 3s adalah ...",
-    options: ["1/9", "1/3", "1/7", "1/8", "1/6"],
-    answer: "A",
-    explain: `
-<p>Diketahui r = 1/3 s. Artinya r adalah sepertiga dari s. Rasio r dan 3s ditulis r : 3s.</p>
-<p>Ganti r dengan 1/3 s, sehingga menjadi (1/3 s) : 3s. Karena rs tidak sama dengan 0, nilai s bukan nol, sehingga s boleh "dicoret" di kedua sisi. Tersisa <b>1/3 : 3</b>.</p>
-<p>Kalikan kedua sisi dengan 3 agar tidak ada pecahan: (1/3 × 3) : (3 × 3) = <b>1 : 9</b>, atau ditulis <b>1/9</b>.</p>
-<p>Cek dengan angka: jika s = 3, maka r = 1 dan 3s = 9. Rasio r : 3s = 1 : 9. Sesuai.</p>`,
+    "n": 13,
+    "text": "Data berat badan (dalam kg) dari 9 siswa adalah: 45, 52, 48, 55, 50, 48, 60, 52, 48. Nilai (median − modus) + mean adalah ...",
+    "options": [
+      "100,44",
+      "101,33",
+      "102,44",
+      "103,33"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus warn\"><b>Kunci platform: B</b> · ⚠ perlu koreksi soal · Materi: Statistika · Median, Modus, Mean</p>\n<section class=\"box catatan warn\"><h4>Catatan untuk pengajar — soal ini perlu dikoreksi</h4><p><b>Soal bermasalah — kunci tidak dapat diturunkan.</b> Hasil perhitungan: (50 − 48) + 50,89 = <b>52,89</b>. Angka ini tidak ada di opsi. Kunci platform B (101,33) tidak cocok dengan tafsir wajar apa pun; pembahasan bawaan platform pun mencoba beberapa variasi lalu menyerah.</p><p><b>Saran:</b> periksa teks asli soal (mungkin data atau operasinya berubah) sebelum dipakai. Cara menghitung median, modus, dan mean di bawah tetap benar dan siap diajarkan.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Mean (rata-rata)</b> = jumlah semua data ÷ banyak data.</li><li><b>Median</b> = nilai tengah setelah data diurutkan. Jika n ganjil → data ke-(n + 1)/2.</li><li><b>Modus</b> = nilai yang paling sering muncul.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Urutkan data dari yang terkecil.</b></span>\n<p class=\"calc\">45,  48,  48,  48,  50,  52,  52,  55,  60</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Median hanya bermakna jika data sudah berurutan.</p>\n</li>\n<li><span class=\"st\"><b>Cari median.</b></span>\n<p class=\"calc\">n = 9 (ganjil)  →  data ke-(9 + 1)/2 = data ke-5  →  50</p>\n</li>\n<li><span class=\"st\"><b>Cari modus.</b></span>\n<p class=\"calc\">48 muncul 3 kali (52 muncul 2 kali, lainnya 1 kali)  →  modus = 48</p>\n</li>\n<li><span class=\"st\"><b>Cari mean.</b></span>\n<p class=\"calc\">jumlah = 45 + 48 + 48 + 48 + 50 + 52 + 52 + 55 + 60 = 458</p>\n<p class=\"calc\">mean = 458 ÷ 9 ≈ 50,89</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Trik hemat: pakai rata-rata sementara 50. Selisih tiap data terhadap 50: −5, −2, −2, −2, 0, +2, +2, +5, +10 → jumlah +8. Mean = 50 + 8/9 ≈ 50,89 ✔.</p>\n</li>\n<li><span class=\"st\"><b>Hitung yang diminta.</b></span>\n<p class=\"calc\">(median − modus) + mean = (50 − 48) + 50,89 = 52,89</p>\n</li>\n</ol>\n<section class=\"box hasil\"><p><b>HASIL &amp; KUNCI  ▶  </b>Hasil perhitungan: <b>≈ 52,89</b> (tidak ada di opsi).  Kunci platform: <b>B (101,33)</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Tiga \"wakil\" dari sekelompok data. <b>Mean</b> = pemerataan (kalau semua berbagi berat sama rata). <b>Median</b> = anak yang berdiri tepat di tengah barisan dari yang teringan sampai terberat. <b>Modus</b> = berat yang paling \"populer\".</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Mencari median tanpa mengurutkan data (kebetulan data ke-5 aslinya juga 50, tetapi caranya tetap salah).</li><li>Memilih modus 52 (hanya 2 kali) padahal 48 muncul 3 kali.</li><li>Salah membaca \"(median − modus) + mean\" menjadi median × modus atau median + modus + mean.</li></ul></section>"
   },
   {
-    n: 14,
-    text: "Di perpustakaan daerah Sukamaju, setiap novel terdapat dua buku sains, dan setiap buku sains terdapat tujuh buku ekonomi. Dengan demikian perbandingan antara buku ekonomi, buku sains, dan novel adalah ...",
-    options: ["7 : 2 : 1", "14 : 7 : 2", "14 : 2 : 1", "7 : 1 : 2", "14 : 7 : 1"],
-    answer: "C",
-    explain: `
-<p>Mulai dari <b>1 novel</b>. Setiap novel ada 2 buku sains, jadi ada <b>2 buku sains</b>. Setiap 1 buku sains ada 7 buku ekonomi. Karena ada 2 buku sains, buku ekonominya 2 × 7 = <b>14 buku</b>.</p>
-<p>Jadi untuk 1 novel: sains = 2, ekonomi = 14. Soal meminta urutan <b>ekonomi : sains : novel</b>, yaitu <b>14 : 2 : 1</b>.</p>
-<p>Kesalahan yang sering terjadi: memilih 7 : 2 : 1 karena lupa mengalikan 2 × 7. Perhatikan juga urutan yang diminta soal.</p>`,
+    "n": 14,
+    "text": "Sebuah dadu dilempar dua kali. Mengetahui bahwa jumlah kedua mata dadu adalah lebih dari 8. Peluang kedua mata dadu menunjukkan angka genap adalah ...",
+    "options": [
+      "1/5",
+      "2/5",
+      "1/4",
+      "3/10"
+    ],
+    "answer": "D",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: D</b> · ✔ terverifikasi · Materi: Peluang Bersyarat · Dua Dadu</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Peluang bersyarat:</b> P(A | B) = n(A ∩ B) / n(B)  → dibaca \"peluang A jika B sudah terjadi\".</li><li>Syarat B membuat <b>ruang sampel menyempit</b> menjadi hanya kejadian B.</li><li>Dua dadu: ruang sampel awal = 6 × 6 = 36 pasangan.  Mata genap pada dadu: 2, 4, 6.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Tentukan ruang sampel yang baru (syarat: jumlah &gt; 8).</b></span>\n<p class=\"why\"><b>Kenapa begitu?  </b>Karena sudah diketahui jumlahnya lebih dari 8, pasangan lain (jumlah ≤ 8) dibuang dari hitungan.</p>\n<table class=\"dt\"><tr><th><b>Jumlah</b></th><th><b>Pasangan (dadu 1, dadu 2)</b></th><th><b>Banyak</b></th></tr><tr><td>9</td><td>(3,6)  (4,5)  (5,4)  (6,3)</td><td>4</td></tr><tr><td>10</td><td>(4,6)  (5,5)  (6,4)</td><td>3</td></tr><tr><td>11</td><td>(5,6)  (6,5)</td><td>2</td></tr><tr><td>12</td><td>(6,6)</td><td>1</td></tr><tr><td><b>Total</b></td><td></td><td><b>10</b></td></tr></table>\n</li>\n<li><span class=\"st\"><b>Pilih pasangan yang kedua matanya genap.</b></span>\n<p class=\"calc\">(4, 6),  (6, 4),  (6, 6)   →   3 pasangan</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Kedua dadu genap berarti dadu 1 dan dadu 2 sama-sama ∈ {2, 4, 6}. Dari 10 pasangan di atas hanya tiga yang genap-genap. Pasangan (2,6), (6,2), (4,4) berjumlah tepat 8 — tidak lebih dari 8, jadi tidak ikut.</p>\n</li>\n<li><span class=\"st\"><b>Hitung peluang bersyarat.</b></span>\n<p class=\"calc\">P = 3/10</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Peluang = <b>3/10</b>  →  jawaban <b>D</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>\"Sudah tahu sebagian\" = dunia mengecil. Setelah tahu jumlah &gt; 8, tinggal 10 kemungkinan, bukan 36 lagi. Dari 10 itu, hitung yang cocok.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Cek di tabel 6×6 (gambar):</b> kotak oranye = jumlah &gt; 8 (10 kotak); kotak hijau = oranye yang genap-genap (3 kotak). Jadi 3 dari 10.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Membagi dengan 36: 3/36 = 1/12 (itu peluang gabungan, bukan peluang bersyarat).</li><li>Memasukkan pasangan berjumlah tepat 8 seperti (4,4), (2,6), (6,2): \"lebih dari 8\" tidak termasuk 8.</li><li>Menganggap (5,5) genap-genap (padahal 5 ganjil).</li></ul></section>",
+    "explainImage": "img/tka-mat-s14.png"
   },
   {
-    n: 15,
-    text: "Nia sedang melakukan survei terhadap beberapa orang di sekitarnya. Di survei pertama, terdapat n responden, di mana sebanyak 60% menyatakan bahwa kuliah itu penting. Pada survei kedua, bertambah sebanyak x responden yang semuanya menyetujui bahwa kuliah itu penting. Setelah digabung, sebanyak tujuh puluh persen dari semua responden Nia setuju bahwa kuliah itu penting. Nilai x yang tepat adalah ....",
-    options: ["n/5", "n/2", "3n", "n/6", "n/3"],
-    answer: "E",
-    explain: `
-<p><b>Survei pertama:</b> n responden, 60% setuju, jadi yang setuju = 0,6n.<br><b>Survei kedua:</b> x responden dan semuanya setuju, jadi yang setuju = x.<br><b>Gabungan:</b> jumlah responden = n + x, jumlah yang setuju = 0,6n + x.</p>
-<p>Jumlah yang setuju ini adalah 70% dari seluruh responden. Susun persamaannya:</p>
-<p>0,6n + x = 0,7 × (n + x) = 0,7n + 0,7x.</p>
-<p>Kumpulkan yang sejenis: x − 0,7x = 0,7n − 0,6n, sehingga 0,3x = 0,1n. x = 0,1n ÷ 0,3 = <b>n/3</b>.</p>
-<p>Cek dengan angka: misal n = 30. Survei pertama: 60% × 30 = 18 orang setuju. Maka x = 30/3 = 10, semuanya setuju. Gabungan: 40 responden, 18 + 10 = 28 setuju, dan 28/40 = 0,7 = 70%. Sesuai.</p>`,
+    "n": 15,
+    "text": "Segitiga ABC memiliki sudut A = 90°. Diketahui tan B = 3/4. Jika BC = 25 cm, luas segitiga ABC adalah ...",
+    "options": [
+      "150 cm²",
+      "175 cm²",
+      "200 cm²",
+      "225 cm²"
+    ],
+    "answer": "A",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: A</b> · ✔ terverifikasi · Materi: Trigonometri · Segitiga Siku-siku</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Perbandingan trigonometri</b> (terhadap sudut B):  sin B = depan/miring;  cos B = samping/miring;  <b>tan B = depan/samping</b>.</li><li><b>Depan</b> = sisi di hadapan sudut;  <b>samping</b> = sisi yang menempel sudut (bukan sisi miring);  <b>miring</b> = sisi di hadapan sudut siku-siku (terpanjang).</li><li><b>Pythagoras:</b> miring² = depan² + samping².</li><li><b>Luas segitiga</b> = ½ × alas × tinggi (dua sisi yang saling tegak lurus).</li><li>Tripel Pythagoras populer: 3-4-5,  5-12-13,  8-15-17,  7-24-25.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Tentukan nama sisi terhadap sudut B.</b></span>\n<p class=\"calc\">Siku-siku di A  →  sisi miring = BC = 25.     depan B = AC,   samping B = AB</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Sisi miring selalu berhadapan dengan sudut 90°. Untuk sudut B, sisi di depannya adalah AC dan yang menempel adalah AB.</p>\n</li>\n<li><span class=\"st\"><b>Terjemahkan tan B = 3/4.</b></span>\n<p class=\"calc\">tan B = AC / AB = 3/4   →   AC = 3k,   AB = 4k</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Perbandingan 3 : 4 artinya panjangnya \"3 bagian\" dan \"4 bagian\" dengan ukuran satu bagian = k.</p>\n</li>\n<li><span class=\"st\"><b>Gunakan Pythagoras untuk mencari k.</b></span>\n<p class=\"calc\">(3k)² + (4k)² = 25²</p>\n<p class=\"calc\">9k² + 16k² = 625</p>\n<p class=\"calc\">25k² = 625   →   k² = 25   →   k = 5</p>\n</li>\n<li><span class=\"st\"><b>Hitung panjang sisi tegak.</b></span>\n<p class=\"calc\">AC = 3 × 5 = 15 cm,      AB = 4 × 5 = 20 cm</p>\n</li>\n<li><span class=\"st\"><b>Hitung luas.</b></span>\n<p class=\"calc\">L = ½ × AB × AC = ½ × 20 × 15 = 150 cm²</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Karena siku-siku di A, AB dan AC saling tegak lurus → yang satu jadi alas, yang lain tinggi.</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Luas = <b>150 cm²</b>  →  jawaban <b>A</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Kenali \"segitiga 3-4-5\": sisi tegak 3 dan 4, sisi miring 5. Soal memberi sisi miring 25 = 5 × 5, jadi segitiga diperbesar 5 kali: 15, 20, 25. Tinggal ½ × 15 × 20.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Mengira tan B = 3/4 berarti sisi miringnya 4 atau 3 (padahal tan memakai sisi depan dan samping).</li><li>Memakai BC = 25 sebagai alas atau tinggi luas.</li><li>Lupa faktor ½: 20 × 15 = 300.</li></ul></section>",
+    "explainImage": "img/tka-mat-s15.png"
   },
   {
-    n: 16,
-    // Catatan: soal tertulis pulpen "naik 2%", sedangkan kunci memakai 20% (lihat catatan di pembahasan).
-    text: "Minggu lalu, harga satu lusin buku sama dengan harga sepuluh biji pulpen. Namun, di bulan minggu ini, harga satu lusin buku naik 20% begitupun dengan harga sepuluh biji pulpen naik 2%. Maka tambahan uang yang diperlukan untuk membeli satu lusin buku dan sepuluh biji pulpen adalah ....",
-    options: ["20%", "10%", "12%", "16%", "15%"],
-    answer: "A",
-    explain: `
-<p>Harga 1 lusin buku <b>sama</b> dengan harga 10 biji pulpen. Agar mudah, misalkan masing-masing <b>Rp100.000</b>. Maka uang yang dibutuhkan sebelum naik = 100.000 + 100.000 = <b>Rp200.000</b>.</p>
-<p><b>Buku</b> naik 20%: kenaikannya 20% × 100.000 = 20.000, sehingga harga baru = <b>Rp120.000</b>.<br><b>Pulpen</b> juga dihitung naik 20% (lihat catatan di bawah): harga baru 10 pulpen = <b>Rp120.000</b>.</p>
-<p>Total setelah naik = 120.000 + 120.000 = <b>Rp240.000</b>. Tambahan uang = 240.000 − 200.000 = <b>Rp40.000</b>. Dalam persen: 40.000 ÷ 200.000 = 0,2 = <b>20%</b>.</p>
-<p><b>Cara cepat:</b> kedua barang harganya sama dan naik dengan persentase yang sama, jadi total belanja pun naik dengan persentase yang sama, yaitu 20%.</p>
-<p><b>Catatan:</b> di soal tertulis pulpen "naik 2%", tetapi perhitungan kunci memakai kenaikan <b>20%</b> untuk pulpen (kata "begitupun" berarti sama-sama naik 20%). Jika pulpen benar-benar hanya naik 2%, maka totalnya 120.000 + 102.000 = 222.000, atau tambah 11%, dan angka itu tidak ada di pilihan jawaban. Karena itu soal dibaca sebagai 20%, dan jawabannya A.</p>
-<p class="key">Intinya: jika dua barang berharga sama naik dengan persen yang sama, total belanjanya naik dengan persen yang sama pula.</p>`,
+    "n": 16,
+    "text": "Sebuah limas dengan alas berbentuk persegi berukuran 12 cm × 12 cm dan tinggi limas 8 cm. Jika limas tersebut diisi air hingga penuh dan kemudian air dituang ke dalam balok dengan alas 9 cm × 16 cm, tinggi air dalam balok adalah ...",
+    "options": [
+      "2,67 cm",
+      "3 cm",
+      "3,56 cm",
+      "4 cm"
+    ],
+    "answer": "A",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: A</b> · ✔ terverifikasi · Materi: Bangun Ruang · Volume Limas &amp; Balok</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Volume limas = ⅓ × luas alas × tinggi.</b></li><li><b>Volume balok = p × l × t</b>  (= luas alas × tinggi).</li><li><b>Volume air tidak berubah</b> ketika dipindah wadah; hanya bentuk wadahnya yang berubah.</li><li>Asal ⅓: satu kubus dapat dibelah menjadi <b>3 limas identik</b> (alas = alas kubus, tinggi = rusuk kubus). Jadi satu limas = ⅓ kubus = ⅓ × alas × tinggi.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Hitung volume limas = volume air.</b></span>\n<p class=\"calc\">V = ⅓ × (12 × 12) × 8 = ⅓ × 144 × 8 = 384 cm³</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Limas diisi penuh, sehingga seluruh isi limas adalah air yang akan dituang.</p>\n</li>\n<li><span class=\"st\"><b>Tulis volume air di dalam balok.</b></span>\n<p class=\"calc\">V = luas alas balok × tinggi air = (9 × 16) × t = 144 t</p>\n</li>\n<li><span class=\"st\"><b>Samakan kedua volume.</b></span>\n<p class=\"calc\">144 t = 384</p>\n<p class=\"calc\">t = 384 ÷ 144 = 8/3 ≈ 2,67 cm</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Air hanya pindah wadah, jadi volumenya tetap.</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Tinggi air = <b>2,67 cm</b>  →  jawaban <b>A</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Air dari wadah runcing (limas) dituang ke wadah kotak. Banyak airnya sama, jadi bila wadah baru \"lebih lebar\" maka tingginya turun.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Kebetulan manis:</b> luas alas limas (12 × 12 = 144) sama dengan luas alas balok (9 × 16 = 144). Maka tinggi air = ⅓ × tinggi limas = ⅓ × 8 = 8/3 ≈ 2,67 cm.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Lupa faktor ⅓ → volume menjadi 1.152 cm³ dan tinggi 8 cm.</li><li>Memakai tinggi limas (8 cm) sebagai tinggi air.</li><li>Membulatkan 2,67 menjadi 3 (opsi B) padahal opsi A tersedia dan lebih tepat.</li></ul></section>"
   },
   {
-    n: 17,
-    text: "Sebuah sepeda motor dapat menghabiskan satu liter bensin setelah menempuh jarak 20 km jika berjalan dengan kecepatan 50 km per jam. Jika kecepatannya berubah menjadi 60 km per jam, jarak yang dapat ditempuh dengan satu liter bensin berkurang sebanyak 12%. Jarak yang dapat ditempuh oleh sepeda motor tersebut dengan 11 liter bensin dan kecepatan 60 km per jam adalah .... km.",
-    options: ["95,1", "193,6", "204,3", "200", "170,3"],
-    answer: "B",
-    explain: `
-<p>Pada kecepatan 50 km/jam, 1 liter bensin dapat menempuh <b>20 km</b>. Pada kecepatan 60 km/jam, jarak per 1 liter <b>berkurang 12%</b> dari 20 km.</p>
-<p>Besar pengurangannya = 12% × 20 = 0,12 × 20 = <b>2,4 km</b>. Jarak per 1 liter sekarang = 20 − 2,4 = <b>17,6 km</b>. (Bisa juga: sisa 88% × 20 = 17,6.)</p>
-<p>Bensin yang tersedia <b>11 liter</b>, sehingga jarak total = 17,6 × 11 = 176 + 17,6 = <b>193,6 km</b>.</p>
-<p>Cek lain: jika tanpa pengurangan, 11 liter menempuh 20 × 11 = 220 km. Dikurangi 12%: 220 − 26,4 = 193,6 km. Hasilnya sama.</p>
-<p>Angka 50 km/jam dan 60 km/jam hanya menjelaskan keadaannya. Yang dipakai untuk menghitung adalah <b>20 km</b>, <b>12%</b>, dan <b>11 liter</b>.</p>
-<p class="key">Intinya: "berkurang 12%" artinya yang tersisa 88% dari nilai semula.</p>`,
+    "n": 17,
+    "text": "Pak Budi menyimpan uang di bank sebesar Rp5.000.000 dengan bunga tunggal 8% per tahun. Setelah berapa tahun uang Pak Budi menjadi Rp6.400.000?",
+    "options": [
+      "2,5 tahun",
+      "3 tahun",
+      "3,5 tahun",
+      "4 tahun"
+    ],
+    "answer": "C",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: C</b> · ✔ terverifikasi · Materi: Aritmetika Sosial · Bunga Tunggal</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Bunga tunggal:</b> bunga selalu dihitung dari modal awal (bunga tidak ikut berbunga).</li><li>Bunga setelah t tahun = <b>M × i × t</b>  (M = modal, i = suku bunga per tahun, t = waktu dalam tahun).</li><li>Saldo akhir = modal + bunga.</li><li>8% = 8/100 = 0,08.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Cari total bunga yang diperoleh.</b></span>\n<p class=\"calc\">6.400.000 − 5.000.000 = 1.400.000</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Selisih saldo akhir dan modal adalah bunga.</p>\n</li>\n<li><span class=\"st\"><b>Cari bunga tiap tahun.</b></span>\n<p class=\"calc\">8% × 5.000.000 = 0,08 × 5.000.000 = 400.000</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Karena bunga tunggal, bunga tiap tahun selalu sama: 400.000.</p>\n</li>\n<li><span class=\"st\"><b>Cari lama menabung.</b></span>\n<p class=\"calc\">t = 1.400.000 ÷ 400.000 = 3,5 tahun</p>\n</li>\n<li><span class=\"st\"><b>Cek dengan rumus.</b></span>\n<p class=\"calc\">M × i × t = 5.000.000 × 0,08 × 3,5 = 1.400.000 ✔</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Lama menabung = <b>3,5 tahun</b>  →  jawaban <b>C</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Seperti \"bonus\" tetap Rp400.000 tiap tahun. Berapa kali bonus agar terkumpul 1,4 juta? 3 kali = 1,2 juta (kurang), 4 kali = 1,6 juta (lebih) → ada di antara 3 dan 4 → 3,5 tahun (3 tahun 6 bulan).</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Menjawab 3 tahun: 3 × 400.000 = 1.200.000 → saldo 6.200.000 (belum 6.400.000).</li><li>Memakai bunga majemuk (bunga berbunga) padahal soal menyebut bunga tunggal.</li><li>Lupa mengurangi modal sebelum membagi (6.400.000 ÷ 400.000 = 16).</li></ul></section>"
   },
   {
-    n: 18,
-    // Catatan: kunci mengikuti file sumber (B). Lihat catatan di pembahasan.
-    text: "Seluruh siswa kelas XI di SMA Cahaya Bangsa yang terdiri dari 100 orang disurvei mengenai apakah mereka pernah mengunjungi perpustakaan sekolah dan perpustakaan daerah. Berdasarkan hasil survei, terdapat 72 siswa yang pernah mengunjungi perpustakaan sekolah dan 52 siswa pernah mengunjungi perpustakaan daerah. Jumlah yang tidak mungkin untuk siswa yang pernah mengunjungi perpustakaan sekolah dan perpustakaan daerah adalah ....",
-    options: ["25", "24", "52", "32", "20"],
-    answer: "B",
-    explain: `
-<p>Jumlah siswa seluruhnya hanya <b>100 orang</b>. Namun jika 72 siswa (perpustakaan sekolah) dan 52 siswa (perpustakaan daerah) dijumlahkan, hasilnya 72 + 52 = <b>124</b>. Angka 124 lebih besar dari 100. Artinya ada siswa yang <b>terhitung dua kali</b>, yaitu siswa yang pernah mengunjungi <b>kedua</b> perpustakaan.</p>
-<p>Jumlah yang terhitung dua kali = 124 − 100 = <b>24 orang</b>. Ini adalah jumlah <b>paling sedikit</b> siswa yang pernah mengunjungi kedua perpustakaan.</p>
-<p>Cek: jika yang ke keduanya 24 orang, maka yang hanya ke perpustakaan sekolah = 72 − 24 = 48, dan yang hanya ke perpustakaan daerah = 52 − 24 = 28. Total = 48 + 28 + 24 = 100. Pas, tidak ada siswa yang tidak berkunjung sama sekali.</p>
-<p>Jumlah paling banyak yang bisa ke keduanya adalah <b>52</b> (yaitu seluruh pengunjung perpustakaan daerah juga pernah ke perpustakaan sekolah). Jadi jumlah siswa yang ke kedua perpustakaan hanya mungkin berkisar <b>24 sampai 52</b>.</p>
-<p>Cek pilihan: 25, 24, 52, dan 32 berada di antara 24 dan 52 (mungkin terjadi). Angka 20 di bawah 24 (mustahil terjadi).</p>
-<p><b>Catatan penting:</b> pembahasan pada kunci menghitung <b>jumlah minimal</b> (24), sehingga kunci memilih <b>B</b>. Namun kalimat soal berbunyi "jumlah yang <b>tidak mungkin</b>". Jika dibaca apa adanya, angka yang tidak mungkin adalah <b>20 (pilihan E)</b>, sedangkan 24 justru angka terkecil yang masih mungkin. Kemungkinan soal aslinya menanyakan jumlah paling sedikit. Mohon dicek kembali dengan soal aslinya.</p>
-<p class="key">Intinya: jika dua kelompok bila dijumlahkan melebihi total, selisihnya adalah jumlah paling sedikit yang berada di kedua kelompok.</p>`,
+    "n": 18,
+    "text": "Pada segitiga ABC, DE // BC dengan D terletak pada AB dan E terletak pada AC. Jika AD = 4 cm, DB = 6 cm, dan BC = 15 cm, maka panjang DE adalah ...",
+    "options": [
+      "6 cm",
+      "7,5 cm",
+      "9 cm",
+      "10 cm"
+    ],
+    "answer": "A",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: A</b> · ✔ terverifikasi · Materi: Kesebangunan Segitiga</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Dua segitiga sebangun</b> jika sudut-sudutnya sama besar (kriteria sudut-sudut).</li><li>Garis yang ditarik <b>sejajar</b> salah satu sisi segitiga membentuk segitiga kecil yang <b>sebangun</b> dengan segitiga besar.</li><li>Pada segitiga sebangun, <b>perbandingan sisi yang seletak sama:</b> AD/AB = AE/AC = DE/BC.</li><li><b>Sudut sehadap</b> pada dua garis sejajar sama besar.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Buktikan kedua segitiga sebangun.</b></span>\n<p class=\"why\"><b>Kenapa begitu?  </b>Sudut A dipakai bersama. Karena DE // BC, ∠ADE = ∠ABC dan ∠AED = ∠ACB (sehadap). Tiga sudut sama → segitiga ADE sebangun dengan segitiga ABC.</p>\n</li>\n<li><span class=\"st\"><b>Cari panjang AB (sisi besar yang seletak dengan AD).</b></span>\n<p class=\"calc\">AB = AD + DB = 4 + 6 = 10 cm</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Pasangan yang seletak adalah AD dengan AB — bukan AD dengan DB. AD adalah bagian segitiga kecil; AB adalah sisi yang sama pada segitiga besar.</p>\n</li>\n<li><span class=\"st\"><b>Susun perbandingan sisi seletak.</b></span>\n<p class=\"calc\">DE / BC = AD / AB   →   DE / 15 = 4 / 10</p>\n</li>\n<li><span class=\"st\"><b>Hitung DE.</b></span>\n<p class=\"calc\">DE = 15 × 4/10 = 6 cm</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>DE = <b>6 cm</b>  →  jawaban <b>A</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Segitiga kecil ADE adalah \"foto yang diperkecil\" dari segitiga ABC dengan skala 4/10 = 2/5. Semua sisi segitiga besar dikali 2/5: 15 × 2/5 = 6.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Memakai AD/DB = 4/6 sehingga DE = 10 (opsi D). Pembanding yang benar adalah AD/<b>AB</b>.</li><li>Mengira DE = ½ BC = 7,5 (itu hanya benar bila D titik tengah AB).</li></ul></section>",
+    "explainImage": "img/tka-mat-s18.png"
   },
   {
-    n: 19,
-    text: "Pada bulan Oktober, negara A memiliki populasi penduduk sebanyak P. Di bulan itu, terdapat L kasus Leukemia, dengan tingkat Leukemia per kapita sebanyak L/P. Jika dalam sepuluh bulan ke depan kasus Leukemia di negara tersebut menurun sebanyak 50% dengan populasi yang meningkat sebanyak 50%, persentase perubahan tingkat Leukemia per kapita di negara tersebut dalam sepuluh bulan ke depan adalah ....",
-    options: ["Naik sebesar 33 1/3%", "Naik sebesar 66 2/3%", "Turun sebanyak 50%", "Turun sebanyak 75%", "Turun sebesar 66 2/3%"],
-    answer: "E",
-    explain: `
-<p><b>Arti istilahnya:</b> "tingkat Leukemia per kapita" adalah jumlah penderita dibagi jumlah penduduk, yaitu seberapa banyak penderita untuk setiap penduduk. Jadi ada dua hal yang berubah sekaligus: jumlah penderita dan jumlah penduduk.</p>
-<p><b>Langkah 1 – Keadaan awal.</b> Penderita = L, penduduk = P. Maka tingkatnya adalah L/P.</p>
-<p><b>Langkah 2 – Sepuluh bulan kemudian.</b> Kasus turun 50%, artinya tinggal setengahnya: ½L. Penduduk naik 50%, artinya menjadi 1½ kali lipat: 1,5P.</p>
-<p><b>Langkah 3 – Tingkat yang baru.</b> ½L ÷ 1,5P. Karena ½ ÷ 1,5 = 1/3, tingkat yang baru adalah 1/3 × (L/P). Artinya tingkat sekarang tinggal sepertiga dari tingkat awal.</p>
-<p><b>Langkah 4 – Ubah menjadi persen perubahan.</b> Awalnya 1 bagian penuh (100%), sekarang tinggal 1/3 bagian. Yang hilang adalah 1 − 1/3 = 2/3 bagian, yaitu 66 2/3%. Karena berkurang, perubahannya adalah <b>turun 66 2/3%</b>.</p>
-<p><b>Contoh dengan angka:</b> misalkan awalnya ada 100 penderita di antara 1.000 penduduk, tingkatnya 100 ÷ 1.000 = 0,10. Sepuluh bulan kemudian penderita tinggal 50 dan penduduk menjadi 1.500, tingkatnya 50 ÷ 1.500 ≈ 0,033. Dari 0,10 menjadi 0,033 berarti tinggal sepertiganya (turun dua pertiganya).</p>
-<p class="key">Tips: jangan langsung memilih "Turun 50%". Angka 50% itu hanya perubahan jumlah kasus. Karena penduduknya ikut bertambah, jatah penderita untuk tiap penduduk menjadi lebih kecil lagi.</p>`,
+    "n": 19,
+    "text": "Sebuah roket diluncurkan ke udara. Ketinggiannya (dalam meter) setelah t detik dirumuskan dengan h(t) = −5t² + 40t + 20. Ketinggian maksimum yang dicapai roket adalah ...",
+    "options": [
+      "80 meter",
+      "90 meter",
+      "95 meter",
+      "100 meter"
+    ],
+    "answer": "D",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: D</b> · ✔ terverifikasi · Materi: Fungsi Kuadrat · Nilai Maksimum</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li>Fungsi kuadrat f(t) = at² + bt + c. Jika <b>a &lt; 0</b>, grafiknya parabola terbuka ke bawah → punya <b>titik puncak (maksimum)</b>.</li><li><b>Waktu puncak (sumbu simetri):</b> t = −b / (2a).</li><li><b>Nilai maksimum:</b> masukkan t puncak, atau langsung h<sub>maks</sub> = c − b²/(4a).</li><li>Asal rumus (melengkapkan kuadrat): at² + bt + c = a(t + b/2a)² + (c − b²/4a). Karena a &lt; 0, suku a(…)² selalu ≤ 0, maka hasil terbesar tercapai saat suku itu nol → t = −b/2a.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Kenali bentuknya.</b></span>\n<p class=\"calc\">a = −5,   b = 40,   c = 20   →   a negatif, jadi ada nilai maksimum</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>a negatif = parabola \"tersenyum terbalik\" (cembung ke atas) → ada puncak tertinggi — cocok dengan roket yang naik lalu turun.</p>\n</li>\n<li><span class=\"st\"><b>Cari kapan roket berada di puncak.</b></span>\n<p class=\"calc\">t = −b / (2a) = −40 / (2 × (−5)) = −40 / (−10) = 4 detik</p>\n</li>\n<li><span class=\"st\"><b>Masukkan t = 4 ke h(t).</b></span>\n<p class=\"calc\">h(4) = −5(4²) + 40(4) + 20</p>\n<p class=\"calc\">= −5(16) + 160 + 20 = −80 + 160 + 20 = 100 meter</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Yang diminta adalah tinggi, bukan waktu. t = 4 hanya menjawab \"kapan\".</p>\n</li>\n<li><span class=\"st\"><b>Cek dengan rumus langsung.</b></span>\n<p class=\"calc\">h<sub>maks</sub> = c − b²/(4a) = 20 − 40²/(4 × (−5)) = 20 − 1.600/(−20) = 20 + 80 = 100 ✔</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Ketinggian maksimum = <b>100 meter</b>  →  jawaban <b>D</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Bola yang dilempar ke atas: makin lama makin pelan, berhenti sesaat di puncak, lalu turun. Lintasannya simetris. Roket ini berada di 20 m saat t = 0 dan 20 m lagi saat t = 8. Puncaknya tepat di tengah: t = 4.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Tanpa rumus puncak:</b> h(0) = 20 dan h(8) = −320 + 320 + 20 = 20 → tinggi sama di t = 0 dan t = 8, maka puncak di tengahnya, t = 4. Lalu h(4) = 100.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Menjawab 4 (itu waktu, bukan tinggi).</li><li>Lupa +20 sehingga mendapat −80 + 160 = 80 (opsi A).</li><li>Salah tanda pada t = −b/2a: −40/10 = −4 (lupa bahwa a juga negatif).</li></ul></section>",
+    "explainImage": "img/tka-mat-s19.png"
   },
   {
-    n: 20,
-    text: "Sebuah angka akan dikatakan sempurna jika besar angka tersebut sama dengan jumlah seluruh faktor positifnya yang kurang dari angka itu sendiri. Angka berikut yang dapat dikatakan sempurna adalah ....",
-    options: ["1", "4", "10", "8", "6"],
-    answer: "E",
-    explain: `
-<p><b>Arti istilahnya:</b> faktor (pembagi) suatu angka adalah angka-angka yang dapat membagi angka itu tanpa sisa. Contohnya, pembagi 6 adalah 1, 2, 3, dan 6. Sebuah angka disebut <b>sempurna</b> jika semua pembaginya, kecuali angka itu sendiri, dijumlahkan hasilnya persis sama dengan angka tersebut.</p>
-<p>Mari kita periksa kelima pilihan satu per satu:</p>
-<table>
-<tr><th>Angka</th><th>Pembagi (selain angka itu sendiri)</th><th>Jumlah pembagi</th><th>Sama dengan angkanya?</th></tr>
-<tr><td>1</td><td>tidak ada</td><td>0</td><td>Tidak (0 ≠ 1)</td></tr>
-<tr><td>4</td><td>1, 2</td><td>1 + 2 = 3</td><td>Tidak (3 ≠ 4)</td></tr>
-<tr><td>10</td><td>1, 2, 5</td><td>1 + 2 + 5 = 8</td><td>Tidak (8 ≠ 10)</td></tr>
-<tr><td>8</td><td>1, 2, 4</td><td>1 + 2 + 4 = 7</td><td>Tidak (7 ≠ 8)</td></tr>
-<tr><td><b>6</b></td><td>1, 2, 3</td><td><b>1 + 2 + 3 = 6</b></td><td><b>Ya</b> (6 = 6)</td></tr>
-</table>
-<p>Hanya angka 6 yang jumlah pembaginya sama dengan dirinya sendiri, sehingga 6 adalah angka sempurna.</p>
-<p><b>Catatan penting:</b> kunci jawaban di sumber soal tertulis C (10), tetapi perhitungan pada pembahasan sumber itu sendiri menunjukkan bahwa 10 menghasilkan 8 (bukan 10), sedangkan 6 menghasilkan 6. Jadi jawaban yang benar adalah <b>E (6)</b>; kemungkinan ada kekeliruan pada kunci di sumbernya.</p>`,
+    "n": 20,
+    "text": "Suku ke-4 dan suku ke-7 suatu barisan geometri berturut-turut adalah 8 dan 64. Suku ke-10 barisan tersebut adalah ...",
+    "options": [
+      "512",
+      "1.024",
+      "2.048",
+      "4.096"
+    ],
+    "answer": "A",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: A</b> · ✔ terverifikasi · Materi: Barisan Geometri</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Barisan geometri:</b> tiap suku = suku sebelumnya × <b>rasio r</b> (tetap).</li><li><b>U</b><b><sub>n</sub></b><b> = a × r</b><b><sup>n−1</sup></b>  (a = suku pertama).</li><li>Dua suku berjarak k langkah: <b>U</b><b><sub>n+k</sub></b><b> ÷ U</b><b><sub>n</sub></b><b> = r</b><b><sup>k</sup></b>.</li><li>Asal rumus: U₁ = a, U₂ = a·r, U₃ = a·r², ... tiap langkah menambah satu pangkat r → suku ke-n memuat r<sup>n−1</sup>.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Tulis dua informasi dalam bentuk rumus.</b></span>\n<p class=\"calc\">U₄ = a·r³ = 8</p>\n<p class=\"calc\">U₇ = a·r⁶ = 64</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Pangkat r selalu n − 1: suku ke-4 → r³, suku ke-7 → r⁶.</p>\n</li>\n<li><span class=\"st\"><b>Bagi U₇ dengan U₄ agar a hilang.</b></span>\n<p class=\"calc\">U₇ ÷ U₄ = (a·r⁶) ÷ (a·r³) = r³</p>\n<p class=\"calc\">r³ = 64 ÷ 8 = 8   →   r = ∛8 = 2</p>\n</li>\n<li><span class=\"st\"><b>Cari a.</b></span>\n<p class=\"calc\">a·2³ = 8   →   8a = 8   →   a = 1</p>\n</li>\n<li><span class=\"st\"><b>Hitung suku ke-10.</b></span>\n<p class=\"calc\">U<sub>10</sub> = a·r⁹ = 1 × 2⁹ = 512</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>U₁₀ = <b>512</b>  →  jawaban <b>A</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Bila tiap langkah dikali 2, dari suku ke-4 (8) menjadi suku ke-7 (64) butuh 3 langkah: 8 → 16 → 32 → 64. Lanjutkan 3 langkah dari U₇ sampai U₁₀: 64 → 128 → 256 → 512.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Jalan pintas:</b> dari U₇ ke U₁₀ ada 3 langkah, jadi dikali r³ = 8: 64 × 8 = 512.  <b>Cek barisan:</b> 1, 2, 4, <b>8</b>, 16, 32, <b>64</b>, 128, 256, <b>512</b> ✔</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Memakai r<sup>n</sup> bukan r<sup>n−1</sup>, sehingga U₁₀ = 2<sup>10</sup> = 1.024 (opsi B).</li><li>Mengira r = 8 (lupa menarik akar pangkat tiga).</li><li>Salah menghitung banyak langkah dari U₇ ke U₁₀ (yang benar 3 langkah, bukan 10 atau 7).</li></ul></section>"
   },
   {
-    n: 21,
-    // Catatan: soal tertulis "DE = y", sedangkan gambar pembahasan dan kunci memakai y sebagai DC.
-    text: "Perhatikan gambar berikut. Berdasarkan gambar di atas, diketahui bahwa luas bujur sangkar ABCE adalah x² dan panjang DE = y. Maka, luas segitiga AED yang tepat adalah .....",
-    image: "img/s21.png",
-    options: ["1/2(x² − y)", "½x² − ½xy", "x² − xy", "1/2y(x − y)", "xy − x²"],
-    answer: "B",
-    explainImage: "img/s21-p.png",
-    explain: `
-<p><b>Langkah 1 – Kenali bangunnya.</b> "Bujur sangkar" sama dengan persegi: keempat sisinya sama panjang. Luasnya x², artinya panjang sisinya adalah x (karena sisi × sisi = x × x = x²).</p>
-<p><b>Langkah 2 – Lihat segitiga AED.</b> Segitiga AED adalah bagian berwarna biru pada gambar. Ia berdiri tegak di pojok E, sehingga <b>tingginya = sisi AE = x</b> dan <b>alasnya = ED</b>.</p>
-<p><b>Langkah 3 – Cari panjang alas ED.</b> Seluruh sisi bawah EC panjangnya x, dan sisi itu terbagi menjadi dua bagian: ED dan DC. Bila DC = y, maka ED = x − y (sisa setelah dikurangi y).</p>
-<p><b>Langkah 4 – Hitung luas segitiga.</b> Luas segitiga = ½ × alas × tinggi = ½ × (x − y) × x = ½x(x − y). Kalikan x ke dalam kurung: <b>½x² − ½xy</b>. Itulah pilihan B.</p>
-<p><b>Catatan penting:</b> pada soal tertulis DE = y, tetapi gambar pembahasan di sumber soal menandai y pada bagian DC (dari D ke C), dan hanya dengan pengertian itu jawaban B muncul. Jika benar DE = y, luas segitiga AED hanya ½ × x × y = ½xy, yang tidak ada di pilihan jawaban. Jadi pada soal ini y dibaca sebagai panjang DC.</p>`,
+    "n": 21,
+    "text": "Sebuah es krim berbentuk kerucut padat (tidak berongga) dengan diameter 7 cm dan tinggi 12 cm. Es krim tersebut meleleh menjadi cairan yang ditampung dalam gelas berbentuk tabung dengan diameter 7 cm. Tinggi cairan dalam gelas adalah ...",
+    "options": [
+      "3 cm",
+      "4 cm",
+      "5 cm",
+      "6 cm"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: B</b> · ✔ terverifikasi · Materi: Bangun Ruang · Volume Kerucut &amp; Tabung</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Volume kerucut = ⅓ × π × r² × t.</b></li><li><b>Volume tabung = π × r² × h.</b></li><li><b>r = d ÷ 2</b>  (jari-jari = setengah diameter).</li><li>Es krim meleleh → <b>volume tetap</b>; hanya bentuk wadahnya yang berubah.</li><li>Asal ⅓: kerucut sama dengan ⅓ tabung yang alas dan tingginya sama.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Cari jari-jari.</b></span>\n<p class=\"calc\">r = 7 ÷ 2 = 3,5 cm</p>\n</li>\n<li><span class=\"st\"><b>Hitung volume kerucut.</b></span>\n<p class=\"calc\">V = ⅓ × π × 3,5² × 12</p>\n<p class=\"calc\">= ⅓ × π × 12,25 × 12 = 4 × 12,25 π = 49π cm³</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>12 dibagi 3 lebih dulu menjadi 4 agar hitungan ringkas.</p>\n</li>\n<li><span class=\"st\"><b>Tulis volume cairan di dalam tabung.</b></span>\n<p class=\"calc\">V = π × 3,5² × h = 12,25 π h</p>\n</li>\n<li><span class=\"st\"><b>Samakan kedua volume.</b></span>\n<p class=\"calc\">12,25 π h = 49π</p>\n<p class=\"calc\">h = 49 ÷ 12,25 = 4 cm</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>π di kedua ruas saling habis.</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Tinggi cairan = <b>4 cm</b>  →  jawaban <b>B</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Gelas tabung punya lebar yang sama dengan es krim kerucut. Kerucut hanya ⅓ dari tabung berukuran sama; jadi cairan hanya mengisi ⅓ dari tinggi 12 cm.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Jalan pintas:</b> jari-jari kerucut dan tabung sama → π r² saling habis → h = ⅓ × t = ⅓ × 12 = 4 cm.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Lupa ⅓ pada volume kerucut → h = 12 cm.</li><li>Memakai diameter sebagai r di satu rumus saja (tidak konsisten).</li><li>Menganggap kerucut berongga (soal menyebut padat/tidak berongga → seluruh isi meleleh).</li></ul></section>"
   },
   {
-    n: 22,
-    text: "Perhatikan gambar sebuah persegi panjang di bawah ini. Jika luas segitiga siku-siku sama kaki ABE adalah 7 cm dan panjang EC adalah 3 kali BE, maka luas ABCD adalah .... cm.",
-    image: "img/s22.png",
-    options: ["21", "28", "42", "60", "56"],
-    answer: "E",
-    explainImage: "img/s22-p.png",
-    explain: `
-<p><b>Langkah 1 – Pahami gambarnya.</b> ABCD adalah persegi panjang. Titik E terletak di sisi bawah BC, dan segitiga ABE (berwarna biru) berada di pojok kiri bawah. Karena E ada di antara B dan C, maka BC = BE + EC.</p>
-<p><b>Langkah 2 – Ubah "luas segitiga" menjadi "luas persegi panjang kecil".</b> Luas segitiga = ½ × AB × BE = 7. Kalau kedua ruas dikalikan 2, diperoleh AB × BE = 14. Dengan kata lain, persegi panjang kecil berukuran AB × BE luasnya 14 (tepat dua kali luas segitiga).</p>
-<p><b>Langkah 3 – Cari panjang seluruh alas.</b> EC = 3 × BE, sehingga BC = BE + 3 × BE = 4 × BE. Jadi seluruh alas sama dengan 4 potong yang selebar BE.</p>
-<p><b>Langkah 4 – Hitung luas ABCD.</b> Luas ABCD = AB × BC = AB × (4 × BE) = 4 × (AB × BE) = 4 × 14 = <b>56 cm²</b>.</p>
-<p><b>Cara membayangkannya:</b> persegi panjang ABCD terdiri dari 4 potongan persegi panjang kecil yang sama (masing-masing luasnya 14). Maka luas seluruhnya 4 × 14 = 56.</p>
-<p class="key">Tips: kata "sama kaki" pada soal tidak diperlukan untuk menghitung. Yang dipakai hanyalah luas segitiga dan perbandingan BE dengan EC.</p>`,
+    "n": 22,
+    "text": "Himpunan penyelesaian dari 3|2x − 1| ≤ 15 adalah ...",
+    "options": [
+      "−2 ≤ x ≤ 3",
+      "−3 ≤ x ≤ 2",
+      "x ≤ −2 atau x ≥ 3",
+      "x ≤ −3 atau x ≥ 2"
+    ],
+    "answer": "A",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: A</b> · ✔ terverifikasi · Materi: Pertidaksamaan Nilai Mutlak</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Nilai mutlak = jarak ke nol:</b> |u| selalu ≥ 0, contoh |−5| = 5.</li><li><b>|u| ≤ k</b> (k &gt; 0)  ⇔  <b>−k ≤ u ≤ k</b>  → satu interval (\"di dalam\").</li><li><b>|u| ≥ k</b>  ⇔  u ≤ −k <b>atau</b> u ≥ k  → dua bagian (\"di luar\").</li><li>Pada pertidaksamaan: tambah/kurang bilangan ke <b>semua bagian</b> sama; kali/bagi bilangan <b>negatif</b> → tanda dibalik.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Sederhanakan dulu.</b></span>\n<p class=\"calc\">3|2x − 1| ≤ 15   →   |2x − 1| ≤ 5</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Kedua sisi dibagi 3 (positif, tanda tidak berubah) agar bentuk dasar |u| ≤ k muncul.</p>\n</li>\n<li><span class=\"st\"><b>Ubah ke bentuk tanpa tanda mutlak.</b></span>\n<p class=\"calc\">−5 ≤ 2x − 1 ≤ 5</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>\"Jarak 2x − 1 dari nol paling jauh 5\" → 2x − 1 boleh berada dari −5 sampai 5.</p>\n</li>\n<li><span class=\"st\"><b>Tambahkan 1 ke semua bagian.</b></span>\n<p class=\"calc\">−5 + 1 ≤ 2x ≤ 5 + 1   →   −4 ≤ 2x ≤ 6</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Menambah 1 harus dilakukan pada ketiga bagian agar tetap seimbang.</p>\n</li>\n<li><span class=\"st\"><b>Bagi 2 pada semua bagian.</b></span>\n<p class=\"calc\">−2 ≤ x ≤ 3</p>\n</li>\n<li><span class=\"st\"><b>Uji titik untuk memastikan.</b></span>\n<table class=\"dt\"><tr><th><b>x</b></th><th><b>Hitung 3|2x − 1|</b></th><th><b>≤ 15 ?</b></th></tr><tr><td>0  (di dalam)</td><td>3|−1| = 3</td><td>✔ ya</td></tr><tr><td>3  (batas)</td><td>3|5| = 15</td><td>✔ ya</td></tr><tr><td>−2  (batas)</td><td>3|−5| = 15</td><td>✔ ya</td></tr><tr><td>4  (di luar)</td><td>3|7| = 21</td><td>✘ tidak</td></tr><tr><td>−3  (di luar)</td><td>3|−7| = 21</td><td>✘ tidak</td></tr></table>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Himpunan penyelesaian: <b>−2 ≤ x ≤ 3</b>  →  jawaban <b>A</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>|2x − 1| ≤ 5 artinya \"jarak 2x − 1 dari nol tidak lebih dari 5\": boleh berada di antara −5 dan 5. Seperti pagar: hanya yang berada di dalam pagar yang boleh.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Mengurangi 1, bukan menambah 1 → x antara −3 dan 2 (opsi B).</li><li>Memilih bentuk \"atau\" (opsi C/D) — itu untuk tanda ≥.</li><li>Lupa membagi 2 sampai x berdiri sendiri (hasil −4 ≤ x ≤ 6).</li></ul></section>",
+    "explainImage": "img/tka-mat-s22.png"
   },
   {
-    n: 23,
-    text: "Sebuah tiang bendera setinggi 98 m memiliki bayangan sepanjang 42 m ketika didirikan di bawah teriknya matahari. Panjang bayangan untuk tiang bendera dengan tinggi 35 m di posisi dan waktu yang sama adalah ....",
-    options: ["10m", "20m", "5m", "15m", "25m"],
-    answer: "D",
-    explainImage: "img/s23-p.png",
-    explain: `
-<p><b>Ide utamanya:</b> pada tempat dan waktu yang sama, matahari miringnya sama. Karena itu, semua benda yang berdiri tegak punya perbandingan "tinggi benda : panjang bayangan" yang sama. Benda yang tingginya dua kali lipat akan punya bayangan dua kali lipat juga.</p>
-<p><b>Langkah 1 – Cari perbandingan dari tiang pertama.</b> 98 : 42. Bagi kedua angka dengan 14 sehingga menjadi 7 : 3. Artinya, setiap tinggi 7 m menghasilkan bayangan 3 m.</p>
-<p><b>Langkah 2 – Terapkan pada tiang kedua.</b> Tinggi 35 m sama dengan 5 kali 7 m (karena 35 ÷ 7 = 5). Maka bayangannya juga 5 kali 3 m = <b>15 m</b>.</p>
-<p><b>Langkah 3 – Cara dengan rumus perbandingan.</b> 98/42 = 35/X, sehingga X = (42 × 35) ÷ 98 = 1.470 ÷ 98 = 15 m.</p>
-<p><b>Pengecekan:</b> 35 : 15 disederhanakan (dibagi 5) menjadi 7 : 3, sama dengan perbandingan tiang pertama. Jadi jawabannya benar.</p>`,
+    "n": 23,
+    "text": "Sebuah lapangan berbentuk persegi panjang 60 m × 40 m dikelilingi oleh setengah lingkaran di kedua ujung lebarnya (membentuk stadion oval). Luas total lapangan dan setengah lingkaran tersebut adalah ... (π = 3,14)",
+    "options": [
+      "3.514 m²",
+      "3.628 m²",
+      "3.656 m²",
+      "3.714 m²"
+    ],
+    "answer": "C",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: C</b> · ✔ terverifikasi · Materi: Luas Gabungan Bangun Datar</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Luas persegi panjang = p × l.</b></li><li><b>Luas lingkaran = π × r²</b>,   r = d ÷ 2.</li><li><b>Dua setengah lingkaran yang sama = 1 lingkaran penuh.</b></li><li>Luas gabungan = jumlah luas bagian-bagiannya (jika bagian-bagiannya tidak saling tumpang tindih).</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Hitung luas persegi panjang.</b></span>\n<p class=\"calc\">60 × 40 = 2.400 m²</p>\n</li>\n<li><span class=\"st\"><b>Tentukan jari-jari setengah lingkaran.</b></span>\n<p class=\"calc\">diameter = lebar lapangan = 40 m   →   r = 20 m</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Setengah lingkaran \"menutup\" kedua ujung lebar, sehingga garis tengahnya (diameter) = lebar = 40 m. Bukan 60 m.</p>\n</li>\n<li><span class=\"st\"><b>Gabungkan dua setengah lingkaran.</b></span>\n<p class=\"calc\">luas = π r² = 3,14 × 20² = 3,14 × 400 = 1.256 m²</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Kiri + kanan masing-masing setengah = satu lingkaran utuh, jadi cukup hitung satu lingkaran.</p>\n</li>\n<li><span class=\"st\"><b>Jumlahkan.</b></span>\n<p class=\"calc\">2.400 + 1.256 = 3.656 m²</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Luas total = <b>3.656 m²</b>  →  jawaban <b>C</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Bayangkan dua \"tutup\" setengah bulat di kiri dan kanan lapangan dilepas lalu ditempelkan jadi satu lingkaran utuh berjari-jari 20 m. Tinggal luas persegi panjang + luas lingkaran.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Memakai diameter 60 (r = 30) padahal ujung yang dibulatkan adalah sisi 40 m.</li><li>Hanya menghitung satu setengah lingkaran: 2.400 + 628 = 3.028.</li><li>Memakai r = 40 (menganggap diameter sebagai jari-jari): 3,14 × 1.600 = 5.024.</li><li>Salah kali: 3,14 × 400 ditulis 1.246 atau 1.265 (yang benar 1.256).</li></ul></section>",
+    "explainImage": "img/tka-mat-s23.png"
   },
   {
-    n: 24,
-    text: "Sebuah tanah kosong yang berbentuk persegi dengan ukuran lebar 50 m dan panjang 120 m akan dibagi dua dengan sebuah garis diagonal yang membagi kebun tersebut menjadi dua lahan yang sama besar. Jika salah satu lahan kebun ingin dikelilingi dengan pagar, panjang pagar yang diperlukan untuk mengelilingi satu lahan tersebut adalah .... m.",
-    options: ["300", "200", "180", "170", "350"],
-    answer: "A",
-    explainImage: "img/s24-p.png",
-    explain: `
-<p><b>Langkah 1 – Bayangkan bentuknya.</b> Tanah berbentuk persegi panjang 120 m × 50 m. Bila dipotong lurus dari pojok ke pojok (diagonal), terbentuk dua segitiga yang sama besar. Satu segitiga itulah satu lahan yang akan dipagari.</p>
-<p><b>Langkah 2 – Tentukan sisi-sisi satu lahan.</b> Satu lahan (segitiga) punya tiga sisi: lebar 50 m, panjang 120 m, dan sisi miring (diagonal) yang belum diketahui. Pagar harus mengelilingi ketiga sisi itu.</p>
-<p><b>Langkah 3 – Hitung panjang diagonal.</b> Segitiganya bersudut siku-siku, jadi pakai rumus Pythagoras: diagonal = √(50² + 120²) = √(2.500 + 14.400) = √16.900 = 130 m. Cara cepat: perbandingan 50 : 120 sama dengan 5 : 12, dan pasangan ini selalu memiliki sisi miring 13 (tiga bilangan 5-12-13). Dikali 10 menjadi 50-120-130.</p>
-<p><b>Langkah 4 – Jumlahkan ketiga sisi.</b> Panjang pagar = 50 + 120 + 130 = <b>300 m</b>.</p>
-<p class="key">Tips: yang dipagari hanya satu lahan (satu segitiga), bukan seluruh tanah. Kalau seluruh tanah yang dipagari, panjangnya 2 × (50 + 120) = 340 m, dan itu bukan jawaban soal ini.</p>`,
+    "n": 24,
+    "text": "Kertas dilipat menjadi dua secara berulang. Tebal kertas awal adalah 0,1 mm. Setelah berapa kali lipatan, tebal tumpukan kertas melebihi 1 cm?",
+    "options": [
+      "6 kali",
+      "7 kali",
+      "8 kali",
+      "9 kali"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: B</b> · ✔ terverifikasi · Materi: Barisan Geometri · Pertumbuhan Eksponensial</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Tiap dilipat dua, tebal menjadi 2 kali lipat.</b> Setelah n lipatan: T<sub>n</sub> = T₀ × 2<sup>n</sup>.</li><li><b>Satuan harus sama:</b> 1 cm = 10 mm.</li><li><b>\"Melebihi\"</b> berarti <b>lebih dari (&gt;)</b>, bukan sama dengan.</li><li>2<sup>n</sup> = 2 × 2 × ... (n faktor):  2¹ = 2,  2² = 4,  2³ = 8, ...</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Samakan satuan.</b></span>\n<p class=\"calc\">1 cm = 10 mm   →   syarat: tebal &gt; 10 mm</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Tebal awal dalam mm (0,1 mm), maka target 1 cm diubah ke mm agar tidak salah hitung.</p>\n</li>\n<li><span class=\"st\"><b>Tulis rumus tebal setelah n lipatan.</b></span>\n<p class=\"calc\">T<sub>n</sub> = 0,1 × 2<sup>n</sup> mm</p>\n</li>\n<li><span class=\"st\"><b>Buat pertidaksamaan.</b></span>\n<p class=\"calc\">0,1 × 2<sup>n</sup> &gt; 10</p>\n<p class=\"calc\">2<sup>n</sup> &gt; 100</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Kedua ruas dibagi 0,1 (sama dengan dikali 10).</p>\n</li>\n<li><span class=\"st\"><b>Cari n terkecil lewat tabel pangkat 2.</b></span>\n<table class=\"dt\"><tr><th><b>n</b></th><th><b>2</b><b><sup>n</sup></b></th><th><b>Tebal (mm)</b></th><th><b>&gt; 10 mm ?</b></th></tr><tr><td>1</td><td>2</td><td>0,2</td><td>tidak</td></tr><tr><td>2</td><td>4</td><td>0,4</td><td>tidak</td></tr><tr><td>3</td><td>8</td><td>0,8</td><td>tidak</td></tr><tr><td>4</td><td>16</td><td>1,6</td><td>tidak</td></tr><tr><td>5</td><td>32</td><td>3,2</td><td>tidak</td></tr><tr><td>6</td><td>64</td><td>6,4</td><td>tidak</td></tr><tr><td class=\"ok\"><b>7</b></td><td class=\"ok\"><b>128</b></td><td class=\"ok\"><b>12,8</b></td><td class=\"ok\"><b>ya ✔</b></td></tr></table>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Dibutuhkan <b>7 lipatan</b>  →  jawaban <b>B</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Melipat kertas = menggandakan tebal. Setelah 6 lipatan baru 6,4 mm (belum sampai 1 cm = 10 mm); lipatan ke-7 langsung melompat ke 12,8 mm.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Fakta menarik untuk kelas:</b> secara teori, kertas setebal 0,1 mm yang dilipat 42 kali setebalnya sekitar 440.000 km — lebih jauh daripada jarak Bumi–Bulan (± 384.000 km).</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Tidak mengubah satuan: 0,1 × 2<sup>n</sup> &gt; 1 → 2<sup>n</sup> &gt; 10 → n = 4 (salah).</li><li>Mengira tebal n lipatan = 0,1 × 2 × n (menjumlah, bukan berpangkat).</li><li>Memilih n = 6 karena 2⁶ = 64 \"mendekati\" 100, padahal 64 belum lebih dari 100.</li></ul></section>"
   },
   {
-    n: 25,
-    text: "Jika diketahui nilai dari A + B + C = 6, maka dengan logika yang sama, nilai dari H + K + L =",
-    options: ["17", "24", "25", "10", "31"],
-    answer: "E",
-    explain: `
-<p><b>Langkah 1 – Temukan pola.</b> Soal memberi petunjuk A + B + C = 6. Jika setiap huruf diganti dengan nomor urutnya dalam abjad, A = 1, B = 2, C = 3, maka 1 + 2 + 3 = 6. Cocok, berarti polanya benar: <b>setiap huruf bernilai sama dengan nomor urutnya dalam abjad</b>.</p>
-<p><b>Langkah 2 – Tulis nomor urut huruf yang dibutuhkan.</b> Hitung dari A:</p>
-<table>
-<tr><th>Huruf</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th>I</th><th>J</th><th>K</th><th>L</th></tr>
-<tr><th>Nomor</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td class="hl">8</td><td>9</td><td>10</td><td class="hl">11</td><td class="hl">12</td></tr>
-</table>
-<p><b>Langkah 3 – Jumlahkan.</b> H = 8, K = 11, L = 12. Maka H + K + L = 8 + 11 + 12 = <b>31</b>.</p>`,
+    "n": 25,
+    "text": "Nilai ujian 12 siswa (diurutkan): 55, 60, 65, 68, 70, 72, 75, 78, 80, 85, 88, 90. Jangkauan interkuartil (IQR) data tersebut adalah ...",
+    "options": [
+      "16",
+      "17",
+      "18",
+      "19"
+    ],
+    "answer": "A",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: A</b> · ✔ terverifikasi · Materi: Statistika · Jangkauan Interkuartil (IQR)</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Kuartil</b> membagi data urut menjadi 4 bagian sama banyak: Q₁ (25%), Q₂ = median (50%), Q₃ (75%).</li><li><b>Q₁ = median kelompok bawah,  Q₃ = median kelompok atas.</b></li><li><b>IQR = Q₃ − Q₁</b>  (lebar 50% data di tengah).</li><li>Median untuk n genap = rata-rata dua data tengah.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Pastikan data sudah urut dan hitung banyaknya.</b></span>\n<p class=\"calc\">n = 12</p>\n</li>\n<li><span class=\"st\"><b>Cari median, lalu pisahkan menjadi dua kelompok.</b></span>\n<p class=\"calc\">Median = (data ke-6 + data ke-7) / 2 = (72 + 75) / 2 = 73,5</p>\n<p class=\"calc\">Kelompok bawah:  55, 60, 65, 68, 70, 72   (6 data)</p>\n<p class=\"calc\">Kelompok atas:  75, 78, 80, 85, 88, 90   (6 data)</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Karena n genap, median jatuh di antara dua data; kedua kelompok sama banyak (masing-masing 6).</p>\n</li>\n<li><span class=\"st\"><b>Q₁ = median kelompok bawah.</b></span>\n<p class=\"calc\">Q₁ = (data ke-3 + data ke-4) / 2 = (65 + 68) / 2 = 66,5</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Kelompok bawah punya 6 data (genap) → mediannya rata-rata data ke-3 dan ke-4 dalam kelompok itu.</p>\n</li>\n<li><span class=\"st\"><b>Q₃ = median kelompok atas.</b></span>\n<p class=\"calc\">Q₃ = (80 + 85) / 2 = 82,5</p>\n</li>\n<li><span class=\"st\"><b>Hitung IQR.</b></span>\n<p class=\"calc\">IQR = Q₃ − Q₁ = 82,5 − 66,5 = 16</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>IQR = <b>16</b>  →  jawaban <b>A</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Data dibelah dua, lalu tiap belahan dibelah dua lagi → empat potong. IQR hanya melihat 50% data di tengah, membuang 25% nilai terendah dan 25% tertinggi (nilai ekstrem). Jadi IQR menjawab: \"kebanyakan siswa nilainya terpaut berapa?\"</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Mengambil Q₁ = 65 dan Q₃ = 80 (satu data saja, bukan rata-rata dua data tengah) → 15.</li><li>Memakai jangkauan biasa (90 − 55 = 35).</li><li>Tidak membagi data menjadi dua kelompok yang sama banyak.</li></ul></section>"
   },
+  {
+    "n": 26,
+    "text": "Sebuah barang elektronik dijual seharga Rp4.500.000 sudah termasuk PPN 10%. Toko tersebut memberikan diskon 15% untuk pembelian tunai. Harga barang setelah diskon (sudah termasuk PPN) adalah ...",
+    "options": [
+      "Rp3.675.000",
+      "Rp3.825.000",
+      "Rp3.960.000",
+      "Rp4.050.000"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: B</b> · ✔ terverifikasi · Materi: Aritmetika Sosial · Diskon &amp; PPN</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Diskon = persen diskon × harga awal.</b></li><li><b>Harga bayar = harga awal − diskon = (100% − persen diskon) × harga awal.</b></li><li><b>PPN</b> adalah pajak yang ditambahkan ke harga. Bila soal berkata \"<b>sudah termasuk</b> PPN\", harga itu sudah memuat pajak → <b>tidak dihitung lagi</b>.</li><li>15% = 15/100 = 0,15.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Baca kata kunci: harga Rp4.500.000 SUDAH termasuk PPN 10%.</b></span>\n<p class=\"why\"><b>Kenapa begitu?  </b>Artinya angka 4.500.000 sudah final (sudah plus pajak). PPN 10% adalah informasi pengecoh; tidak perlu ditambah maupun dikurangkan lagi.</p>\n</li>\n<li><span class=\"st\"><b>Hitung diskon 15%.</b></span>\n<p class=\"calc\">15% × 4.500.000 = 0,15 × 4.500.000 = 675.000</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Cara mental: 10% = 450.000; 5% = 225.000; jumlahnya 675.000.</p>\n</li>\n<li><span class=\"st\"><b>Kurangkan diskon dari harga.</b></span>\n<p class=\"calc\">4.500.000 − 675.000 = 3.825.000</p>\n</li>\n<li><span class=\"st\"><b>Cek lewat jalur cepat.</b></span>\n<p class=\"calc\">Bayar = 85% × 4.500.000 = 0,85 × 4.500.000 = 3.825.000 ✔</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Harga setelah diskon = <b>Rp3.825.000</b>  →  jawaban <b>B</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>PPN ibarat sudah tercetak di label harga toko. Diskon adalah potongan dari label itu. Karena yang ditanya \"harga sudah termasuk PPN\", cukup potong label.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Fakta menarik:</b> bila siswa menempuh \"jalur panjang\" (buang PPN → diskon → tambah PPN lagi): 4.500.000 ÷ 1,1 × 0,85 × 1,1 = 3.825.000. Hasilnya sama, sebab perkalian bersifat komutatif (urutan tidak mengubah hasil).</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Menambah PPN 10% lagi (4.950.000 × 0,85 = 4.207.500) padahal harga sudah termasuk PPN.</li><li>Menghitung diskon 15% lalu menambah 10% pada hasil diskon.</li><li>Salah pinjam angka saat mengurangkan 4.500.000 − 675.000.</li></ul></section>"
+  },
+  {
+    "n": 27,
+    "text": "Mengetahui titik A(1, 3), B(4, 9), dan C(p, 15). Jika A, B, C segaris (kolinear), nilai p adalah ...",
+    "options": [
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: B</b> · ✔ terverifikasi · Materi: Gradien · Tiga Titik Segaris (Kolinear)</p>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Gradien (kemiringan)</b> garis melalui (x₁, y₁) dan (x₂, y₂):  <b>m = (y₂ − y₁) / (x₂ − x₁)</b>.</li><li><b>Tiga titik segaris (kolinear)</b> ⇔ gradien antar-pasangan titiknya sama:  m<sub>AB</sub> = m<sub>AC</sub>.</li><li>Persamaan garis melalui (x₁, y₁) bergradien m:  <b>y − y₁ = m(x − x₁)</b>.</li><li>Arti gradien: setiap x naik 1, y naik sebesar m.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Hitung gradien A–B (datanya lengkap).</b></span>\n<p class=\"calc\">m<sub>AB</sub> = (9 − 3)/(4 − 1) = 6/3 = 2</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Hanya A dan B yang koordinatnya lengkap, jadi gradien dihitung dari keduanya.</p>\n</li>\n<li><span class=\"st\"><b>Hitung gradien A–C (ada p).</b></span>\n<p class=\"calc\">m<sub>AC</sub> = (15 − 3)/(p − 1) = 12/(p − 1)</p>\n</li>\n<li><span class=\"st\"><b>Kolinear → gradien harus sama.</b></span>\n<p class=\"calc\">12/(p − 1) = 2</p>\n<p class=\"calc\">p − 1 = 12 ÷ 2 = 6</p>\n<p class=\"calc\">p = 7</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Tiga titik satu garis berarti kemiringan setiap bagian garisnya sama.</p>\n</li>\n<li><span class=\"st\"><b>Cek dengan pasangan B–C.</b></span>\n<p class=\"calc\">m<sub>BC</sub> = (15 − 9)/(7 − 4) = 6/3 = 2 ✔</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>p = <b>7</b>  →  jawaban <b>B</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Dari A ke B: x maju 3, y naik 6 (tiap maju 1, naik 2). Jalan menanjak yang sama harus berlanjut ke C. Dari B (y = 9) ke C (y = 15) naik 6 lagi → x maju 3 lagi: 4 + 3 = 7.</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Cara lain (persamaan garis):</b> y − 3 = 2(x − 1)  →  y = 2x + 1. Titik C(p, 15): 15 = 2p + 1  →  p = 7 ✔</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Salah urutan pengurangan (y₂ − y₁ dibagi x₁ − x₂) sehingga tanda gradien terbalik.</li><li>Menyamakan p dengan angka y titik B (9) — x dan y tertukar.</li></ul></section>",
+    "explainImage": "img/tka-mat-s27.png"
+  },
+  {
+    "n": 28,
+    "text": "Seorang pelari dapat menyelesaikan suatu lintasan dalam waktu 40 menit. Pelari kedua menyelesaikan lintasan yang sama dalam 60 menit. Pelari ketiga menyelesaikan dalam 120 menit. Jika ketiganya berlari bersama, berapa menit mereka menyelesaikan satu putaran lintasan?",
+    "options": [
+      "18 menit",
+      "20 menit",
+      "22 menit",
+      "24 menit"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus ok\"><b>Kunci platform: B</b> · ✔ terverifikasi · Materi: Kerja Bersama · Kecepatan Gabungan</p>\n<section class=\"box tips\"><h4>Tips mengajar</h4><p>Soal ini memakai logika \"<b>kerja bersama</b>\" (seperti tiga pompa mengisi satu kolam): ketiga pelari bersama-sama menuntaskan <b>satu lintasan</b>, misalnya dengan membagi lintasan atau estafet. Ini bukan \"berlari beriringan\". Jelaskan di awal agar siswa tidak bingung.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Kecepatan = 1 lintasan ÷ waktu</b>  →  1/40,  1/60,  1/120 lintasan per menit.</li><li>Bekerja/berlari <b>bersama</b> → <b>kecepatan dijumlahkan</b>.</li><li><b>Waktu bersama = 1 ÷ (jumlah kecepatan).</b></li><li>Menjumlah pecahan → samakan penyebut dengan KPK.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Ubah waktu menjadi kecepatan.</b></span>\n<p class=\"calc\">Pelari 1 = 1/40,   Pelari 2 = 1/60,   Pelari 3 = 1/120   (lintasan per menit)</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Pelari 1 butuh 40 menit untuk 1 lintasan, berarti tiap menit menyelesaikan 1/40 lintasan.</p>\n</li>\n<li><span class=\"st\"><b>Jumlahkan dengan penyebut yang sama.</b></span>\n<p class=\"calc\">KPK(40, 60, 120) = 120</p>\n<p class=\"calc\">1/40 + 1/60 + 1/120 = 3/120 + 2/120 + 1/120 = 6/120 = 1/20</p>\n</li>\n<li><span class=\"st\"><b>Balikkan untuk mendapatkan waktu.</b></span>\n<p class=\"calc\">waktu = 1 ÷ (1/20) = 20 menit</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Waktu bersama = <b>20 menit</b>  →  jawaban <b>B</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Misalkan lintasan panjangnya 120 satuan (angka KPK). Pelari 1: 120 ÷ 40 = 3 satuan/menit; pelari 2: 2 satuan/menit; pelari 3: 1 satuan/menit. Bersama: 6 satuan/menit → 120 ÷ 6 = 20 menit. Tanpa pecahan!</p></section>\n<section class=\"box cepat\"><h4>Cara cepat, alternatif &amp; pengecekan</h4><p><b>Uji kewajaran:</b> waktu bersama harus lebih cepat daripada pelari tercepat (40 menit). 20 &lt; 40 ✔</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Merata-ratakan waktu: (40 + 60 + 120) ÷ 3 ≈ 73,3 menit — \"bersama\" seharusnya lebih cepat dari pelari tercepat.</li><li>Menjumlahkan waktu (40 + 60 + 120 = 220).</li><li>Menjumlahkan penyebut: 1/40 + 1/60 + 1/120 = 1/220 (salah).</li></ul></section>"
+  },
+  {
+    "n": 29,
+    "text": "Dalam sebuah kompetisi matematika, setiap peserta mengerjakan 5 soal. Nilai benar = +4, salah = −1, tidak dijawab = 0. Nilai Roni adalah 11 dan ia tidak meninggalkan soal tidak dijawab. Bagaimana soal yang dijawab Roni dengan benar?",
+    "options": [
+      "2 soal",
+      "3 soal",
+      "4 soal",
+      "5 soal"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus note\"><b>Kunci platform: B</b> · ● cek catatan · Materi: Sistem Persamaan · Logika Skor</p>\n<section class=\"box catatan\"><h4>Catatan untuk pengajar</h4><p><b>Redaksi bertentangan.</b> Jika Roni menjawab semua 5 soal (tidak ada yang dikosongkan), skornya hanya bisa −5, 0, 5, 10, 15, atau 20 — <b>skor 11 mustahil</b> (3 benar + 2 salah = 10). Skor 11 hanya mungkin bila <b>ada 1 soal kosong</b>: 3 benar + 1 salah + 1 kosong = 12 − 1 = 11.</p><p>Kunci platform B (3 soal) benar untuk satu-satunya kemungkinan itu. <b>Saran:</b> ganti kalimat menjadi \"ia meninggalkan satu soal tidak dijawab\", atau hapus kalimat tersebut agar soal konsisten.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li>Skor = <b>4 × (benar) − 1 × (salah) + 0 × (kosong).</b></li><li>Banyak soal: <b>benar + salah + kosong = 5.</b></li><li>Banyak soal adalah <b>bilangan cacah</b> (0, 1, 2, ...) — hasil pecahan seperti 3,2 berarti tidak mungkin.</li><li>Strategi: <b>uji nilai b (benar) satu per satu</b> (coba-coba yang terarah).</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Beri nama variabel.</b></span>\n<p class=\"calc\">b = banyak benar,   s = banyak salah,   k = banyak kosong</p>\n<p class=\"calc\">b + s + k = 5</p>\n<p class=\"calc\">4b − s = 11</p>\n</li>\n<li><span class=\"st\"><b>Coba ikuti kalimat soal: semua dijawab (k = 0).</b></span>\n<p class=\"calc\">s = 5 − b</p>\n<p class=\"calc\">4b − (5 − b) = 11   →   5b = 16   →   b = 3,2</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Hasil 3,2 bukan bilangan bulat → mustahil. Berarti harus ada soal yang tidak dijawab (k ≥ 1).</p>\n</li>\n<li><span class=\"st\"><b>Uji nilai b secara terarah.</b></span>\n<p class=\"why\"><b>Kenapa begitu?  </b>Skor tertinggi bila b benar adalah 4b. Syaratnya 4b ≥ 11 → b ≥ 3. Cukup uji b = 3, 4, 5.</p>\n<table class=\"dt\"><tr><th><b>b (benar)</b></th><th><b>s = 4b − 11</b></th><th><b>b + s ≤ 5 ?</b></th><th><b>Layak?</b></th></tr><tr><td class=\"ok\">3</td><td class=\"ok\">12 − 11 = 1</td><td class=\"ok\">3 + 1 = 4 ≤ 5</td><td class=\"ok\"><b>✔ ya</b> (k = 1)</td></tr><tr><td>4</td><td>16 − 11 = 5</td><td>4 + 5 = 9 &gt; 5</td><td>✘ tidak</td></tr><tr><td>5</td><td>20 − 11 = 9</td><td>5 + 9 = 14 &gt; 5</td><td>✘ tidak</td></tr></table>\n</li>\n<li><span class=\"st\"><b>Simpulkan dan cek.</b></span>\n<p class=\"calc\">b = 3,  s = 1,  k = 1   →   skor = 4(3) − 1 + 0 = 11 ✔</p>\n</li>\n</ol>\n<section class=\"box jawab\"><p><b>JAWABAN  ▶  </b>Roni menjawab benar <b>3 soal</b>  →  jawaban <b>B</b>.</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Skor 11 dari 5 soal. Kalau 4 benar → 16, terlalu besar karena pengurangnya harus 5 padahal soal tinggal 1. Kalau 3 benar → 12, perlu dikurangi 1 → tepat 1 salah. Sisa 1 soal dibiarkan kosong.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Memaksakan semua soal terjawab, mendapat b = 3,2, lalu membulatkan menjadi 3 atau 4.</li><li>Menghitung 3 benar + 2 salah = 12 − 2 = 10 dan mengira itu 11.</li><li>Lupa bahwa jawaban salah mengurangi 1 (bukan 0).</li></ul></section>"
+  },
+  {
+    "n": 30,
+    "text": "Pak Ahmad memiliki sebidang tanah berbentuk trapesium dengan sisi sejajar 24 m dan 16 m, dan tinggi 10 m. Ia ingin membangun kolam renang persegi panjang di atas tanah tersebut dengan ukuran 8 m × 5 m, dan menanami sisanya dengan rumput. Biaya pemasangan rumput Rp25.000 per m² dan biaya pembuatan kolam renang Rp500.000 per m². Berapa total biaya yang dikeluarkan Pak Ahmad?",
+    "options": [
+      "Rp5.750.000",
+      "Rp6.000.000",
+      "Rp6.250.000",
+      "Rp6.500.000"
+    ],
+    "answer": "B",
+    "explain": "<p class=\"keystatus warn\"><b>Kunci platform: B</b> · ⚠ perlu koreksi soal · Materi: Luas Trapesium · Perhitungan Biaya</p>\n<section class=\"box catatan warn\"><h4>Catatan untuk pengajar — soal ini perlu dikoreksi</h4><p><b>Soal bermasalah — kemungkinan salah ketik tarif kolam.</b> Dengan angka tertulis (kolam Rp500.000 per m²), total = Rp24.000.000 — tidak ada di opsi.</p><p>Kunci platform B (Rp6.000.000) cocok bila <b>biaya pembuatan kolam Rp50.000 per m²</b> (bukan Rp500.000): 160 × 25.000 + 40 × 50.000 = 4.000.000 + 2.000.000 = 6.000.000. <b>Saran:</b> koreksi \"Rp500.000\" menjadi \"Rp50.000\" sebelum dipakai. Rumus dan alur langkahnya tidak berubah.</p></section>\n<section class=\"box rumus\"><h4>Rumus &amp; konsep kunci</h4><ul><li><b>Luas trapesium = ½ × (jumlah sisi sejajar) × tinggi.</b></li><li><b>Luas persegi panjang = p × l.</b></li><li><b>Luas sisa = luas total − luas yang dipakai.</b></li><li><b>Biaya = luas × tarif per m².</b></li><li>Asal luas trapesium: dua trapesium identik (satu dibalik) disusun menjadi <b>jajar genjang</b> beralas (a + b) dan tinggi t → luas = (a + b) × t. Jadi satu trapesium = setengahnya.</li></ul></section>\n<h4 class=\"steps-title\">Langkah penyelesaian — dan kenapa begitu</h4>\n<ol class=\"steps\">\n<li><span class=\"st\"><b>Hitung luas tanah (trapesium).</b></span>\n<p class=\"calc\">L = ½ × (24 + 16) × 10 = ½ × 40 × 10 = 200 m²</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Sisi sejajar adalah 24 dan 16; yang dipakai adalah tinggi (jarak tegak lurus antarsisi sejajar) = 10, bukan sisi miring.</p>\n</li>\n<li><span class=\"st\"><b>Hitung luas kolam.</b></span>\n<p class=\"calc\">8 × 5 = 40 m²</p>\n</li>\n<li><span class=\"st\"><b>Cari luas yang ditanami rumput.</b></span>\n<p class=\"calc\">200 − 40 = 160 m²</p>\n<p class=\"why\"><b>Kenapa begitu?  </b>Rumput hanya di sisa tanah (di luar kolam), jadi luas kolam dikurangkan.</p>\n</li>\n<li><span class=\"st\"><b>Hitung biaya rumput.</b></span>\n<p class=\"calc\">160 × 25.000 = 4.000.000</p>\n</li>\n<li><span class=\"st\"><b>Hitung biaya kolam dan total (dua kemungkinan tarif).</b></span>\n<table class=\"dt\"><tr><th><b>Tarif kolam</b></th><th><b>Perhitungan</b></th><th><b>Total biaya</b></th></tr><tr><td>Rp500.000/m² (sesuai teks)</td><td>40 × 500.000 = 20.000.000</td><td>Rp24.000.000 (tidak ada di opsi)</td></tr><tr><td class=\"ok\">Rp50.000/m² (dugaan benar)</td><td class=\"ok\">40 × 50.000 = 2.000.000</td><td class=\"ok\"><b>Rp6.000.000</b> (opsi B ✔)</td></tr></table>\n</li>\n</ol>\n<section class=\"box hasil\"><p><b>HASIL &amp; KUNCI  ▶  </b>Dengan teks apa adanya: <b>Rp24.000.000</b> (tidak ada di opsi).  Kunci platform: <b>B (Rp6.000.000)</b> — cocok bila tarif kolam Rp50.000/m².</p></section>\n<section class=\"box awam\"><h4>Logika orang awam — bahasa untuk siswa</h4><p>Tiga langkah: (1) berapa luas tanah, (2) berapa yang jadi kolam — sisanya rumput, (3) kalikan masing-masing dengan tarifnya. Seperti menghitung anggaran renovasi: lantai satu harga, cat satu harga.</p></section>\n<section class=\"box jebakan\"><h4>Jebakan yang sering memancing siswa</h4><ul><li>Lupa ½ pada rumus trapesium → luas 400 m².</li><li>Memakai sisi miring sebagai tinggi.</li><li>Menghitung rumput di seluruh tanah (200 m²) padahal area kolam tidak ditanami.</li><li>Menjumlah biaya tanpa membedakan tarif rumput dan tarif kolam.</li></ul></section>",
+    "explainImage": "img/tka-mat-s30.png"
+  }
 ];
