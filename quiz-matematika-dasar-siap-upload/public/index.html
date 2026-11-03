@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Latihan Soal</title>
-  <meta name="description" content="Latihan soal dengan umpan balik langsung. Pilih kuis: Matematika Dasar atau Bahasa Inggris.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='34%25' cy='28%25' r='80%25'%3E%3Cstop offset='0' stop-color='%23c9b8ff'/%3E%3Cstop offset='.45' stop-color='%237a4df0'/%3E%3Cstop offset='1' stop-color='%232a1b8f'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3C/svg%3E">
+  <meta name="description" content="Latihan soal matematika dasar dan bahasa Inggris dengan umpan balik langsung.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='34%25' cy='28%25' r='80%25'%3E%3Cstop offset='0' stop-color='%23c9b8ff'/%3E%3Cstop offset='.45' stop-color='%237a4df0'/%3E%3Cstop offset='1' stop-color='%232a1b8f'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3Ctext x='32' y='43' font-size='30' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'%3E%CF%80%3C/text%3E%3C/svg%3E">
   <meta name="theme-color" content="#0c0e3d">
   <link rel="preload" href="fonts/orbitron-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/nunito-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -23,24 +23,12 @@
 
   <div id="toast" role="status" aria-live="polite" hidden></div>
 
-  <!-- MENU: PILIH KUIS -->
-  <main id="view-menu" class="view center" hidden>
-    <section class="menu">
-      <div class="logo" aria-hidden="true">✦</div>
-      <h1>Latihan Soal</h1>
-      <p class="muted" id="menu-hello">Pilih kuis yang mau dikerjakan.</p>
-      <div id="menu-list" class="menu-list" aria-label="Pilihan kuis"></div>
-      <p id="menu-error" class="error" role="alert" hidden></p>
-      <button class="btn ghost small" id="menu-logout" data-action="logout" type="button" hidden>Bukan kamu? Ganti nama</button>
-    </section>
-  </main>
-
   <!-- LOGIN -->
   <main id="view-login" class="view center" hidden>
     <form id="login-form" class="card narrow" autocomplete="off">
-      <div class="logo" id="login-icon" aria-hidden="true">π</div>
-      <h1 id="login-title">Latihan Soal</h1>
-      <p class="muted" id="login-desc"></p>
+      <div class="logo" aria-hidden="true">π</div>
+      <h1>Latihan Soal</h1>
+      <p class="muted">Jawaban langsung diperiksa. Masuk dengan nama kamu, lalu pilih quiz. Kalau masuk lagi dengan nama yang sama, pengerjaanmu dilanjutkan.</p>
       <label for="in-name">Nama</label>
       <input id="in-name" name="name" type="text" maxlength="40" placeholder="Ketik namamu" required autofocus>
       <div id="pin-row" hidden>
@@ -49,20 +37,30 @@
       </div>
       <p id="login-error" class="error" role="alert" hidden></p>
       <button class="btn primary block" type="submit" id="btn-login">Masuk</button>
-      <button class="btn ghost block tight" data-action="menu" type="button">← Pilih kuis lain</button>
     </form>
+  </main>
+
+  <!-- MENU PILIH QUIZ -->
+  <main id="view-menu" class="view center" hidden>
+    <section class="card menu-card">
+      <h1 id="menu-title">Pilih quiz</h1>
+      <p class="muted" id="menu-sub"></p>
+      <div id="menu-list" class="menu-list" role="list"></div>
+      <div class="menu-foot">
+        <button class="btn ghost" data-action="logout" type="button">Keluar</button>
+      </div>
+    </section>
   </main>
 
   <!-- MENUNGGU -->
   <main id="view-wait" class="view center" hidden>
     <section class="card narrow center-text">
       <div class="pulse" aria-hidden="true"></div>
-      <p class="quiz-tag" id="wait-quiz"></p>
       <h2 id="wait-title">Menunggu guru</h2>
       <p id="wait-text" class="muted"></p>
       <p class="muted small">Halaman ini terbuka sendiri begitu sesi aktif.</p>
       <div class="btn-row">
-        <button class="btn" data-action="menu" type="button">Pilih kuis lain</button>
+        <button class="btn" data-action="menu" type="button">Ganti quiz</button>
         <button class="btn ghost" data-action="logout" type="button">Keluar</button>
       </div>
     </section>
@@ -74,7 +72,7 @@
       <div class="who"><span class="avatar" id="q-avatar" aria-hidden="true"></span><span id="q-name"></span></div>
       <div class="topbar-right">
         <span class="chip" id="q-score">Benar 0</span>
-        <button class="btn ghost small" data-action="menu" type="button">Menu</button>
+        <button class="btn ghost small" data-action="menu" type="button">Ganti quiz</button>
         <button class="btn ghost small" data-action="logout" type="button">Keluar</button>
       </div>
     </header>
@@ -82,13 +80,13 @@
       <div class="progress" aria-hidden="true"><span id="q-bar"></span></div>
       <p class="muted small" id="q-count"></p>
       <article class="card" id="q-card">
-        <details class="passage" id="q-passage" open hidden>
-          <summary id="q-passage-title">Bacaan</summary>
-          <div class="passage-text" id="q-passage-text"></div>
+        <details id="q-passage" class="passage" hidden>
+          <summary id="q-passage-title"></summary>
+          <div id="q-passage-body" class="passage-body" tabindex="0"></div>
         </details>
         <p class="qtext" id="q-text"></p>
         <img id="q-img" class="qimg" alt="Gambar untuk soal ini" hidden>
-        <p id="q-hint" class="muted small multi-hint" hidden>Soal ini punya lebih dari satu jawaban benar. Pilih semuanya, lalu klik Kirim jawaban.</p>
+        <p id="q-hint" class="hint" hidden>Soal ini punya lebih dari satu jawaban benar. Pilih semua yang tepat, lalu tekan Kirim jawaban.</p>
         <div id="q-options" class="options" role="group" aria-label="Pilihan jawaban"></div>
         <button id="q-submit" class="btn primary block" type="button" hidden disabled>Kirim jawaban</button>
         <div id="q-feedback" class="feedback" role="status" aria-live="polite" hidden></div>
@@ -100,7 +98,6 @@
         <div class="pulse" aria-hidden="true"></div>
         <h2 id="overlay-title">Dijeda oleh guru</h2>
         <p id="overlay-text" class="muted"></p>
-        <button class="btn ghost" data-action="menu" type="button">Pilih kuis lain</button>
       </div>
     </div>
   </div>
@@ -109,13 +106,12 @@
   <main id="view-result" class="view center" hidden>
     <section class="card narrow center-text">
       <div class="logo" aria-hidden="true">✓</div>
-      <p class="quiz-tag" id="r-quiz"></p>
       <h2>Selesai, <span id="r-name"></span>!</h2>
       <p class="score"><span id="r-correct">0</span><small> / <span id="r-total">25</span></small></p>
       <p class="muted" id="r-percent"></p>
       <div id="r-grid" class="grid result-grid" aria-label="Ringkasan per soal"></div>
       <div class="btn-row">
-        <button class="btn primary" data-action="menu" type="button">Pilih kuis lain</button>
+        <button class="btn primary" data-action="menu" type="button">Pilih quiz lain</button>
         <button class="btn ghost" data-action="logout" type="button">Keluar</button>
       </div>
     </section>
@@ -124,17 +120,17 @@
   <!-- GURU -->
   <div id="view-teacher" class="view" hidden>
     <header class="topbar">
-      <div class="who"><span class="avatar" aria-hidden="true">F</span><span>Mode Guru</span></div>
+      <div class="who"><span class="avatar" aria-hidden="true">F</span><span id="t-who">Mode Guru</span></div>
       <div class="topbar-right">
         <span class="chip" id="t-status">...</span>
-        <button class="btn ghost small" data-action="menu" type="button">Menu</button>
+        <button class="btn ghost small" data-action="menu" type="button">Ganti quiz</button>
         <button class="btn ghost small" data-action="logout" type="button">Keluar</button>
       </div>
     </header>
     <div class="wrap wide">
       <section class="card controls" aria-label="Kontrol sesi">
         <div class="controls-info">
-          <strong>Sesi siswa: <span id="t-quiz"></span></strong>
+          <strong>Sesi siswa</strong>
           <span class="muted small" id="t-info"></span>
         </div>
         <div class="controls-btns">
@@ -154,9 +150,9 @@
         <div id="t-grid" class="grid nav-grid" aria-label="Pilih nomor soal"></div>
         <article class="card" id="t-card">
           <p class="muted small" id="t-qno"></p>
-          <details class="passage" id="t-passage" open hidden>
-            <summary id="t-passage-title">Bacaan</summary>
-            <div class="passage-text" id="t-passage-text"></div>
+          <details id="t-passage" class="passage" hidden>
+            <summary id="t-passage-title"></summary>
+            <div id="t-passage-body" class="passage-body" tabindex="0"></div>
           </details>
           <p class="qtext" id="t-qtext"></p>
           <img id="t-qimg" class="qimg" alt="Gambar untuk soal ini" hidden>
