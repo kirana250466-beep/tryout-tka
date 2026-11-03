@@ -1,9 +1,8 @@
 // Daftar quiz yang tersedia di menu. Untuk menambah quiz baru:
-//   1) buat file bank soal (lihat questions.js atau questions-inggris.js sebagai contoh),
+//   1) buat file bank soal (lihat questions-inggris.js sebagai contoh),
 //   2) impor di sini, lalu tambahkan satu entri di QUIZZES dengan id singkat yang belum dipakai.
 // Id dipakai sebagai kunci di database, jadi jangan diubah setelah ada data siswa.
 
-import { QUESTIONS as MAT } from "./questions.js";
 import { QUESTIONS as ING, PASSAGES as ING_PASSAGES } from "./questions-inggris.js";
 import { QUESTIONS as TKA } from "./questions-tka-mat.js";
 
@@ -14,7 +13,6 @@ function make(id, title, desc, questions, passages = {}) {
 }
 
 export const QUIZZES = {
-  mat: make("mat", "Matematika Dasar", "25 soal pilihan ganda. Jawaban langsung diperiksa.", MAT),
   ing: make(
     "ing",
     "Bahasa Inggris",
