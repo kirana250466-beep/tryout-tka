@@ -14,7 +14,8 @@ const S = {
   questions: [],
   passages: {},
   passageOpen: {}, // id teks bacaan -> terbuka / tertutup (diingat selama sesi)
-  progress: [], // [{n, choice, correct, correctKey}]
+  progress: [], // [{n, choice, correct, correctKey, explain?}]
+  review: null, // nomor soal yang sedang ditinjau di halaman tinjauan (null = tidak sedang meninjau)
   idx: 0, // indeks soal yang sedang dikerjakan
   picked: new Set(), // pilihan sementara untuk soal berjawaban ganda
   busy: false,
@@ -24,7 +25,7 @@ const T = { questions: [], passages: {}, i: 0, tab: "bahas" };
 
 const POLL_MS = 4000;
 const $ = (id) => document.getElementById(id);
-const VIEWS = ["login", "menu", "wait", "quiz", "result", "teacher"];
+const VIEWS = ["login", "menu", "wait", "quiz", "result", "review", "teacher"];
 
 /* ====== util ====== */
 function show(view) {
@@ -112,7 +113,7 @@ function logout() {
   sessionStorage.removeItem("quiz.pick");
   Object.assign(S, {
     role: null, name: "", pin: "", quizzes: [], quiz: null, loaded: false,
-    questions: [], passages: {}, progress: [], idx: 0, picked: new Set(), busy: false,
+    questions: [], passages: {}, progress: [], idx: 0, picked: new Set(), busy: false, review: null,
   });
   $("in-name").value = "";
   $("in-pin").value = "";
@@ -149,6 +150,7 @@ function showMenu() {
   S.quiz = null;
   S.loaded = false;
   S.busy = false;
+  S.review = null;
   $("menu-title").textContent = S.role === "teacher" ? "Pilih quiz untuk dikelola" : "Pilih quiz";
   $("menu-sub").textContent = "Halo, " + S.name + ".";
   renderMenu();
@@ -205,6 +207,7 @@ function openQuiz(id) {
   S.progress = [];
   S.idx = 0;
   S.busy = false;
+  S.review = null;
   if (S.role === "teacher") return enterTeacher();
   syncStudent();
   S.timer = setInterval(syncStudent, POLL_MS);
@@ -241,6 +244,7 @@ async function loadQuiz() {
   S.passages = q.passages || {};
   S.progress = q.progress;
   S.idx = q.progress.length;
+  S.review = null;
   S.loaded = true;
   if (S.idx < S.total) renderQuestion();
 }
@@ -259,7 +263,10 @@ function renderStudent() {
     return show("wait");
   }
 
-  if (S.idx >= S.total) return renderResult();
+  if (S.idx >= S.total) {
+    if (S.review == null) renderResult(); // saat meninjau soal, polling tidak boleh menarik kembali ke halaman hasil
+    return;
+  }
 
   if ($("view-quiz").hidden) {
     show("quiz");
@@ -349,6 +356,9 @@ function renderQuestion() {
   $("q-feedback").hidden = true;
   $("q-next").hidden = true;
   $("q-next").textContent = S.idx === S.total - 1 ? "Lihat hasil" : "Lanjut";
+  $("q-next2").textContent = $("q-next").textContent;
+  $("q-explain").hidden = true;
+  $("q-explain-body").replaceChildren();
   S.busy = false;
 }
 
@@ -379,7 +389,7 @@ async function submit(letters) {
       method: "POST",
       body: { quiz: S.quiz, n: q.n, choice: letters.join(""), round: S.round },
     });
-    S.progress.push({ n: q.n, choice: r.choice, correct: r.correct, correctKey: r.correctKey });
+    S.progress.push({ n: q.n, choice: r.choice, correct: r.correct, correctKey: r.correctKey, explain: r.explain });
     showResult(q, r, buttons);
     S.busy = false;
   } catch (e) {
@@ -404,7 +414,8 @@ async function submit(letters) {
   }
 }
 
-function showResult(q, r, buttons) {
+// Beri warna tiap pilihan: benar, salah, terlewat (soal ganda), atau redup. r = {choice, correctKey}.
+function markOptions(q, r, buttons) {
   const keys = new Set(r.correctKey.split(""));
   const chosen = new Set(r.choice.split(""));
   buttons.forEach((b) => {
@@ -419,24 +430,44 @@ function showResult(q, r, buttons) {
     else if (chosen.has(l)) b.classList.add("wrong");
     else b.classList.add("dim");
   });
+}
+
+function feedbackText(q, r) {
+  return r.correct
+    ? q.multi ? "Benar! Semua jawaban tepat. 🎉" : "Benar! 🎉"
+    : "Belum tepat. Jawaban yang benar: " + letterList(r.correctKey);
+}
+
+function showResult(q, r, buttons) {
+  markOptions(q, r, buttons);
   $("q-submit").hidden = true;
   const fb = $("q-feedback");
   fb.className = "feedback " + (r.correct ? "ok" : "bad");
-  fb.textContent = r.correct
-    ? q.multi ? "Benar! Semua jawaban tepat. 🎉" : "Benar! 🎉"
-    : "Belum tepat. Jawaban yang benar: " + letterList(r.correctKey);
+  fb.textContent = feedbackText(q, r);
   fb.hidden = false;
   $("q-score").textContent = "Benar " + scoreNow();
   $("q-bar").style.width = ((S.idx + 1) / S.total) * 100 + "%";
   $("q-next").hidden = false;
+  // Pembahasan siswa (hanya quiz yang punya): dikirim server setelah soal ini dijawab.
+  const panel = $("q-explain");
+  if (r.explain) {
+    $("q-explain-title").textContent = "Pembahasan soal " + q.n;
+    $("q-explain-body").innerHTML = r.explain; // konten dari server milik sendiri, bukan input pengguna
+    panel.open = true;
+    panel.hidden = false;
+  } else {
+    panel.hidden = true;
+  }
   $("q-next").focus();
 }
 
-$("q-next").addEventListener("click", () => {
+function goNext() {
   S.idx += 1;
   if (S.idx >= S.total) renderResult();
   else renderQuestion();
-});
+}
+$("q-next").addEventListener("click", goNext);
+$("q-next2").addEventListener("click", goNext);
 
 function renderResult() {
   const correct = scoreNow();
@@ -446,12 +477,73 @@ function renderResult() {
   $("r-percent").textContent = quizTitle() + ": " + Math.round((correct / S.total) * 100) + "% benar";
   const grid = $("r-grid");
   grid.replaceChildren();
+  let reviewable = false;
   for (let n = 1; n <= S.total; n++) {
     const p = S.progress.find((x) => x.n === n);
-    grid.append(el("span", { class: "cell " + (p ? (p.correct ? "ok" : "bad") : ""), text: String(n) }));
+    const cls = "cell " + (p ? (p.correct ? "ok" : "bad") : "");
+    if (p && p.explain) {
+      reviewable = true;
+      const b = el("button", { class: cls, type: "button", "aria-label": "Lihat soal dan pembahasan nomor " + n, text: String(n) });
+      b.addEventListener("click", () => openReview(n));
+      grid.append(b);
+    } else {
+      grid.append(el("span", { class: cls, text: String(n) }));
+    }
   }
+  $("r-hint").hidden = !reviewable;
+  S.review = null;
   show("result");
 }
+
+/* ====== tinjau soal + pembahasan (setelah selesai) ====== */
+function openReview(n) {
+  const q = S.questions[n - 1];
+  const p = S.progress.find((x) => x.n === n);
+  if (!q || !p || !p.explain) return;
+  S.review = n;
+  $("rv-name").textContent = S.name;
+  $("rv-avatar").textContent = S.name.charAt(0).toUpperCase();
+  $("rv-count").textContent = quizTitle() + " · Tinjau soal " + n + " dari " + S.total;
+  $("rv-text").textContent = q.text;
+  renderPassage("rv", q, S.passages, false);
+
+  const img = $("rv-img");
+  img.hidden = !q.image;
+  if (q.image) img.src = q.image;
+  else img.removeAttribute("src");
+
+  const box = $("rv-options");
+  box.replaceChildren();
+  box.classList.toggle("multi", !!q.multi);
+  const buttons = q.options.map((txt, i) => {
+    const letter = "ABCDE"[i];
+    const b = el("button", { class: "opt", type: "button", "data-letter": letter, disabled: "" }, [
+      el("span", { class: "letter", text: letter }),
+      el("span", { text: txt }),
+    ]);
+    box.append(b);
+    return b;
+  });
+  markOptions(q, p, buttons);
+
+  const fb = $("rv-feedback");
+  fb.className = "feedback " + (p.correct ? "ok" : "bad");
+  fb.textContent = feedbackText(q, p) + " Jawabanmu: " + letterList(p.choice) + ".";
+  $("rv-explain").innerHTML = p.explain; // konten dari server milik sendiri, bukan input pengguna
+
+  $("rv-prev").disabled = n <= 1;
+  $("rv-next").disabled = n >= S.total;
+  show("review");
+}
+
+function leaveReview() {
+  S.review = null;
+  renderResult();
+}
+$("rv-prev").addEventListener("click", () => S.review > 1 && openReview(S.review - 1));
+$("rv-next").addEventListener("click", () => S.review < S.total && openReview(S.review + 1));
+$("rv-back").addEventListener("click", leaveReview);
+$("rv-back-top").addEventListener("click", leaveReview);
 
 /* ====== guru ====== */
 async function enterTeacher() {
