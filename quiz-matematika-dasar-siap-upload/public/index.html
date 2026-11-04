@@ -91,6 +91,11 @@
         <button id="q-submit" class="btn primary block" type="button" hidden disabled>Kirim jawaban</button>
         <div id="q-feedback" class="feedback" role="status" aria-live="polite" hidden></div>
         <button id="q-next" class="btn primary block" type="button" hidden>Lanjut</button>
+        <details id="q-explain" class="passage explain-panel" hidden open>
+          <summary id="q-explain-title">Pembahasan</summary>
+          <div id="q-explain-body" class="explain explain-body" tabindex="0"></div>
+          <button id="q-next2" class="btn primary block" type="button">Lanjut</button>
+        </details>
       </article>
     </div>
     <div id="overlay" class="overlay" hidden>
@@ -110,12 +115,44 @@
       <p class="score"><span id="r-correct">0</span><small> / <span id="r-total">25</span></small></p>
       <p class="muted" id="r-percent"></p>
       <div id="r-grid" class="grid result-grid" aria-label="Ringkasan per soal"></div>
+      <p id="r-hint" class="muted small" hidden>Ketuk nomor soal untuk melihat lagi soal dan pembahasannya.</p>
       <div class="btn-row">
         <button class="btn primary" data-action="menu" type="button">Pilih quiz lain</button>
         <button class="btn ghost" data-action="logout" type="button">Keluar</button>
       </div>
     </section>
   </main>
+
+  <!-- SISWA: TINJAU SOAL + PEMBAHASAN (setelah selesai) -->
+  <div id="view-review" class="view" hidden>
+    <header class="topbar">
+      <div class="who"><span class="avatar" id="rv-avatar" aria-hidden="true"></span><span id="rv-name"></span></div>
+      <div class="topbar-right">
+        <button class="btn ghost small" id="rv-back-top" type="button">Kembali ke hasil</button>
+        <button class="btn ghost small" data-action="logout" type="button">Keluar</button>
+      </div>
+    </header>
+    <div class="wrap">
+      <p class="muted small" id="rv-count"></p>
+      <article class="card" id="rv-card">
+        <details id="rv-passage" class="passage" hidden>
+          <summary id="rv-passage-title"></summary>
+          <div id="rv-passage-body" class="passage-body" tabindex="0"></div>
+        </details>
+        <p class="qtext" id="rv-text"></p>
+        <img id="rv-img" class="qimg" alt="Gambar untuk soal ini" hidden>
+        <div id="rv-options" class="options" role="group" aria-label="Pilihan jawaban"></div>
+        <div id="rv-feedback" class="feedback" role="status"></div>
+        <h3>Pembahasan</h3>
+        <div id="rv-explain" class="explain"></div>
+        <div class="pager">
+          <button class="btn" id="rv-prev" type="button">← Sebelumnya</button>
+          <button class="btn primary" id="rv-next" type="button">Berikutnya →</button>
+        </div>
+        <button class="btn ghost block review-back" id="rv-back" type="button">Kembali ke hasil</button>
+      </article>
+    </div>
+  </div>
 
   <!-- GURU -->
   <div id="view-teacher" class="view" hidden>
