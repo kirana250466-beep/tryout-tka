@@ -1,6 +1,6 @@
 # Quiz Matematika Dasar (25 soal)
 
-Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
+Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, Bahasa Indonesia Lanjutan). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
 
 ## Fitur
 
@@ -38,7 +38,7 @@ Settings, Variables and secrets, tambahkan `TEACHER_PIN` (tipe Secret), lalu dep
 - Setelah login, siswa dan guru memilih quiz di menu. Setiap quiz punya sesi sendiri: guru bisa memulai, menjeda, atau mematikan satu quiz tanpa mengganggu yang lain.
 - Daftar quiz ada di `functions/_lib/quizzes.js`. Untuk menambah quiz baru: buat file bank soal (lihat `questions.js` atau `questions-inggris.js` sebagai contoh), impor di `quizzes.js`, lalu tambahkan satu entri dengan id singkat yang belum dipakai. Jangan mengubah id quiz yang sudah dipakai siswa.
 - Soal bisa punya 2 sampai 5 pilihan (A sampai E). Soal dengan lebih dari satu jawaban benar ditulis dengan `answer: "ACE"` dan otomatis tampil sebagai pilihan ganda kompleks. Nilainya benar hanya jika himpunan jawaban sama persis dengan kunci.
-- Teks bacaan bersama (Bahasa Inggris) disimpan sekali di `PASSAGES` dan dirujuk lewat `passage` pada tiap soal.
+- Teks bacaan bersama (Bahasa Inggris dan Bahasa Indonesia Lanjutan) disimpan sekali di `PASSAGES` dan dirujuk lewat `passage` pada tiap soal. Gambar boleh dipasang di dalam teks bacaan lewat `<img src="img/...">`.
 - Gambar di `explainImage` hanya tampil di mode guru. Gambar di `image` tampil juga untuk siswa.
 - Data sesi, siswa, dan jawaban disimpan di tabel `quiz_session`, `quiz_students`, dan `quiz_answers` (dibuat otomatis). Tabel lama `session`, `students`, `answers` dari versi satu-quiz tidak dipakai lagi.
 
@@ -46,7 +46,17 @@ Settings, Variables and secrets, tambahkan `TEACHER_PIN` (tipe Secret), lalu dep
 Kunci platform untuk soal **3, 8, 10, 11, 12, 13, dan 30** tidak sesuai dengan data soalnya (kemungkinan salah ketik). Di `questions-tka-mat.js`, opsi berkunci pada ketujuh soal itu sudah diganti dengan jawaban hasil hitung, dan angka desimal dibulatkan bila opsi lain berupa bilangan bulat (soal 3: 48 meter). Huruf kuncinya tidak berubah. Catatan kunci lama dan penggantinya tampil di mode guru pada tiap soal.
 
 - **Soal 11:** tanda operasi antara 125^(2/3) dan 32^(2/5) hilang di platform, jadi dipakai tanda **+** (jawaban 30,125). Cocokkan dengan soal aslinya. Bila tandanya lain, ubah opsi berkunci dan teks soal (tanda − memberi 22,125; × memberi 101,125; ÷ memberi 7,375).
-- **Soal 2, 6, 9, dan 29:** kunci sudah benar, tetapi redaksi atau opsinya perlu diluruskan saat mengajar.
+- **Soal 2:** opsi pengecoh yang semula berupa tanggal/tahun sudah diseragamkan ke format jam (20.01.12, 20.04.48, 20.06.00). Redaksi "ketiga kalinya" tetap ambigu, lihat catatan guru.
+- **Soal 6, 9, dan 29:** kunci sudah benar, tetapi redaksi atau opsinya perlu diluruskan saat mengajar.
+
+### Quiz Bahasa Indonesia Lanjutan (id `ind`)
+File: `functions/_lib/questions-indonesia.js`. Dibuat dari dokumen "Soal Bahasa Indonesia Lanjutan, Soal dan Pembahasan Edisi Pengajar No1-30": 6 teks bacaan (masing-masing untuk 5 soal), 30 soal, pilihan A sampai E.
+
+- Sembilan soal berjawaban ganda (No. 3, 6, 10, 13, 17, 20, 24, 27, 30) dan tampil sebagai pilihan ganda kompleks.
+- **Kunci disusun dari analisis isi teks**, karena dokumen sumber tidak menyertakan kunci resmi. Cocokkan dengan kunci resmi sebelum dipakai untuk penilaian. Catatan ini juga tampil di pembahasan soal 1 (mode guru).
+- **Soal 13, 17, dan 20:** di dokumen teks soalnya memakai "paling tepat", tetapi opsi A, C, dan E sama-sama sesuai teks. Pada kuis ini ditambahkan kalimat "Pilih semua jawaban yang tepat." Bila sumber aslinya hanya menerima satu jawaban, ubah `answer` dan hapus kalimat itu.
+- Pembahasan (mode guru) memuat: kunci, maksud soal, kata kunci, langkah menjawab, bukti di teks, bedah tiap pilihan, tips, dan catatan guru. Panduan tiap teks (jenis teks, peta teks, kamus mini) ada di soal pertama setiap teks (No. 1, 6, 11, 16, 21, 26) dalam bagian yang bisa dibuka.
+- Gambar: `public/img/bi-diagram-gudang.png` (di teks 6-10, tampil juga untuk siswa) dan `public/img/bi-penurunan-indikator.png` (hanya mode guru, soal 6).
 
 ## Tampilan (tema galaksi)
 
@@ -83,6 +93,7 @@ functions/_lib/quizzes.js    daftar quiz yang muncul di menu
 functions/_lib/questions.js  bank soal Matematika Dasar (kunci dan pembahasan hanya di server)
 functions/_lib/questions-inggris.js   bank soal Bahasa Inggris (teks bacaan dan soal jawaban ganda)
 functions/_lib/questions-tka-mat.js   bank soal Matematika TKA (30 soal, pilihan A sampai D)
+functions/_lib/questions-indonesia.js  bank soal Bahasa Indonesia Lanjutan (6 teks bacaan, 30 soal, pilihan A sampai E)
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
