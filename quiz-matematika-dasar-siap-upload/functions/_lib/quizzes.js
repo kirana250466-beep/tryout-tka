@@ -9,6 +9,7 @@ import { QUESTIONS as ING, PASSAGES as ING_PASSAGES } from "./questions-inggris.
 import { QUESTIONS as TKA } from "./questions-tka-mat.js";
 import { QUESTIONS as IND, PASSAGES as IND_PASSAGES } from "./questions-indonesia.js";
 import { EXPLAIN_SISWA as IND_EXPLAIN } from "./pembahasan-indonesia.js";
+import { QUESTIONS as INDW, PASSAGES as INDW_PASSAGES } from "./questions-indonesia-wajib.js";
 
 export const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -32,6 +33,14 @@ export const QUIZZES = {
     IND,
     IND_PASSAGES,
     IND_EXPLAIN
+  ),
+  // Tanpa parameter terakhir (studentExplain): siswa tidak melihat pembahasan, hanya benar/salah.
+  indw: make(
+    "indw",
+    "Bahasa Indonesia Wajib",
+    "30 soal berbasis teks bacaan: sinonim dan makna kata, isi bacaan, fakta, gagasan utama, dan judul. Empat soal berupa pilihan ganda kompleks (pilih semua yang tepat).",
+    INDW,
+    INDW_PASSAGES
   ),
 };
 
