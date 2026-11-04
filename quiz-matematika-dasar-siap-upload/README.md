@@ -7,7 +7,8 @@ Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Ba
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa.
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind` di bawah).
+- Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
 - Melihat soal, kunci, dan pembahasan setiap nomor.
@@ -57,6 +58,12 @@ File: `functions/_lib/questions-indonesia.js`. Dibuat dari dokumen "Soal Bahasa 
 - **Soal 13, 17, dan 20:** di dokumen teks soalnya memakai "paling tepat", tetapi opsi A, C, dan E sama-sama sesuai teks. Pada kuis ini ditambahkan kalimat "Pilih semua jawaban yang tepat." Bila sumber aslinya hanya menerima satu jawaban, ubah `answer` dan hapus kalimat itu.
 - Pembahasan (mode guru) memuat: kunci, maksud soal, kata kunci, langkah menjawab, bukti di teks, bedah tiap pilihan, tips, dan catatan guru. Panduan tiap teks (jenis teks, peta teks, kamus mini) ada di soal pertama setiap teks (No. 1, 6, 11, 16, 21, 26) dalam bagian yang bisa dibuka.
 - Gambar: `public/img/bi-diagram-gudang.png` (di teks 6-10, tampil juga untuk siswa) dan `public/img/bi-penurunan-indikator.png` (hanya mode guru, soal 6).
+- **Pembahasan untuk siswa** ada di `functions/_lib/pembahasan-indonesia.js`, dibuat dari dokumen "Soal Bahasa Indonesia Lanjutan, Soal dan Pembahasan Edisi Siswa No1-30". Isinya: kata kunci, langkah menjawab, bukti di teks, bedah tiap pilihan jawaban (dengan jenis jebakan), dan jurus. Inti teks tiap bagian dipasang di soal terakhir bagian itu (5, 10, 15, 20, 25, 30) supaya tidak membocorkan soal berikutnya.
+  - Server hanya mengirim pembahasan soal N setelah siswa itu menjawab soal N, jadi pembahasan soal yang belum dijawab tidak ikut terkirim. Pembahasan guru (login `Ferdi`) tetap dari `questions-indonesia.js` dan tidak berubah; akun `Ferdi` tidak memakai jalur siswa.
+  - Kunci di dokumen siswa sudah dicocokkan dengan `answer` di `questions-indonesia.js`: 30 dari 30 sama, dan opsi A sampai E identik dengan di dokumen.
+  - Catatan di pembahasan soal 13, 17, dan 20 disesuaikan dengan redaksi soal di website (yang sudah memuat "Pilih semua jawaban yang tepat.").
+  - Bagian "Bekal singkat", kamus kata perintah, dan kotak "Coretanku" di dokumen Word tidak ikut dipasang di website.
+  - Untuk quiz lain: kirim bank pembahasan sebagai parameter terakhir `make(...)` di `quizzes.js` (peta nomor soal ke HTML). Quiz tanpa parameter itu tetap tanpa pembahasan siswa.
 
 ## Tampilan (tema galaksi)
 
@@ -94,7 +101,8 @@ functions/_lib/questions.js  bank soal Matematika Dasar (kunci dan pembahasan ha
 functions/_lib/questions-inggris.js   bank soal Bahasa Inggris (teks bacaan dan soal jawaban ganda)
 functions/_lib/questions-tka-mat.js   bank soal Matematika TKA (30 soal, pilihan A sampai D)
 functions/_lib/questions-indonesia.js  bank soal Bahasa Indonesia Lanjutan (6 teks bacaan, 30 soal, pilihan A sampai E)
+functions/_lib/pembahasan-indonesia.js pembahasan Bahasa Indonesia Lanjutan untuk siswa (dikirim setelah soal dijawab)
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server dan tidak pernah dikirim ke browser siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (hanya quiz `ind`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
