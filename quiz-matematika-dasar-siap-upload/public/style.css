@@ -489,3 +489,20 @@ input:focus-visible, button:focus-visible {
   .qc-title { font-size: 0.95rem; }
   .quiz-card .chip { padding: 2px 10px; font-size: 0.8rem; }
 }
+
+/* ---------- pembahasan untuk siswa (Bahasa Indonesia Lanjutan) ---------- */
+/* panel pembahasan di bawah tombol Lanjut: memakai gaya kotak teks bacaan, isinya tidak digulir sendiri */
+.explain-panel { margin: 18px 0 0; }
+.explain-body { padding: 14px 16px 6px; border-top: 1px solid var(--line); }
+/* petunjuk 'gulir teks' milik teks bacaan tidak berlaku untuk panel pembahasan */
+.explain-panel[open]::after { content: none; display: none; }
+.explain-body:focus-visible { outline: 3px solid rgba(79, 209, 255, 0.7); outline-offset: -3px; }
+.explain-panel > .btn { margin: 4px 0 16px; width: calc(100% - 32px); margin-left: 16px; margin-right: 16px; }
+.explain .trap { font-size: 0.85rem; font-weight: 800; color: var(--warn); }
+.explain .trap-key { color: var(--ok); } /* bukan .key: kelas itu sudah dipakai kotak kunci lama */
+.explain .steps-title { margin-top: 20px; }
+
+/* halaman hasil: nomor soal yang bisa diketuk untuk meninjau */
+.result-grid button.cell { cursor: pointer; padding: 0; }
+.result-grid button.cell:hover, .result-grid button.cell:focus-visible { border-color: var(--cyan); box-shadow: 0 0 14px rgba(79, 209, 255, 0.35); outline: none; }
+.review-back { margin-top: 14px; }
