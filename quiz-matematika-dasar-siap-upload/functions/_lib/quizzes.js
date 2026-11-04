@@ -2,15 +2,18 @@
 //   1) buat file bank soal (lihat questions-inggris.js sebagai contoh),
 //   2) impor di sini, lalu tambahkan satu entri di QUIZZES dengan id singkat yang belum dipakai.
 // Id dipakai sebagai kunci di database, jadi jangan diubah setelah ada data siswa.
+// Parameter terakhir make() (studentExplain) opsional: peta nomor soal -> HTML pembahasan untuk siswa.
+// Quiz yang mengisinya (sekarang hanya "ind") menampilkan pembahasan ke siswa setelah soal itu dijawab.
 
 import { QUESTIONS as ING, PASSAGES as ING_PASSAGES } from "./questions-inggris.js";
 import { QUESTIONS as TKA } from "./questions-tka-mat.js";
 import { QUESTIONS as IND, PASSAGES as IND_PASSAGES } from "./questions-indonesia.js";
+import { EXPLAIN_SISWA as IND_EXPLAIN } from "./pembahasan-indonesia.js";
 
 export const LETTERS = ["A", "B", "C", "D", "E"];
 
-function make(id, title, desc, questions, passages = {}) {
-  return { id, title, desc, questions, passages, total: questions.length };
+function make(id, title, desc, questions, passages = {}, studentExplain = null) {
+  return { id, title, desc, questions, passages, total: questions.length, studentExplain };
 }
 
 export const QUIZZES = {
@@ -25,15 +28,20 @@ export const QUIZZES = {
   ind: make(
     "ind",
     "Bahasa Indonesia Lanjutan",
-    "30 soal berbasis 6 teks: laporan penelitian, teks dengan diagram, cerpen, teks ilmiah, dan eksposisi. Sembilan soal punya lebih dari satu jawaban benar.",
+    "30 soal berbasis 6 teks: laporan penelitian, teks dengan diagram, cerpen, teks ilmiah, dan eksposisi. Sembilan soal punya lebih dari satu jawaban benar. Pembahasan tampil setelah kamu menjawab.",
     IND,
-    IND_PASSAGES
+    IND_PASSAGES,
+    IND_EXPLAIN
   ),
 };
 
 export const QUIZ_IDS = Object.keys(QUIZZES);
 
 export const isMulti = (q) => q.answer.length > 1;
+
+// Pembahasan untuk siswa (HTML) atau null bila quiz ini tidak punya. Hanya dipanggil dari jalur
+// yang sudah memastikan siswa itu sudah menjawab soal nomor n.
+export const studentExplainOf = (quiz, n) => (quiz.studentExplain && quiz.studentExplain[n]) || null;
 
 // Versi untuk siswa: tanpa kunci dan tanpa pembahasan.
 export function publicQuiz(quiz) {
