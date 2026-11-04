@@ -1,6 +1,6 @@
 # Quiz Matematika Dasar (25 soal)
 
-Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, Bahasa Indonesia Lanjutan). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
+Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
 
 ## Fitur
 
@@ -65,6 +65,17 @@ File: `functions/_lib/questions-indonesia.js`. Dibuat dari dokumen "Soal Bahasa 
   - Bagian "Bekal singkat", kamus kata perintah, dan kotak "Coretanku" di dokumen Word tidak ikut dipasang di website.
   - Untuk quiz lain: kirim bank pembahasan sebagai parameter terakhir `make(...)` di `quizzes.js` (peta nomor soal ke HTML). Quiz tanpa parameter itu tetap tanpa pembahasan siswa.
 
+### Quiz Bahasa Indonesia Wajib (id `indw`)
+File: `functions/_lib/questions-indonesia-wajib.js`. Dibuat dari dokumen "Soal Bahasa Indonesia No1-30" (soal, kunci, dan pembahasan): 17 teks bacaan, 30 soal, pilihan A sampai E.
+
+- **Tanpa pembahasan untuk siswa.** Di `quizzes.js` quiz ini tidak diberi parameter `studentExplain`, jadi siswa hanya melihat benar atau salah setelah menjawab. Pembahasan dari dokumen tetap ada di field `explain` dan hanya tampil di mode guru (login `Ferdi`). Untuk menampilkan pembahasan ke siswa nanti, buat bank pembahasan seperti `pembahasan-indonesia.js` lalu kirim sebagai parameter terakhir `make(...)`.
+- **Empat soal berjawaban ganda (No. 7, 14, 21, 26).** Di dokumen keempatnya berupa tabel Ya/Tidak. Di website diubah menjadi pilihan ganda kompleks: siswa memilih semua pernyataan yang sesuai bacaan (soal 7: semua pernyataan yang salah), dan yang tidak dipilih dianggap "Tidak". Benar hanya jika kelima pernyataan tepat.
+- **Soal 22:** kunci mengikuti dokumen (A). Dokumen mencatat kunci sumber awal tertulis E, tetapi pilihan E ada di bacaan sehingga tidak cocok dengan kata "kecuali". Catatan ini tampil di mode guru.
+- **Soal 13:** opsi C di dokumen tertulis "Mehilangkan", diperbaiki menjadi "Menghilangkan".
+- **Soal 30:** soal menyebut "paragraf pertama", padahal kata *meteorologi* ada di paragraf kedua. Dibiarkan sesuai dokumen; jawaban tetap D.
+- Soal 14 memakai teks yang sama dengan soal 12 dan 13, dan soal 27 memakai teks yang sama dengan soal 28, jadi tiap pasangan berbagi satu teks bacaan. Judul teks tanpa judul di dokumen (soal 1, 8, 9, 19, 20) ditulis sendiri sebagai label singkat.
+- Tidak ada gambar di quiz ini.
+
 ## Tampilan (tema galaksi)
 
 Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
@@ -102,6 +113,7 @@ functions/_lib/questions-inggris.js   bank soal Bahasa Inggris (teks bacaan dan 
 functions/_lib/questions-tka-mat.js   bank soal Matematika TKA (30 soal, pilihan A sampai D)
 functions/_lib/questions-indonesia.js  bank soal Bahasa Indonesia Lanjutan (6 teks bacaan, 30 soal, pilihan A sampai E)
 functions/_lib/pembahasan-indonesia.js pembahasan Bahasa Indonesia Lanjutan untuk siswa (dikirim setelah soal dijawab)
+functions/_lib/questions-indonesia-wajib.js  bank soal Bahasa Indonesia Wajib (17 teks bacaan, 30 soal, tanpa pembahasan siswa)
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
