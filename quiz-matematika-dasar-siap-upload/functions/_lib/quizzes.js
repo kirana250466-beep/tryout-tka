@@ -5,6 +5,7 @@
 
 import { QUESTIONS as ING, PASSAGES as ING_PASSAGES } from "./questions-inggris.js";
 import { QUESTIONS as TKA } from "./questions-tka-mat.js";
+import { QUESTIONS as IND, PASSAGES as IND_PASSAGES } from "./questions-indonesia.js";
 
 export const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -21,6 +22,13 @@ export const QUIZZES = {
     ING_PASSAGES
   ),
   tka: make("tka", "Matematika TKA", "30 soal pilihan ganda A sampai D: aljabar, barisan, peluang, geometri, dan statistika.", TKA),
+  ind: make(
+    "ind",
+    "Bahasa Indonesia Lanjutan",
+    "30 soal berbasis 6 teks: laporan penelitian, teks dengan diagram, cerpen, teks ilmiah, dan eksposisi. Sembilan soal punya lebih dari satu jawaban benar.",
+    IND,
+    IND_PASSAGES
+  ),
 };
 
 export const QUIZ_IDS = Object.keys(QUIZZES);
