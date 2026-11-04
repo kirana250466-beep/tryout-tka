@@ -1,7 +1,7 @@
 // API quiz. Dipanggil dari src/worker.js (runtime Workers) dan menyimpan data di D1.
 // Semua endpoint ada di bawah /api/*.
 
-import { QUIZZES, QUIZ_IDS, LETTERS, isMulti, publicQuiz } from "../_lib/quizzes.js";
+import { QUIZZES, QUIZ_IDS, LETTERS, isMulti, publicQuiz, studentExplainOf } from "../_lib/quizzes.js";
 
 const TEACHER_KEY = "ferdi";
 
@@ -115,6 +115,12 @@ async function registerStudent(env, quizId, round, { display, key }) {
   return row?.display || display;
 }
 
+// Pembahasan siswa (jika quiz ini punya) ikut dikirim hanya untuk soal yang sudah dijawab siswa itu.
+function withExplain(data, qz, n) {
+  const explain = studentExplainOf(qz, n);
+  return explain ? { ...data, explain } : data;
+}
+
 // Jawaban dikirim sebagai string huruf ("C" atau "ACE"). Hasilnya diurutkan dan tanpa duplikat.
 function parseChoice(raw, multi, optionCount) {
   const text = (Array.isArray(raw) ? raw.join("") : String(raw ?? "")).toUpperCase();
@@ -180,12 +186,13 @@ async function quiz(request, env) {
     .bind(qz.id, session.round, who.key)
     .all();
 
-  const progress = results.map((r) => ({
-    n: r.n,
-    choice: r.choice,
-    correct: !!r.correct,
-    correctKey: qz.questions[r.n - 1].answer,
-  }));
+  const progress = results.map((r) =>
+    withExplain(
+      { n: r.n, choice: r.choice, correct: !!r.correct, correctKey: qz.questions[r.n - 1].answer },
+      qz,
+      r.n
+    )
+  );
 
   return json({
     quiz: qz.id,
@@ -221,7 +228,9 @@ async function answer(request, env) {
     .bind(qz.id, session.round, who.key, n)
     .first();
   if (existing) {
-    return json({ n, choice: existing.choice, correct: !!existing.correct, correctKey: q.answer, repeated: true });
+    return json(
+      withExplain({ n, choice: existing.choice, correct: !!existing.correct, correctKey: q.answer, repeated: true }, qz, n)
+    );
   }
 
   const countRow = await env.DB.prepare(
@@ -248,7 +257,7 @@ async function answer(request, env) {
     ),
   ]);
 
-  return json({ n, choice, correct: !!correct, correctKey: q.answer });
+  return json(withExplain({ n, choice, correct: !!correct, correctKey: q.answer }, qz, n));
 }
 
 async function teacherQuestions(request, env) {
