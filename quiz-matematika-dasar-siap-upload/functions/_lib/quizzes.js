@@ -3,13 +3,16 @@
 //   2) impor di sini, lalu tambahkan satu entri di QUIZZES dengan id singkat yang belum dipakai.
 // Id dipakai sebagai kunci di database, jadi jangan diubah setelah ada data siswa.
 // Parameter terakhir make() (studentExplain) opsional: peta nomor soal -> HTML pembahasan untuk siswa.
-// Quiz yang mengisinya (sekarang hanya "ind") menampilkan pembahasan ke siswa setelah soal itu dijawab.
+// Quiz yang mengisinya (sekarang "ind" dan "snbt") menampilkan pembahasan ke siswa setelah soal itu dijawab.
+// Soal yang memuat rumus atau tabel boleh punya field opsional html dan optionsHtml (lihat questions-snbt.js).
 
 import { QUESTIONS as ING, PASSAGES as ING_PASSAGES } from "./questions-inggris.js";
 import { QUESTIONS as TKA } from "./questions-tka-mat.js";
 import { QUESTIONS as IND, PASSAGES as IND_PASSAGES } from "./questions-indonesia.js";
 import { EXPLAIN_SISWA as IND_EXPLAIN } from "./pembahasan-indonesia.js";
 import { QUESTIONS as INDW, PASSAGES as INDW_PASSAGES } from "./questions-indonesia-wajib.js";
+import { QUESTIONS as SNBT } from "./questions-snbt.js";
+import { EXPLAIN_SISWA as SNBT_EXPLAIN } from "./pembahasan-snbt.js";
 
 export const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -42,6 +45,15 @@ export const QUIZZES = {
     INDW,
     INDW_PASSAGES
   ),
+  // Pembahasan pengajar ada di field explain tiap soal (hanya mode guru); pembahasan siswa bergambar di SNBT_EXPLAIN.
+  snbt: make(
+    "snbt",
+    "SNBT Kuantitatif",
+    "20 soal Pengetahuan Kuantitatif (Tryout SNBT Naufal Academy #5): matriks, fungsi, trigonometri, geometri, statistika, peluang, dan aritmetika sosial. Pembahasan bergambar tampil setelah kamu menjawab.",
+    SNBT,
+    {},
+    SNBT_EXPLAIN
+  ),
 };
 
 export const QUIZ_IDS = Object.keys(QUIZZES);
@@ -58,8 +70,10 @@ export function publicQuiz(quiz) {
     questions: quiz.questions.map((q) => ({
       n: q.n,
       text: q.text,
+      html: q.html || null,
       image: q.image || null,
       options: q.options,
+      optionsHtml: q.optionsHtml || null,
       passage: q.passage || null,
       multi: isMulti(q),
     })),
