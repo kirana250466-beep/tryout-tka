@@ -1,6 +1,6 @@
 # Quiz Matematika Dasar (25 soal)
 
-Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
+Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib, SNBT Kuantitatif). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
 
 ## Fitur
 
@@ -76,6 +76,15 @@ File: `functions/_lib/questions-indonesia-wajib.js`. Dibuat dari dokumen "Soal B
 - Soal 14 memakai teks yang sama dengan soal 12 dan 13, dan soal 27 memakai teks yang sama dengan soal 28, jadi tiap pasangan berbagi satu teks bacaan. Judul teks tanpa judul di dokumen (soal 1, 8, 9, 19, 20) ditulis sendiri sebagai label singkat.
 - Tidak ada gambar di quiz ini.
 
+### Quiz SNBT Kuantitatif (id `snbt`)
+File: `functions/_lib/questions-snbt.js` (soal dan pembahasan pengajar) dan `functions/_lib/pembahasan-snbt.js` (pembahasan siswa). Dibuat dari dua dokumen Word yang soalnya sama: "Pembahasan SNBT Kuantitatif No1-20" (untuk pengajar) dan "Soal SNBT Kuantitatif Naufal No1-20 Ilustrasi" (soal dan pembahasan untuk siswa). 20 soal Pengetahuan Kuantitatif (Tryout SNBT Naufal Academy #5), pilihan A sampai E.
+
+- **Dua pembahasan berbeda.** Pembahasan pengajar (langkah lengkap, "Ingat dulu", "Catatan untuk pengajar") ada di field `explain` tiap soal dan hanya tampil di mode guru (login `Ferdi`). Pembahasan siswa (ide utama, ilustrasi, langkah, "Hati-hati") ada di `pembahasan-snbt.js` dan tampil ke siswa setelah soal itu dijawab.
+- **Gambar.** Gambar soal 1 sampai 5: `public/img/snbt-q01.png` sampai `snbt-q05.png`. Ilustrasi pembahasan siswa (satu per soal): `snbt-s01.png` sampai `snbt-s20.png`.
+- **Rumus dan tabel.** Soal boleh punya field opsional `html` (teks soal berisi rumus, matriks, atau tabel) dan `optionsHtml` (pilihan berisi pecahan atau akar). Rumus dirender KaTeX saat bank soal dibuat, jadi browser tidak memproses rumus dan tidak perlu internet. Gaya dan font rumus ada di `public/katex/` (CSS + 20 font woff2). `app.js` memakai `html` dan `optionsHtml` bila ada; quiz lain tetap memakai teks biasa. Field `text` dan `options` tetap berisi versi teks biasa sebagai cadangan.
+- **Soal 1 diubah dari isian menjadi pilihan ganda.** Di dokumen soal 1 berupa isian angka (jawaban 11), padahal website hanya mendukung pilihan ganda. Pilihan dibuat: −11, 11, 12, 13, 20 (kunci B). Pengecoh diambil dari kesalahan yang disebut di pembahasan: urutan pengurangan terbalik, hasil kali keempat angka, kedua hasil kali dijumlahkan, dan luas persegi panjang pembungkus. Frasa "(tuliskan angkanya saja)" dihapus. Catatan ini juga tampil di mode guru.
+- **Teks soal** mengikuti dokumen siswa. Dibanding dokumen pengajar, bedanya hanya kata seperti "di atas" dan "berikut" serta tanda baca; angka, gambar, pilihan, dan kunci identik. Kunci kedua dokumen sama, dan ke-20 jawaban sudah dihitung ulang secara mandiri.
+
 ## Tampilan (tema galaksi)
 
 Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
@@ -105,7 +114,7 @@ Semua soal, kunci, dan pembahasan ada di `functions/_lib/questions.js`. Ubah `an
 ```
 wrangler.jsonc               konfigurasi Worker (Static Assets + binding D1)
 src/worker.js                pintu masuk: /api/* ke API, sisanya ke public/
-public/                      halaman web (index.html, style.css, app.js, img/, fonts/)
+public/                      halaman web (index.html, style.css, app.js, img/, fonts/, katex/)
 functions/api/[[route]].js   API (login, soal, jawaban, kontrol guru)
 functions/_lib/quizzes.js    daftar quiz yang muncul di menu
 functions/_lib/questions.js  bank soal Matematika Dasar (kunci dan pembahasan hanya di server)
@@ -114,7 +123,9 @@ functions/_lib/questions-tka-mat.js   bank soal Matematika TKA (30 soal, pilihan
 functions/_lib/questions-indonesia.js  bank soal Bahasa Indonesia Lanjutan (6 teks bacaan, 30 soal, pilihan A sampai E)
 functions/_lib/pembahasan-indonesia.js pembahasan Bahasa Indonesia Lanjutan untuk siswa (dikirim setelah soal dijawab)
 functions/_lib/questions-indonesia-wajib.js  bank soal Bahasa Indonesia Wajib (17 teks bacaan, 30 soal, tanpa pembahasan siswa)
+functions/_lib/questions-snbt.js      bank soal SNBT Kuantitatif (20 soal, rumus KaTeX) + pembahasan pengajar di field explain
+functions/_lib/pembahasan-snbt.js     pembahasan SNBT Kuantitatif untuk siswa (bergambar, dikirim setelah soal dijawab)
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (hanya quiz `ind`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind` dan `snbt`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
