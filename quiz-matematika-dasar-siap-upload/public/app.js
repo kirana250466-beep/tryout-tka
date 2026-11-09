@@ -66,6 +66,25 @@ function el(tag, props = {}, children = []) {
   return e;
 }
 
+// Soal atau pilihan yang memuat rumus/tabel dikirim server sebagai HTML (q.html, q.optionsHtml);
+// soal lain tetap teks biasa lewat textContent.
+function setQText(node, q) {
+  node.classList.toggle("rich", !!q.html);
+  if (q.html) node.innerHTML = q.html; // konten dari server milik sendiri, bukan input pengguna
+  else node.textContent = q.text;
+}
+
+function optSpan(q, i, suffix = "") {
+  const span = document.createElement("span");
+  if (q.optionsHtml) {
+    span.innerHTML = q.optionsHtml[i]; // idem: konten server
+    if (suffix) span.append(suffix);
+  } else {
+    span.textContent = q.options[i] + suffix;
+  }
+  return span;
+}
+
 function stopPolling() {
   clearInterval(S.timer);
   S.timer = null;
@@ -317,7 +336,7 @@ function renderQuestion() {
   $("q-score").textContent = "Benar " + scoreNow();
   $("q-count").textContent = quizTitle() + " · Soal " + q.n + " dari " + S.total;
   $("q-bar").style.width = (S.idx / S.total) * 100 + "%";
-  $("q-text").textContent = q.text;
+  setQText($("q-text"), q);
   renderPassage("q", q, S.passages, true);
 
   const img = $("q-img");
@@ -337,7 +356,7 @@ function renderQuestion() {
     const letter = "ABCDE"[i];
     const b = el("button", { class: "opt", type: "button", "data-letter": letter }, [
       el("span", { class: "letter", text: letter }),
-      el("span", { text: txt }),
+      optSpan(q, i),
     ]);
     if (q.multi) {
       b.setAttribute("aria-pressed", "false");
@@ -504,7 +523,7 @@ function openReview(n) {
   $("rv-name").textContent = S.name;
   $("rv-avatar").textContent = S.name.charAt(0).toUpperCase();
   $("rv-count").textContent = quizTitle() + " · Tinjau soal " + n + " dari " + S.total;
-  $("rv-text").textContent = q.text;
+  setQText($("rv-text"), q);
   renderPassage("rv", q, S.passages, false);
 
   const img = $("rv-img");
@@ -519,7 +538,7 @@ function openReview(n) {
     const letter = "ABCDE"[i];
     const b = el("button", { class: "opt", type: "button", "data-letter": letter, disabled: "" }, [
       el("span", { class: "letter", text: letter }),
-      el("span", { text: txt }),
+      optSpan(q, i),
     ]);
     box.append(b);
     return b;
@@ -589,7 +608,7 @@ function renderTeacherQuestion() {
   [...$("t-grid").children].forEach((c, i) => c.classList.toggle("current", i === T.i));
   $("t-qno").textContent =
     "Soal " + q.n + " dari " + T.questions.length + (multi ? " · lebih dari satu jawaban benar" : "");
-  $("t-qtext").textContent = q.text;
+  setQText($("t-qtext"), q);
   renderPassage("t", q, T.passages, false);
 
   const qi = $("t-qimg");
@@ -604,14 +623,15 @@ function renderTeacherQuestion() {
     box.append(
       el("div", { class: "opt" + (isKey ? " correct" : "") }, [
         el("span", { class: "letter", text: letter }),
-        el("span", { text: txt + (isKey ? "  ✓" : "") }),
+        optSpan(q, i, isKey ? "  ✓" : ""),
       ])
     );
   });
 
-  $("t-answer").textContent = multi
-    ? letterList(q.answer)
-    : q.answer + ". " + q.options["ABCDE".indexOf(q.answer)];
+  const ans = $("t-answer");
+  if (multi) ans.textContent = letterList(q.answer);
+  else if (q.optionsHtml) ans.innerHTML = q.answer + ". " + q.optionsHtml["ABCDE".indexOf(q.answer)]; // konten server
+  else ans.textContent = q.answer + ". " + q.options["ABCDE".indexOf(q.answer)];
 
   const ei = $("t-eimg");
   ei.hidden = !q.explainImage;
