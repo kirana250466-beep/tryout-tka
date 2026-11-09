@@ -506,3 +506,24 @@ input:focus-visible, button:focus-visible {
 .result-grid button.cell { cursor: pointer; padding: 0; }
 .result-grid button.cell:hover, .result-grid button.cell:focus-visible { border-color: var(--cyan); box-shadow: 0 0 14px rgba(79, 209, 255, 0.35); outline: none; }
 .review-back { margin-top: 14px; }
+
+/* ---------- soal berumus dan bertabel, pembahasan bergambar (quiz SNBT Kuantitatif) ---------- */
+/* Rumus dirender KaTeX di sisi server saat bank soal dibuat; gayanya ada di katex/katex.min.css. */
+.katex { font-size: 1.1em; }
+.qtext.rich { white-space: normal; }
+.qtext.rich .qp { line-height: 1.6; }
+.qtext .katex .base:has(.mfrac) { margin: 5px 0; } /* beri napas vertikal pada baris yang berisi pecahan */
+.qtext .qp { margin: 0 0 10px; }
+.qtext .qp:last-child { margin-bottom: 0; }
+.qtext .katex-display, .explain .katex-display { margin: 10px 0; padding: 2px 0; overflow-x: auto; overflow-y: hidden; }
+.qtable { border-collapse: collapse; margin: 10px 0; font-size: 0.95rem; font-weight: 500; }
+.qtable th, .qtable td { border: 1px solid var(--line-strong); padding: 6px 12px; text-align: center; }
+.qtable th { background: var(--panel-2); font-weight: 700; }
+.qtable .katex { white-space: nowrap; }
+.opt .katex { font-weight: 400; }
+.explain figure.ill { margin: 14px 0; }
+.explain figure.ill img {
+  display: block; max-width: 100%; height: auto; margin: 0 auto;
+  background: #fff; border-radius: 10px; padding: 6px; box-shadow: 0 0 22px rgba(138, 91, 255, 0.3);
+}
+.explain figure.ill figcaption { margin-top: 8px; font-size: 0.88rem; line-height: 1.5; text-align: center; color: var(--muted); }
