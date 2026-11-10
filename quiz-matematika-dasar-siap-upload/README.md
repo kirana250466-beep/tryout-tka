@@ -1,13 +1,13 @@
 # Quiz Matematika Dasar (25 soal)
 
-Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib, SNBT Kuantitatif). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
+Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, TKA Matematika 2, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib, SNBT Kuantitatif). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
 
 ## Fitur
 
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind` di bawah).
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, dan **TKA Matematika 2**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, dan `tka2` di bawah).
 - Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
@@ -85,6 +85,15 @@ File: `functions/_lib/questions-snbt.js` (soal dan pembahasan pengajar) dan `fun
 - **Soal 1 diubah dari isian menjadi pilihan ganda.** Di dokumen soal 1 berupa isian angka (jawaban 11), padahal website hanya mendukung pilihan ganda. Pilihan dibuat: −11, 11, 12, 13, 20 (kunci B). Pengecoh diambil dari kesalahan yang disebut di pembahasan: urutan pengurangan terbalik, hasil kali keempat angka, kedua hasil kali dijumlahkan, dan luas persegi panjang pembungkus. Frasa "(tuliskan angkanya saja)" dihapus. Catatan ini juga tampil di mode guru.
 - **Teks soal** mengikuti dokumen siswa. Dibanding dokumen pengajar, bedanya hanya kata seperti "di atas" dan "berikut" serta tanda baca; angka, gambar, pilihan, dan kunci identik. Kunci kedua dokumen sama, dan ke-20 jawaban sudah dihitung ulang secara mandiri.
 
+### Quiz TKA Matematika 2 (id `tka2`)
+File: `functions/_lib/questions-tka-mat2.js` (soal dan pembahasan pengajar) dan `functions/_lib/pembahasan-tka-mat2.js` (pembahasan siswa). Dibuat dari dua PDF yang soalnya sama: "Pembahasan Visual - Soal Latihan TKA Matematika Kelas IX SMP/MTs" (untuk pengajar) dan "Versi Siswa" (untuk siswa). 30 soal pilihan ganda A sampai D: bilangan, perbandingan dan persamaan, aljabar dan fungsi, pola bilangan, geometri, bangun ruang, transformasi, statistika, dan peluang.
+
+- **Dua pembahasan berbeda.** Pembahasan pengajar (langkah penyelesaian lengkap, trik, awas jebakan, dan pertanyaan pancingan untuk siswa) ada di field `explain` tiap soal dan hanya tampil di mode guru (login `Ferdi`). Pembahasan siswa (langkah singkat, satu kotak trik atau awas, dan ilustrasi) ada di `pembahasan-tka-mat2.js` dan tampil ke siswa tepat setelah soal itu dijawab, sama seperti quiz `ind` dan `snbt`. Server hanya mengirim pembahasan soal N setelah siswa itu menjawab soal N.
+- **Gambar.** Ilustrasi pengajar: `public/img/tka2-t01.png` sampai `tka2-t30.png` (dipasang lewat `explainImage`, hanya mode guru). Ilustrasi siswa: `public/img/tka2-s01.png` sampai `tka2-s30.png` (ada di dalam pembahasan siswa). Gambar dipotong dari kotak ilustrasi di kedua PDF. Gambar memuat jawaban, jadi tidak dipakai sebagai gambar soal.
+- **Kunci.** Kunci mengikuti tabel rekap di PDF dan sudah dihitung ulang satu per satu: 30 dari 30 cocok. Tanda plus, minus, dan perkalian pada soal 11, 12, 15, 16, 21 sampai 24 diperiksa dari tampilan halaman PDF, karena teks yang bisa disalin dari PDF kehilangan sebagian simbol itu.
+- **Soal 24 (pertanyaan pancingan):** di PDF tertulis bayangan "di seberang J" untuk faktor skala 2. Kalimat itu diperjelas menjadi "di luar J pada garis yang sama dari P, 2x lebih jauh dari P" (J' = (14, -22)).
+- Quiz **Matematika TKA** (id `tka`) yang lama tidak diubah. Kedua quiz punya sesi, siswa, dan jawaban sendiri.
+
 ## Tampilan (tema galaksi)
 
 Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
@@ -120,6 +129,8 @@ functions/_lib/quizzes.js    daftar quiz yang muncul di menu
 functions/_lib/questions.js  bank soal Matematika Dasar (kunci dan pembahasan hanya di server)
 functions/_lib/questions-inggris.js   bank soal Bahasa Inggris (teks bacaan dan soal jawaban ganda)
 functions/_lib/questions-tka-mat.js   bank soal Matematika TKA (30 soal, pilihan A sampai D)
+functions/_lib/questions-tka-mat2.js  bank soal TKA Matematika 2 (30 soal, pilihan A sampai D) + pembahasan pengajar di field explain
+functions/_lib/pembahasan-tka-mat2.js pembahasan TKA Matematika 2 untuk siswa (bergambar, dikirim setelah soal dijawab)
 functions/_lib/questions-indonesia.js  bank soal Bahasa Indonesia Lanjutan (6 teks bacaan, 30 soal, pilihan A sampai E)
 functions/_lib/pembahasan-indonesia.js pembahasan Bahasa Indonesia Lanjutan untuk siswa (dikirim setelah soal dijawab)
 functions/_lib/questions-indonesia-wajib.js  bank soal Bahasa Indonesia Wajib (17 teks bacaan, 30 soal, tanpa pembahasan siswa)
@@ -128,4 +139,4 @@ functions/_lib/pembahasan-snbt.js     pembahasan SNBT Kuantitatif untuk siswa (b
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind` dan `snbt`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, dan `tka2`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
