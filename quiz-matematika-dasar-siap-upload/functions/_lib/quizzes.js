@@ -3,11 +3,13 @@
 //   2) impor di sini, lalu tambahkan satu entri di QUIZZES dengan id singkat yang belum dipakai.
 // Id dipakai sebagai kunci di database, jadi jangan diubah setelah ada data siswa.
 // Parameter terakhir make() (studentExplain) opsional: peta nomor soal -> HTML pembahasan untuk siswa.
-// Quiz yang mengisinya (sekarang "ind" dan "snbt") menampilkan pembahasan ke siswa setelah soal itu dijawab.
+// Quiz yang mengisinya (sekarang "ind", "snbt", dan "tka2") menampilkan pembahasan ke siswa setelah soal itu dijawab.
 // Soal yang memuat rumus atau tabel boleh punya field opsional html dan optionsHtml (lihat questions-snbt.js).
 
 import { QUESTIONS as ING, PASSAGES as ING_PASSAGES } from "./questions-inggris.js";
 import { QUESTIONS as TKA } from "./questions-tka-mat.js";
+import { QUESTIONS as TKA2 } from "./questions-tka-mat2.js";
+import { EXPLAIN_SISWA as TKA2_EXPLAIN } from "./pembahasan-tka-mat2.js";
 import { QUESTIONS as IND, PASSAGES as IND_PASSAGES } from "./questions-indonesia.js";
 import { EXPLAIN_SISWA as IND_EXPLAIN } from "./pembahasan-indonesia.js";
 import { QUESTIONS as INDW, PASSAGES as INDW_PASSAGES } from "./questions-indonesia-wajib.js";
@@ -29,6 +31,15 @@ export const QUIZZES = {
     ING_PASSAGES
   ),
   tka: make("tka", "Matematika TKA", "30 soal pilihan ganda A sampai D: aljabar, barisan, peluang, geometri, dan statistika.", TKA),
+  // Pembahasan pengajar ada di field explain tiap soal (hanya mode guru); pembahasan siswa bergambar di TKA2_EXPLAIN.
+  tka2: make(
+    "tka2",
+    "TKA Matematika 2",
+    "30 soal pilihan ganda A sampai D (Matematika Kelas IX SMP/MTs): bilangan, aljabar, barisan, geometri, transformasi, statistika, dan peluang. Pembahasan bergambar tampil setelah kamu menjawab.",
+    TKA2,
+    {},
+    TKA2_EXPLAIN
+  ),
   ind: make(
     "ind",
     "Bahasa Indonesia Lanjutan",
