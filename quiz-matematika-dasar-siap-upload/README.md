@@ -1,13 +1,13 @@
 # Quiz Matematika Dasar (25 soal)
 
-Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, TKA Matematika 2, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib, SNBT Kuantitatif). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
+Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, TKA Matematika 2, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib, SNBT Kuantitatif, Penalaran Umum). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
 
 ## Fitur
 
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, dan **TKA Matematika 2**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, dan `tka2` di bawah).
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, dan **Penalaran Umum**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, dan `pu` di bawah).
 - Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
@@ -94,6 +94,19 @@ File: `functions/_lib/questions-tka-mat2.js` (soal dan pembahasan pengajar) dan 
 - **Soal 24 (pertanyaan pancingan):** di PDF tertulis bayangan "di seberang J" untuk faktor skala 2. Kalimat itu diperjelas menjadi "di luar J pada garis yang sama dari P, 2x lebih jauh dari P" (J' = (14, -22)).
 - Quiz **Matematika TKA** (id `tka`) yang lama tidak diubah. Kedua quiz punya sesi, siswa, dan jawaban sendiri.
 
+### Quiz Penalaran Umum (id `pu`)
+File: `functions/_lib/questions-penalaran-umum.js`. Dibuat dari dokumen "Soal_TPS_Penalaran_Umum_Gabungan_No1-30.docx" (soal, kunci, dan pembahasan). 30 soal TPS Penalaran Umum, pilihan A sampai E: penarikan simpulan (modus ponens, modus tollens, silogisme, pernyataan berkuantor), logika analitik, penalaran kuantitatif, dan pola bilangan.
+
+- **Pembahasan guru dan siswa sama.** Isi pembahasan ada di field `explain` tiap soal. Mode guru (login `Ferdi`) menampilkannya langsung, dan siswa menerima isi yang sama tepat setelah menjawab soal itu lewat `EXPLAIN_SISWA`, yang dibuat otomatis dari field `explain` di file yang sama. Jadi cukup mengedit satu tempat untuk mengubah keduanya. Server hanya mengirim pembahasan soal N setelah siswa itu menjawab soal N.
+- **Gambar.** Soal 22 (grafik batang produksi gula): `public/img/pu-q22.png`. Soal 23 (grafik berat badan bayi): `public/img/pu-q23.png`. Soal 21 memakai tabel lewat field `html`.
+- **Soal 3 diubah dari tabel Benar/Salah menjadi pilihan ganda kompleks.** Siswa memilih semua pernyataan yang benar (kunci B, C, D). Benar hanya jika pilihan sama persis dengan kunci. Soal 18 juga berjawaban ganda (kunci A, B, D = H, M, I).
+- **Soal 23 dan 28 diubah dari isian angka menjadi pilihan ganda.** Di dokumen jawabannya 10 dan 3, padahal website hanya mendukung pilihan ganda. Pilihan soal 23: 9; 9,4; 9,6; 10; 10,6 (kunci D). Pilihan soal 28: 0 sampai 4 (kunci D). Pengecoh soal 23 berasal dari kesalahan hitung yang umum dan dijelaskan di pembahasan. Frasa "Jawaban hanya dalam bentuk angka" dihapus.
+- **Soal 18:** teks menyebut "delapan mahasiswa" tetapi hanya tujuh nama tertulis (F, G, H, I, K, L, M). Dibiarkan sesuai dokumen, jawaban tidak terpengaruh. Rantai nilai "H > I > M" di pembahasan dokumen diperbaiki karena I dan M tidak dibandingkan di soal; hasil akhir tetap H, I, dan M.
+- **Soal 7:** awal penjelasan opsi C terpotong di dokumen; kalimatnya dilengkapi dari kalimat lanjutannya.
+- **Soal 9 dan 29:** label dan kalimat penutup pembahasan yang keliru di dokumen dibetulkan (soal 9: penjelasan produktivitas milik opsi C; soal 29: penutup B sesuai kunci).
+- **Soal 30:** salah ketik "Rp13.500.00,00" pada soal di aplikasi dibaca sebagai Rp13.500.000,00.
+- **Kunci.** Dihitung ulang satu per satu: 30 dari 30 sama dengan dokumen.
+
 ## Tampilan (tema galaksi)
 
 Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
@@ -136,7 +149,8 @@ functions/_lib/pembahasan-indonesia.js pembahasan Bahasa Indonesia Lanjutan untu
 functions/_lib/questions-indonesia-wajib.js  bank soal Bahasa Indonesia Wajib (17 teks bacaan, 30 soal, tanpa pembahasan siswa)
 functions/_lib/questions-snbt.js      bank soal SNBT Kuantitatif (20 soal, rumus KaTeX) + pembahasan pengajar di field explain
 functions/_lib/pembahasan-snbt.js     pembahasan SNBT Kuantitatif untuk siswa (bergambar, dikirim setelah soal dijawab)
+functions/_lib/questions-penalaran-umum.js  bank soal Penalaran Umum (30 soal, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, dan `tka2`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, dan `pu`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
