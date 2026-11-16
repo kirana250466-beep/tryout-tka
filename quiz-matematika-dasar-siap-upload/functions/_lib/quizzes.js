@@ -3,7 +3,7 @@
 //   2) impor di sini, lalu tambahkan satu entri di QUIZZES dengan id singkat yang belum dipakai.
 // Id dipakai sebagai kunci di database, jadi jangan diubah setelah ada data siswa.
 // Parameter terakhir make() (studentExplain) opsional: peta nomor soal -> HTML pembahasan untuk siswa.
-// Quiz yang mengisinya (sekarang "ind", "snbt", dan "tka2") menampilkan pembahasan ke siswa setelah soal itu dijawab.
+// Quiz yang mengisinya (sekarang "ind", "snbt", "tka2", dan "pu") menampilkan pembahasan ke siswa setelah soal itu dijawab.
 // Soal yang memuat rumus atau tabel boleh punya field opsional html dan optionsHtml (lihat questions-snbt.js).
 
 import { QUESTIONS as ING, PASSAGES as ING_PASSAGES } from "./questions-inggris.js";
@@ -15,6 +15,7 @@ import { EXPLAIN_SISWA as IND_EXPLAIN } from "./pembahasan-indonesia.js";
 import { QUESTIONS as INDW, PASSAGES as INDW_PASSAGES } from "./questions-indonesia-wajib.js";
 import { QUESTIONS as SNBT } from "./questions-snbt.js";
 import { EXPLAIN_SISWA as SNBT_EXPLAIN } from "./pembahasan-snbt.js";
+import { QUESTIONS as PU, EXPLAIN_SISWA as PU_EXPLAIN } from "./questions-penalaran-umum.js";
 
 export const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -64,6 +65,15 @@ export const QUIZZES = {
     SNBT,
     {},
     SNBT_EXPLAIN
+  ),
+  // Pembahasan guru dan siswa sama: field explain tiap soal di questions-penalaran-umum.js, diteruskan ke siswa lewat PU_EXPLAIN.
+  pu: make(
+    "pu",
+    "Penalaran Umum",
+    "30 soal TPS Penalaran Umum: penarikan simpulan (modus ponens, modus tollens, silogisme, pernyataan berkuantor), logika analitik, penalaran kuantitatif, dan pola bilangan. Dua soal (No. 3 dan 18) punya lebih dari satu jawaban benar. Pembahasan tampil setelah kamu menjawab.",
+    PU,
+    {},
+    PU_EXPLAIN
   ),
 };
 
