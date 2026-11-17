@@ -1,13 +1,13 @@
 # Quiz Matematika Dasar (25 soal)
 
-Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, TKA Matematika 2, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib, SNBT Kuantitatif, Penalaran Umum, TKA Matematika 3, TKA Matematika 4). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
+Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, TKA Matematika 2, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib, SNBT Kuantitatif, Penalaran Umum, TKA Matematika 3, TKA Matematika 4, Pemahaman Bacaan dan Menulis 2). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
 
 ## Fitur
 
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, dan **Penalaran Umum**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, dan `pu` di bawah).
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, dan **Pemahaman Bacaan dan Menulis 2**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, dan `pbm2` di bawah).
 - Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
@@ -127,6 +127,16 @@ File: `functions/_lib/questions-penalaran-umum.js`. Dibuat dari dokumen "Soal_TP
 - **Soal 30:** salah ketik "Rp13.500.00,00" pada soal di aplikasi dibaca sebagai Rp13.500.000,00.
 - **Kunci.** Dihitung ulang satu per satu: 30 dari 30 sama dengan dokumen.
 
+### Quiz Pemahaman Bacaan dan Menulis 2 (id `pbm2`)
+File: `functions/_lib/questions-pbm2.js`. Dibuat dari dokumen "Soal_Pemahaman_Bacaan_Menulis_No1-20.docx" (soal, kunci, dan pembahasan; Tryout SNBT Naufal Academy #5). 20 soal TPS Pemahaman Bacaan dan Menulis, pilihan A sampai E, semuanya berjawaban tunggal: keparalelan kalimat, urutan dan pemisahan paragraf, kata majemuk berimbuhan, ejaan dan tanda baca (EYD Edisi V), serta kalimat baku.
+
+- **Pembahasan guru dan siswa sama.** Isi pembahasan ada di field `explain` tiap soal. Mode guru (login `Ferdi`) menampilkannya langsung, dan siswa menerima isi yang sama tepat setelah menjawab soal itu lewat `EXPLAIN_SISWA`, yang dibuat otomatis dari field `explain` di file yang sama (pola yang sama dengan `pu`, `tka3`, dan `tka4`). Cukup mengedit satu tempat untuk mengubah keduanya.
+- **Tanpa teks bacaan.** Semua soal berdiri sendiri, jadi quiz ini tidak memakai `PASSAGES`.
+- **Huruf miring dan tebal.** Dipertahankan dari dokumen lewat field `html` dan `optionsHtml` karena penting untuk soal ejaan dan keparalelan. Field `text` dan `options` tetap berisi versi teks biasa.
+- **Soal 16.** Di dokumen hanya "pasca bencana" yang dicetak miring, padahal soal menanyakan perbaikan "kata dan tanda baca yang dicetak miring". Di website "Rp250.000.000,00 / tahun" ikut dimiringkan supaya soalnya jelas.
+- **Warna penilaian pilihan di pembahasan.** Hijau untuk pilihan yang sama dengan kunci, merah muda untuk yang lain. Pada soal 17 yang ditanyakan adalah kalimat yang salah, jadi kalimat (2) berlabel "SALAH" berwarna hijau karena itu kuncinya.
+- **Kunci.** A B C C C D B A A A A A B C B A B C D C (soal 1 sampai 20), sama dengan "Kunci Jawaban" di tiap pembahasan dokumen.
+
 ## Tampilan (tema galaksi)
 
 Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
@@ -172,7 +182,8 @@ functions/_lib/pembahasan-snbt.js     pembahasan SNBT Kuantitatif untuk siswa (b
 functions/_lib/questions-tka-mat3.js        bank soal TKA Matematika 3 (30 soal, rumus KaTeX) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-tka-mat4.js        bank soal TKA Matematika 4 (20 soal, pilihan A sampai D) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-penalaran-umum.js  bank soal Penalaran Umum (30 soal, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
+functions/_lib/questions-pbm2.js            bank soal Pemahaman Bacaan dan Menulis 2 (20 soal, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, dan `pu`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, dan `pbm2`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
