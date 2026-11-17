@@ -3,7 +3,7 @@
 //   2) impor di sini, lalu tambahkan satu entri di QUIZZES dengan id singkat yang belum dipakai.
 // Id dipakai sebagai kunci di database, jadi jangan diubah setelah ada data siswa.
 // Parameter terakhir make() (studentExplain) opsional: peta nomor soal -> HTML pembahasan untuk siswa.
-// Quiz yang mengisinya (sekarang "ind", "snbt", "tka2", "tka3", dan "pu") menampilkan pembahasan ke siswa setelah soal itu dijawab.
+// Quiz yang mengisinya (sekarang "ind", "snbt", "tka2", "tka3", "tka4", dan "pu") menampilkan pembahasan ke siswa setelah soal itu dijawab.
 // Soal yang memuat rumus atau tabel boleh punya field opsional html dan optionsHtml (lihat questions-snbt.js).
 
 import { QUESTIONS as ING, PASSAGES as ING_PASSAGES } from "./questions-inggris.js";
@@ -17,6 +17,7 @@ import { QUESTIONS as SNBT } from "./questions-snbt.js";
 import { EXPLAIN_SISWA as SNBT_EXPLAIN } from "./pembahasan-snbt.js";
 import { QUESTIONS as PU, EXPLAIN_SISWA as PU_EXPLAIN } from "./questions-penalaran-umum.js";
 import { QUESTIONS as TKA3, EXPLAIN_SISWA as TKA3_EXPLAIN } from "./questions-tka-mat3.js";
+import { QUESTIONS as TKA4, EXPLAIN_SISWA as TKA4_EXPLAIN } from "./questions-tka-mat4.js";
 
 export const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -50,6 +51,15 @@ export const QUIZZES = {
     TKA3,
     {},
     TKA3_EXPLAIN
+  ),
+  // Pembahasan guru dan siswa sama: field explain tiap soal di questions-tka-mat4.js, diteruskan ke siswa lewat TKA4_EXPLAIN.
+  tka4: make(
+    "tka4",
+    "TKA Matematika 4",
+    "20 soal pilihan ganda A sampai D (Matematika Kelas IX SMP/MTs): pola bilangan, fungsi linear, statistika, peluang, diagram Venn, geometri, transformasi, skala, dan aljabar. Pembahasan tampil setelah kamu menjawab.",
+    TKA4,
+    {},
+    TKA4_EXPLAIN
   ),
   ind: make(
     "ind",
