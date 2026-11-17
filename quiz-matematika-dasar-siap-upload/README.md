@@ -1,13 +1,13 @@
 # Quiz Matematika Dasar (25 soal)
 
-Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, TKA Matematika 2, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib, SNBT Kuantitatif, Penalaran Umum, TKA Matematika 3). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
+Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, TKA Matematika 2, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib, SNBT Kuantitatif, Penalaran Umum, TKA Matematika 3, TKA Matematika 4). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
 
 ## Fitur
 
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, dan **Penalaran Umum**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, dan `pu` di bawah).
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, dan **Penalaran Umum**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, dan `pu` di bawah).
 - Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
@@ -104,6 +104,16 @@ File: `functions/_lib/questions-tka-mat3.js`. Dibuat dari dokumen "Soal_dan_Pemb
 - **Koreksi kecil.** Pembahasan soal 20 di dokumen menulis 15² = 255, dibetulkan menjadi 225 (hasil tetap 289 dan AB = 17). Catatan editor di dokumen (soal 20, 25, 28, 30) tidak dimasukkan ke pembahasan karena sudah teratasi. Label "(PG)" dan "(PGK)" pada soal 27 sampai 29 tidak dipakai.
 - **Kunci.** Mengikuti tabel rekap di dokumen dan dihitung ulang satu per satu: 30 dari 30 cocok.
 
+### Quiz TKA Matematika 4 (id `tka4`)
+File: `functions/_lib/questions-tka-mat4.js`. Dibuat dari PDF "Latihan Soal TKA Matematika Kelas IX SMP/MTs" (`TKA_16_Halaman_1-4.pdf`, halaman 1 sampai 4). 20 soal pilihan ganda A sampai D, semuanya berjawaban tunggal: pola bilangan, fungsi linear, statistika, peluang, diagram Venn, geometri, transformasi, skala, dan aljabar.
+
+- **Pembahasan guru dan siswa sama.** Isi pembahasan ada di field `explain` tiap soal. Mode guru (login `Ferdi`) menampilkannya langsung, dan siswa menerima isi yang sama tepat setelah menjawab soal itu lewat `EXPLAIN_SISWA`, yang dibuat otomatis dari field `explain` di file yang sama (pola yang sama dengan `tka3` dan `pu`). Cukup mengedit satu tempat untuk mengubah keduanya.
+- **Kunci dan pembahasan dibuat baru.** PDF hanya berisi soal, tanpa kunci dan tanpa pembahasan. Kunci: C B C C C B B C B B C B C C B B C D C C (soal 1 sampai 20). Semuanya sudah dihitung ulang satu per satu, dan diperiksa lagi dengan skrip: 20 dari 20 cocok.
+- **Tabel.** Tabel pada soal 1, 2, 3, 8, 9, 10, 15, dan 19 ditulis ulang sebagai tabel HTML (field `html`, kelas `qtable`). Field `text` tetap berisi versi teks biasa.
+- **Pecahan.** Pecahan pada soal 4 dan pilihan soal 11 digambar bertumpuk lewat field `html` dan `optionsHtml` (tanpa KaTeX).
+- **Gambar.** Digambar ulang dari PDF: `public/img/tka4-q05.png` (bangun L pada bidang koordinat, soal 5) dan `public/img/tka4-q14.png` (segitiga siku-siku, soal 14). Gambar pembahasan soal 5: `public/img/tka4-p05.png` (bangun L dipecah menjadi dua persegi panjang), ikut tampil ke siswa.
+- **Soal 2.** Di PDF tertulis "Grafik berikut", padahal datanya berupa tabel, jadi di website ditulis "Tabel berikut".
+
 ### Quiz Penalaran Umum (id `pu`)
 File: `functions/_lib/questions-penalaran-umum.js`. Dibuat dari dokumen "Soal_TPS_Penalaran_Umum_Gabungan_No1-30.docx" (soal, kunci, dan pembahasan). 30 soal TPS Penalaran Umum, pilihan A sampai E: penarikan simpulan (modus ponens, modus tollens, silogisme, pernyataan berkuantor), logika analitik, penalaran kuantitatif, dan pola bilangan.
 
@@ -160,8 +170,9 @@ functions/_lib/questions-indonesia-wajib.js  bank soal Bahasa Indonesia Wajib (1
 functions/_lib/questions-snbt.js      bank soal SNBT Kuantitatif (20 soal, rumus KaTeX) + pembahasan pengajar di field explain
 functions/_lib/pembahasan-snbt.js     pembahasan SNBT Kuantitatif untuk siswa (bergambar, dikirim setelah soal dijawab)
 functions/_lib/questions-tka-mat3.js        bank soal TKA Matematika 3 (30 soal, rumus KaTeX) + pembahasan di field explain, dipakai bersama guru dan siswa
+functions/_lib/questions-tka-mat4.js        bank soal TKA Matematika 4 (20 soal, pilihan A sampai D) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-penalaran-umum.js  bank soal Penalaran Umum (30 soal, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, dan `pu`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, dan `pu`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
