@@ -3,7 +3,7 @@
 //   2) impor di sini, lalu tambahkan satu entri di QUIZZES dengan id singkat yang belum dipakai.
 // Id dipakai sebagai kunci di database, jadi jangan diubah setelah ada data siswa.
 // Parameter terakhir make() (studentExplain) opsional: peta nomor soal -> HTML pembahasan untuk siswa.
-// Quiz yang mengisinya (sekarang "ind", "snbt", "tka2", "tka3", "tka4", dan "pu") menampilkan pembahasan ke siswa setelah soal itu dijawab.
+// Quiz yang mengisinya (sekarang "ind", "snbt", "tka2", "tka3", "tka4", "pu", dan "pbm2") menampilkan pembahasan ke siswa setelah soal itu dijawab.
 // Soal yang memuat rumus atau tabel boleh punya field opsional html dan optionsHtml (lihat questions-snbt.js).
 
 import { QUESTIONS as ING, PASSAGES as ING_PASSAGES } from "./questions-inggris.js";
@@ -18,6 +18,7 @@ import { EXPLAIN_SISWA as SNBT_EXPLAIN } from "./pembahasan-snbt.js";
 import { QUESTIONS as PU, EXPLAIN_SISWA as PU_EXPLAIN } from "./questions-penalaran-umum.js";
 import { QUESTIONS as TKA3, EXPLAIN_SISWA as TKA3_EXPLAIN } from "./questions-tka-mat3.js";
 import { QUESTIONS as TKA4, EXPLAIN_SISWA as TKA4_EXPLAIN } from "./questions-tka-mat4.js";
+import { QUESTIONS as PBM2, EXPLAIN_SISWA as PBM2_EXPLAIN } from "./questions-pbm2.js";
 
 export const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -94,6 +95,15 @@ export const QUIZZES = {
     PU,
     {},
     PU_EXPLAIN
+  ),
+  // Pembahasan guru dan siswa sama: field explain tiap soal di questions-pbm2.js, diteruskan ke siswa lewat PBM2_EXPLAIN.
+  pbm2: make(
+    "pbm2",
+    "Pemahaman Bacaan dan Menulis 2",
+    "20 soal TPS Pemahaman Bacaan dan Menulis: keparalelan kalimat, urutan dan pemisahan paragraf, kata majemuk berimbuhan, ejaan dan tanda baca (EYD Edisi V), serta kalimat baku. Pembahasan tampil setelah kamu menjawab.",
+    PBM2,
+    {},
+    PBM2_EXPLAIN
   ),
 };
 
