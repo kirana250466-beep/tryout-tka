@@ -1,13 +1,13 @@
 # Quiz Matematika Dasar (25 soal)
 
-Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, TKA Matematika 2, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib, SNBT Kuantitatif, Penalaran Umum, TKA Matematika 3, TKA Matematika 4, Pemahaman Bacaan dan Menulis 2). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
+Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Bahasa Inggris, Matematika TKA, TKA Matematika 2, Bahasa Indonesia Lanjutan, Bahasa Indonesia Wajib, SNBT Kuantitatif, Penalaran Umum, TKA Matematika 3, TKA Matematika 4, Pemahaman Bacaan dan Menulis, Pemahaman Bacaan dan Menulis 2). Berjalan sebagai satu Cloudflare Worker: halaman web dari Static Assets (folder `public/`), API di `/api/*`, data di D1.
 
 ## Fitur
 
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, dan **Pemahaman Bacaan dan Menulis 2**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, dan `pbm2` di bawah).
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, dan **Pemahaman Bacaan dan Menulis 2**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, dan `pbm2` di bawah).
 - Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
@@ -127,6 +127,16 @@ File: `functions/_lib/questions-penalaran-umum.js`. Dibuat dari dokumen "Soal_TP
 - **Soal 30:** salah ketik "Rp13.500.00,00" pada soal di aplikasi dibaca sebagai Rp13.500.000,00.
 - **Kunci.** Dihitung ulang satu per satu: 30 dari 30 sama dengan dokumen.
 
+### Quiz Pemahaman Bacaan dan Menulis (id `pbm`)
+File: `functions/_lib/questions-pbm.js`. Dibuat dari dokumen "Soal_dan_Pembahasan_TPS_Pemahaman_Bacaan_Menulis_No1-20.docx" (soal, kunci, dan pembahasan). 20 soal TPS Pemahaman Bacaan dan Menulis, pilihan A sampai E, semuanya berjawaban tunggal, berbasis 4 teks bacaan (masing-masing untuk 5 soal): topi baseball (1-5), sahabat dan depresi (6-10), klakson "telolet" (11-15), binatang dan hewan (16-20).
+
+- **Pembahasan guru dan siswa sama.** Isi pembahasan ada di field `explain` tiap soal. Mode guru (login `Ferdi`) menampilkannya langsung, dan siswa menerima isi yang sama tepat setelah menjawab soal itu lewat `EXPLAIN_SISWA`, yang dibuat otomatis dari field `explain` di file yang sama (pola yang sama dengan `pu` dan `pbm2`). Cukup mengedit satu tempat untuk mengubah keduanya.
+- **Teks bacaan.** Ada di `PASSAGES` (kunci `topi`, `sahabat`, `telolet`, `hewan`). Tiap paragraf diberi label P1 dan P2 karena beberapa soal menyebut "paragraf kedua". Kata bercetak tebal pada teks klakson "telolet" dipertahankan karena dipakai soal 12. Sumber kutipan teks 2 (Halodoc) ikut ditampilkan.
+- **Soal 12 dan 18 diubah dari isian angka menjadi pilihan ganda.** Di dokumen jawabannya 1 dan 2, padahal website hanya mendukung pilihan ganda. Soal 12: pilihan (1), (2), (4), (5), (6) yaitu lima kalimat yang memuat kata bercetak tebal (kunci A, kalimat 1). Soal 18: pilihan (1), (2), (4), (6), (10) (kunci B, kalimat 2). Label jawaban dan kalimat penutup pembahasan kedua soal disesuaikan menjadi huruf; isi pembahasan tidak diubah.
+- **Soal 5, pilihan D.** Di dokumen kalimatnya terpotong ("... aksesori para ..." dengan catatan "lanjutan opsi D tidak tampak pada foto"). Dilengkapi menjadi "... aksesori para pemain dan fan baseball." Pilihan D salah menurut pembahasan, jadi kunci tidak terpengaruh. Cocokkan dengan soal aslinya bila ada.
+- **Huruf miring dan tebal.** Dipertahankan lewat field `html` dan `optionsHtml`. Field `text` dan `options` tetap berisi versi teks biasa.
+- **Kunci.** E D E D C D A E E B C A E C D D E B A A (soal 1 sampai 20), sama dengan tabel "Kunci Jawaban" di akhir dokumen dan "Jawaban yang benar" di tiap pembahasan.
+
 ### Quiz Pemahaman Bacaan dan Menulis 2 (id `pbm2`)
 File: `functions/_lib/questions-pbm2.js`. Dibuat dari dokumen "Soal_Pemahaman_Bacaan_Menulis_No1-20.docx" (soal, kunci, dan pembahasan; Tryout SNBT Naufal Academy #5). 20 soal TPS Pemahaman Bacaan dan Menulis, pilihan A sampai E, semuanya berjawaban tunggal: keparalelan kalimat, urutan dan pemisahan paragraf, kata majemuk berimbuhan, ejaan dan tanda baca (EYD Edisi V), serta kalimat baku.
 
@@ -182,8 +192,9 @@ functions/_lib/pembahasan-snbt.js     pembahasan SNBT Kuantitatif untuk siswa (b
 functions/_lib/questions-tka-mat3.js        bank soal TKA Matematika 3 (30 soal, rumus KaTeX) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-tka-mat4.js        bank soal TKA Matematika 4 (20 soal, pilihan A sampai D) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-penalaran-umum.js  bank soal Penalaran Umum (30 soal, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
+functions/_lib/questions-pbm.js             bank soal Pemahaman Bacaan dan Menulis (20 soal, 4 teks bacaan, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-pbm2.js            bank soal Pemahaman Bacaan dan Menulis 2 (20 soal, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, dan `pbm2`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, dan `pbm2`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
