@@ -3,7 +3,7 @@
 //   2) impor di sini, lalu tambahkan satu entri di QUIZZES dengan id singkat yang belum dipakai.
 // Id dipakai sebagai kunci di database, jadi jangan diubah setelah ada data siswa.
 // Parameter terakhir make() (studentExplain) opsional: peta nomor soal -> HTML pembahasan untuk siswa.
-// Quiz yang mengisinya (sekarang "ind", "snbt", "tka2", "tka3", "tka4", "pu", "pbm", "pbm2", dan "ppu") menampilkan pembahasan ke siswa setelah soal itu dijawab.
+// Quiz yang mengisinya (sekarang "ind", "snbt", "tka2", "tka3", "tka4", "pu", "pbm", "pbm2", "ppu", dan "ppu2") menampilkan pembahasan ke siswa setelah soal itu dijawab.
 // Soal yang memuat rumus atau tabel boleh punya field opsional html dan optionsHtml (lihat questions-snbt.js).
 
 import { QUESTIONS as ING, PASSAGES as ING_PASSAGES } from "./questions-inggris.js";
@@ -21,6 +21,7 @@ import { QUESTIONS as TKA4, EXPLAIN_SISWA as TKA4_EXPLAIN } from "./questions-tk
 import { QUESTIONS as PBM, PASSAGES as PBM_PASSAGES, EXPLAIN_SISWA as PBM_EXPLAIN } from "./questions-pbm.js";
 import { QUESTIONS as PBM2, EXPLAIN_SISWA as PBM2_EXPLAIN } from "./questions-pbm2.js";
 import { QUESTIONS as PPU, PASSAGES as PPU_PASSAGES, EXPLAIN_SISWA as PPU_EXPLAIN } from "./questions-ppu.js";
+import { QUESTIONS as PPU2, EXPLAIN_SISWA as PPU2_EXPLAIN } from "./questions-ppu2.js";
 
 export const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -124,6 +125,15 @@ export const QUIZZES = {
     PPU,
     PPU_PASSAGES,
     PPU_EXPLAIN
+  ),
+  // Pembahasan guru dan siswa sama: field explain tiap soal di questions-ppu2.js, diteruskan ke siswa lewat PPU2_EXPLAIN.
+  ppu2: make(
+    "ppu2",
+    "Pengetahuan dan Pemahaman Umum 2",
+    "20 soal TPS Pengetahuan dan Pemahaman Umum (Tryout SNBT Naufal Academy #5), tiap soal dengan teks atau data sendiri: bahasa artifisial, strategi penalaran penulis, kelemahan penalaran, rujukan anafora dan katafora, kalimat efektif dan inti kalimat, makna kontekstual, nada penulis, serta kolokasi. Pembahasan tampil setelah kamu menjawab.",
+    PPU2,
+    {},
+    PPU2_EXPLAIN
   ),
 };
 
