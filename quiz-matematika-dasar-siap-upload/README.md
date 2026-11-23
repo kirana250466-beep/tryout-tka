@@ -7,7 +7,7 @@ Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Ba
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, dan **Pemahaman Bacaan dan Menulis 2**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, dan `pbm2` di bawah).
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, **Pemahaman Bacaan dan Menulis 2**, dan **Pengetahuan dan Pemahaman Umum**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, dan `ppu` di bawah).
 - Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
@@ -147,6 +147,19 @@ File: `functions/_lib/questions-pbm2.js`. Dibuat dari dokumen "Soal_Pemahaman_Ba
 - **Warna penilaian pilihan di pembahasan.** Hijau untuk pilihan yang sama dengan kunci, merah muda untuk yang lain. Pada soal 17 yang ditanyakan adalah kalimat yang salah, jadi kalimat (2) berlabel "SALAH" berwarna hijau karena itu kuncinya.
 - **Kunci.** A B C C C D B A A A A A B C B A B C D C (soal 1 sampai 20), sama dengan "Kunci Jawaban" di tiap pembahasan dokumen.
 
+### Quiz Pengetahuan dan Pemahaman Umum (id `ppu`)
+File: `functions/_lib/questions-ppu.js`. Dibuat dari dokumen "Soal_dan_Pembahasan_TPS_PPU.docx" (soal, kunci, dan pembahasan). 20 soal TPS Pengetahuan dan Pemahaman Umum, pilihan A sampai E, semuanya berjawaban tunggal, berbasis 4 teks bacaan: brain rot (1-5), bahasa gaul Generasi Alpha (6-10), suneung Korea Selatan (11-15), penangkapan penyandang disabilitas (16-19). Soal 20 berdiri sendiri (data bahasa fiktif Glekglekglek).
+
+- **Pembahasan guru dan siswa sama.** Isi pembahasan ada di field `explain` tiap soal. Mode guru (login `Ferdi`) menampilkannya langsung, dan siswa menerima isi yang sama tepat setelah menjawab soal itu lewat `EXPLAIN_SISWA`, yang dibuat otomatis dari field `explain` di file yang sama (pola yang sama dengan `pbm` dan `pbm2`). Cukup mengedit satu tempat untuk mengubah keduanya.
+- **Teks bacaan.** Ada di `PASSAGES` (kunci `brain`, `alpha`, `suneung`, `disabilitas`). Teks 1 sampai 3 diberi label P1 dan P2 di depan tiap paragraf; teks 4 hanya satu paragraf.
+- **Soal 6 diubah dari isian angka menjadi pilihan ganda.** Di dokumen jawabannya 4, padahal website hanya mendukung pilihan ganda. Pilihannya (1) sampai (5), yaitu kelima kalimat paragraf 1 (kunci D, kalimat 4). Label jawaban dan kalimat penutup pembahasan disesuaikan menjadi huruf; isi pembahasan tidak diubah.
+- **Soal 4, pembahasan dilengkapi.** Pembahasan di dokumen berhenti sebelum analisis tiap opsi (ada catatan "lanjutan pembahasan soal ini tidak terlihat pada foto"). Analisis opsi A sampai E ditulis ulang di sini mengikuti pola dasar S-P-O-konj-P-O yang sudah ada di pembahasan. Kunci D sesuai dokumen. Cocokkan dengan pembahasan aslinya bila ada.
+- **Soal 1, pembahasan butir 5.** Contoh "lari-lari (berlari terus-menerus), ..." terpotong di dokumen. Tanda "..." dibuang, contoh lain tidak ditambahkan.
+- **Catatan transkripsi.** Kalimat berawalan "Catatan:" di dokumen (keterangan hasil transkripsi foto) tidak ditampilkan.
+- **Huruf miring dan tebal.** Dipertahankan lewat field `html` dan `optionsHtml`. Field `text` dan `options` tetap berisi versi teks biasa.
+- **Warna penilaian pilihan di pembahasan.** Hijau untuk pilihan yang sama dengan kunci, merah muda untuk yang lain.
+- **Kunci.** E B A D B D E B B A B D D B A D E C B D (soal 1 sampai 20), sama dengan "Jawaban" di tiap soal dokumen.
+
 ## Tampilan (tema galaksi)
 
 Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
@@ -194,7 +207,8 @@ functions/_lib/questions-tka-mat4.js        bank soal TKA Matematika 4 (20 soal,
 functions/_lib/questions-penalaran-umum.js  bank soal Penalaran Umum (30 soal, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-pbm.js             bank soal Pemahaman Bacaan dan Menulis (20 soal, 4 teks bacaan, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-pbm2.js            bank soal Pemahaman Bacaan dan Menulis 2 (20 soal, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
+functions/_lib/questions-ppu.js             bank soal Pengetahuan dan Pemahaman Umum (20 soal, 4 teks bacaan, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, dan `pbm2`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, dan `ppu`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
