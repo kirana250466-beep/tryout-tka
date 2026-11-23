@@ -7,7 +7,7 @@ Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Ba
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, **Pemahaman Bacaan dan Menulis 2**, dan **Pengetahuan dan Pemahaman Umum**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, dan `ppu` di bawah).
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, **Pemahaman Bacaan dan Menulis 2**, **Pengetahuan dan Pemahaman Umum**, dan **Pengetahuan dan Pemahaman Umum 2**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, dan `ppu2` di bawah).
 - Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
@@ -160,6 +160,18 @@ File: `functions/_lib/questions-ppu.js`. Dibuat dari dokumen "Soal_dan_Pembahasa
 - **Warna penilaian pilihan di pembahasan.** Hijau untuk pilihan yang sama dengan kunci, merah muda untuk yang lain.
 - **Kunci.** E B A D B D E B B A B D D B A D E C B D (soal 1 sampai 20), sama dengan "Jawaban" di tiap soal dokumen.
 
+### Quiz Pengetahuan dan Pemahaman Umum 2 (id `ppu2`)
+File: `functions/_lib/questions-ppu2.js`. Dibuat dari dokumen "Soal_dan_Pembahasan_Tryout_SNBT_5_Naufal_Academy.docx" (soal, kunci, dan pembahasan; Tryout SNBT Gratis #5 Naufal Academy). 20 soal subtes Pengetahuan dan Pemahaman Umum, pilihan A sampai E, semuanya berjawaban tunggal. Tiap soal punya teks atau data sendiri.
+
+- **Pembahasan guru dan siswa sama.** Isi pembahasan ada di field `explain` tiap soal. Mode guru (login `Ferdi`) menampilkannya langsung, dan siswa menerima isi yang sama tepat setelah menjawab soal itu lewat `EXPLAIN_SISWA`, yang dibuat otomatis dari field `explain` di file yang sama (pola yang sama dengan `ppu` dan `pbm2`). Cukup mengedit satu tempat untuk mengubah keduanya.
+- **Tanpa teks bacaan bersama.** Quiz ini tidak memakai `PASSAGES`. Teks atau data tiap soal dimasukkan ke field `html` soal itu (pola yang sama dengan `pu`).
+- **Sumber kunci.** Menurut catatan di dokumen, kunci dan pembahasan nomor 1 sampai 5 diambil dari tangkapan layar Naufal Academy, sedangkan nomor 6 sampai 20 tidak tampil di tangkapan layar sehingga disusun mandiri. Kunci nomor 6 sampai 20 belum dicocokkan dengan kunci resmi. Yang paling layak dicek ulang: nomor 10 (menempuh jalur hukum vs mengambil langkah hukum, keduanya lazim) dan nomor 20 (kolokasi; pilihan B, C, dan E juga dipakai penutur sehari-hari).
+- **Soal 1.** Pembahasan di sumber terpotong di bagian akhir; kalimat simpulan dilengkapi (menurut catatan dokumen).
+- **Soal 6.** Di dokumen kelima kalimat teks ditulis satu per baris, padahal soal dan pembahasan menyebut "paragraf pertama" dan "paragraf kedua". Di website kalimat (1)-(3) menjadi paragraf P1 dan kalimat (4)-(5) paragraf P2, sesuai pembahasan.
+- **Format teks soal.** Teks bernomor kalimat (soal 3 sampai 6 dan 12 sampai 16) digabung menjadi satu paragraf; data bahasa artifisial (soal 1 dan 11) tetap satu baris per data. Huruf miring dan tebal dipertahankan lewat field `html` dan `optionsHtml` (kata bercetak tebal dipakai soal 14, 16, dan 18). Field `text` dan `options` tetap berisi versi teks biasa.
+- **Pembahasan.** Penilaian tiap pilihan berwarna hijau untuk pilihan yang sama dengan kunci dan merah muda untuk yang lain; daftar "Mengapa pilihan lain keliru" diberi label "Pilihan X" tanpa mengubah isinya. Kotak "Jadi, jawaban yang tepat adalah X." ditambahkan di akhir tiap pembahasan.
+- **Kunci.** A C B C A A C C B B A A B A A C A B C A (soal 1 sampai 20), sama dengan tabel "Rekap Kunci Jawaban" di dokumen.
+
 ## Tampilan (tema galaksi)
 
 Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
@@ -208,7 +220,8 @@ functions/_lib/questions-penalaran-umum.js  bank soal Penalaran Umum (30 soal, p
 functions/_lib/questions-pbm.js             bank soal Pemahaman Bacaan dan Menulis (20 soal, 4 teks bacaan, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-pbm2.js            bank soal Pemahaman Bacaan dan Menulis 2 (20 soal, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-ppu.js             bank soal Pengetahuan dan Pemahaman Umum (20 soal, 4 teks bacaan, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
+functions/_lib/questions-ppu2.js            bank soal Pengetahuan dan Pemahaman Umum 2 (20 soal, tiap soal dengan teks sendiri, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, dan `ppu`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, dan `ppu2`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
