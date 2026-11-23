@@ -7,7 +7,7 @@ Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Ba
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, **Pemahaman Bacaan dan Menulis 2**, **Pengetahuan dan Pemahaman Umum**, dan **Pengetahuan dan Pemahaman Umum 2**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, dan `ppu2` di bawah).
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, **Pemahaman Bacaan dan Menulis 2**, **Pengetahuan dan Pemahaman Umum**, **Pengetahuan dan Pemahaman Umum 2**, dan **TKA Matematika 7**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, dan `tka7` di bawah).
 - Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
@@ -172,6 +172,18 @@ File: `functions/_lib/questions-ppu2.js`. Dibuat dari dokumen "Soal_dan_Pembahas
 - **Pembahasan.** Penilaian tiap pilihan berwarna hijau untuk pilihan yang sama dengan kunci dan merah muda untuk yang lain; daftar "Mengapa pilihan lain keliru" diberi label "Pilihan X" tanpa mengubah isinya. Kotak "Jadi, jawaban yang tepat adalah X." ditambahkan di akhir tiap pembahasan.
 - **Kunci.** A C B C A A C C B B A A B A A C A B C A (soal 1 sampai 20), sama dengan tabel "Rekap Kunci Jawaban" di dokumen.
 
+### Quiz TKA Matematika 7 (id `tka7`)
+File: `functions/_lib/questions-tka-mat7.js`. Dibuat dari dokumen "Soal_TKA_SMP_Matematika_TryOut5_Soal1-30.docx" (soal, kunci, pembahasan ringkas, dan rekap kunci; Try Out 5 TKA SMP Matematika). 30 soal Matematika Kelas IX: barisan dan deret aritmetika, fungsi linear, persamaan garis lurus, SPLDV, aritmetika sosial, luas dan keliling bangun datar, volume bangun ruang, Pythagoras, transformasi, statistika, peluang, lingkaran, skala peta, dan persentase.
+
+- **Pembahasan guru dan siswa sama.** Isi pembahasan ada di field `explain` tiap soal. Mode guru (login `Ferdi`) menampilkannya langsung, dan siswa menerima isi yang sama tepat setelah menjawab soal itu lewat `EXPLAIN_SISWA`, yang dibuat otomatis dari field `explain` di file yang sama (pola yang sama dengan `tka3`, `tka4`, dan `ppu`). Cukup mengedit satu tempat untuk mengubah keduanya.
+- **21 soal pilihan ganda, 9 soal pernyataan Benar/Salah.** Soal 1, 3, 7, 16, 17, 18, 20, 23, dan 27 di dokumen berupa tabel pernyataan Benar / Salah. Di website semuanya dijadikan pilihan ganda kompleks (seperti soal 10 dan 17 pada `tka3`): tiap pernyataan menjadi satu pilihan (pernyataan 1 = A, 2 = B, dan seterusnya), siswa memilih semua pernyataan yang benar, dan jawaban benar hanya jika pilihannya sama persis dengan kunci. Kalimat "tentukan apakah setiap pernyataan berikut Benar atau Salah" diganti "pilih semua pernyataan berikut yang benar". Kunci: soal 1 = A, C; soal 3 = A, C; soal 7 = A, C, D; soal 16 = A, C; soal 17 = A, C; soal 20 = A, C, D; soal 23 = A, B, C; soal 27 = A, B. Soal 18 hanya punya satu pernyataan benar (B), jadi menjadi pilihan tunggal dan kalimatnya "pilih pernyataan berikut yang benar".
+- **Pembahasan soal pernyataan.** "(1) BENAR — ..." ditulis "A. Pernyataan benar. ..." (hijau) atau "A. Pernyataan salah. ..." (merah muda); rujukan nomor pernyataan di kotak "Awas!" disesuaikan menjadi huruf pilihan.
+- **Topik dan penanda jawaban.** Judul topik tiap soal (mis. "Fungsi Linear") dan label jenis soal tidak ditampilkan di soal supaya tidak membocorkan cara menyelesaikan; topik muncul di pembahasan ("Topik: ..."). Penanda jawaban benar di dokumen (huruf tebal, kolom BENAR / SALAH) tidak ikut dipakai di soal. Kotak "Awas!" tampil sebagai kotak jebakan.
+- **Tabel dan pecahan.** Tabel data ditulis ulang sebagai tabel HTML (field `html`, kelas `qtable`). Pecahan pada pilihan soal 21 digambar bertumpuk (field `optionsHtml`, tanpa KaTeX); pecahan lain tetap ditulis dengan garis miring seperti di dokumen. Field `text` dan `options` berisi versi teks biasa.
+- **Gambar.** Semua dari dokumen, di bagian soal: `public/img/tka7-q04.png`, `q07`, `q08`, `q10`, `q11`, `q15`, `q24`, `q25`, `q26`. Soal 30 memakai ulang `tka7-q07.png` (denah taman atap yang sama dengan soal 7). Gambar soal 26 sudah memuat keterangan "7 kisi" pada jalur robot, seperti di dokumen.
+- **Catatan kecil dari dokumen.** Soal 28 memuat dua catatan yang isinya sama (12% dari total anggaran), keduanya dipertahankan. Soal 30 menyebut "Keluarga tersebut" tanpa rujukan di soal itu (rujukannya di soal 7), tetapi gambar sudah memuat semua ukuran, jadi teks dibiarkan.
+- **Kunci.** A,C | D | A,C | A | C | A | A,C,D | B | C | D | A | D | A | C | A | A,C | A,C | B | D | A,C,D | D | A | A,B,C | A | D | B | A,B | B | B | B (soal 1 sampai 30). Sama dengan "Rekap Kunci Jawaban" di dokumen, cocok dengan penanda jawaban di tiap soal, dan sudah dihitung ulang satu per satu: 30 dari 30 cocok.
+
 ## Tampilan (tema galaksi)
 
 Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
@@ -221,7 +233,8 @@ functions/_lib/questions-pbm.js             bank soal Pemahaman Bacaan dan Menul
 functions/_lib/questions-pbm2.js            bank soal Pemahaman Bacaan dan Menulis 2 (20 soal, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-ppu.js             bank soal Pengetahuan dan Pemahaman Umum (20 soal, 4 teks bacaan, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-ppu2.js            bank soal Pengetahuan dan Pemahaman Umum 2 (20 soal, tiap soal dengan teks sendiri, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
+functions/_lib/questions-tka-mat7.js        bank soal TKA Matematika 7 (30 soal, pilihan A sampai D, 9 soal pilih semua yang benar) + pembahasan di field explain, dipakai bersama guru dan siswa
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, dan `ppu2`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, dan `tka7`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
