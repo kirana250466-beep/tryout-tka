@@ -7,7 +7,7 @@ Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Ba
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, **Pemahaman Bacaan dan Menulis 2**, **Pengetahuan dan Pemahaman Umum**, **Pengetahuan dan Pemahaman Umum 2**, **TKA Matematika 7**, dan **TKA Matematika 8**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, `tka7`, dan `tka8` di bawah).
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, **Pemahaman Bacaan dan Menulis 2**, **Pengetahuan dan Pemahaman Umum**, **Pengetahuan dan Pemahaman Umum 2**, **TKA Matematika 7**, **TKA Matematika 8**, dan **Literasi Bahasa Inggris**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, `tka7`, `tka8`, dan `litinggris` di bawah).
 - Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
@@ -200,6 +200,16 @@ File: `functions/_lib/questions-tka-mat8.js`. Dibuat dari "TKA_17.pdf" (Simulasi
 - **Judul soal, rumus, dan gambar.** Judul tiap soal di PDF tidak ditampilkan di soal; topiknya muncul di pembahasan ("Topik: ..."). Rumus ditulis dengan HTML biasa (pecahan bertumpuk, akar dengan garis atas, superskrip), tanpa KaTeX. Gambar keran dan ember (PDF 12, website no. 9) dipotong dari halaman PDF: `public/img/tka8-q09.png`.
 - **Kunci.** C | A,B,C | A,B,C,D | B | C | C | C | B | C | C | D | A,B,D | B,C | A,B,C | A,B,C | A,C | B,D (website no. 1 sampai 17). Semua dihitung ulang satu per satu: 17 dari 17 cocok.
 
+### Quiz Literasi Bahasa Inggris (id `litinggris`)
+File: `functions/_lib/questions-lit-inggris.js`. Dibuat dari dokumen "Soal_Literasi_Inggris_No1-16.docx" (soal, kunci, dan pembahasan cepat). 16 soal pilihan A sampai E, semuanya berjawaban tunggal, berbasis tiga bacaan: people-pleasing dan self-validation (soal 1-3), efek sambaran petir Teks 1 dan Teks 2 (soal 4-11), dan diskusi forum tentang rajin vs malas (soal 12-16).
+
+- **Pembahasan guru dan siswa sama.** Isi pembahasan ada di field `explain` tiap soal. Mode guru (login `Ferdi`) menampilkannya langsung, dan siswa menerima isi yang sama tepat setelah menjawab soal itu lewat `EXPLAIN_SISWA`, yang dibuat otomatis dari field `explain` di file yang sama (pola yang sama dengan `ppu` dan `pbm`). Cukup mengedit satu tempat untuk mengubah keduanya.
+- **Teks bacaan aslinya belum ada.** Dokumen sumber tidak memuat teks bacaan lengkap (tertulis "teks bacaan tidak ikut terfoto"), hanya tiga ringkasan berbahasa Indonesia yang disusun dari pembahasan. Ringkasan itu dipakai apa adanya di `PASSAGES` dan diberi catatan "ringkasan" di judul dan kalimat pembuka. Soal yang bergantung pada isi teks asli, misalnya soal 6 (nomor paragraf) dan soal 12-16 (komentar tiap peserta forum), lebih adil dijawab bila teks aslinya tersedia. Bila teks asli sudah ada, cukup ganti isi `PASSAGES` tanpa menyentuh soal, kunci, atau pembahasan.
+- **Susunan pembahasan.** Mengikuti dokumen: jawaban dan penjelasan singkat, "Kunci cepat" (kotak kuning), "Kenapa pilihan lain salah?" (tiap pilihan sebagai kotak merah muda, pilihan yang tepat hijau), "Analogi" (kotak ungu), dan "Trik cepat" (kotak merah jambu). Jenis soal tiap nomor (mis. "Nada Penulis (Tone)") muncul di pembahasan, tidak di soal.
+- **Yang dibuang dari dokumen.** Tanda centang dan huruf tebal penanda jawaban pada pilihan, keterangan "(no. n di aplikasi)" pada judul soal, dan emoji pada judul bagian pembahasan.
+- **Soal 15.** Kata yang ditanyakan (*prone*) ditebalkan di tampilan soal.
+- **Kunci.** A D E A B E B C E D C A E C A C (soal 1 sampai 16). Cocok dengan penanda jawaban di tiap soal dan baris "JAWABAN" di pembahasan. Isi pembahasan konsisten dengan ringkasan teks, tetapi kunci tidak bisa dicek terhadap teks aslinya karena teks itu tidak ada di dokumen.
+
 ## Tampilan (tema galaksi)
 
 Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
@@ -251,7 +261,8 @@ functions/_lib/questions-ppu.js             bank soal Pengetahuan dan Pemahaman 
 functions/_lib/questions-ppu2.js            bank soal Pengetahuan dan Pemahaman Umum 2 (20 soal, tiap soal dengan teks sendiri, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-tka-mat7.js        bank soal TKA Matematika 7 (30 soal, pilihan A sampai D, 9 soal pilih semua yang benar) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-tka-mat8.js        bank soal TKA Matematika 8 (17 soal, pilihan A sampai D, 8 soal pilih semua yang benar) + pembahasan di field explain, dipakai bersama guru dan siswa
+functions/_lib/questions-lit-inggris.js     bank soal Literasi Bahasa Inggris (16 soal, 3 teks bacaan berupa ringkasan, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, `tka7`, dan `tka8`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, `tka7`, `tka8`, dan `litinggris`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
