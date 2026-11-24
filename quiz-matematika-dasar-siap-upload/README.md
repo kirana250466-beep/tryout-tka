@@ -7,7 +7,7 @@ Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Ba
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, **Pemahaman Bacaan dan Menulis 2**, **Pengetahuan dan Pemahaman Umum**, **Pengetahuan dan Pemahaman Umum 2**, **TKA Matematika 7**, **TKA Matematika 8**, dan **Literasi Bahasa Inggris**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, `tka7`, `tka8`, dan `litinggris` di bawah).
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, **Pemahaman Bacaan dan Menulis 2**, **Pengetahuan dan Pemahaman Umum**, **Pengetahuan dan Pemahaman Umum 2**, **TKA Matematika 7**, **TKA Matematika 8**, **Literasi Bahasa Inggris**, dan **Literasi Bahasa Inggris 2**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, `tka7`, `tka8`, `litinggris`, dan `litinggris2` di bawah).
 - Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
@@ -210,6 +210,16 @@ File: `functions/_lib/questions-lit-inggris.js`. Dibuat dari dokumen "Soal_Liter
 - **Soal 15.** Kata yang ditanyakan (*prone*) ditebalkan di tampilan soal.
 - **Kunci.** A D E A B E B C E D C A E C A C (soal 1 sampai 16). Cocok dengan penanda jawaban di tiap soal dan baris "JAWABAN" di pembahasan. Isi pembahasan konsisten dengan ringkasan teks, tetapi kunci tidak bisa dicek terhadap teks aslinya karena teks itu tidak ada di dokumen.
 
+### Quiz Literasi Bahasa Inggris 2 (id `litinggris2`)
+File: `functions/_lib/questions-lit-inggris2.js`. Dibuat dari dokumen "Soal_Literasi_Inggris_Tryout5.docx" (teks bacaan, soal, kunci, dan pembahasan kilat; Tryout SNBT Gratis Naufal Academy #5). 20 soal pilihan A sampai E, semuanya berjawaban tunggal, berbasis 8 bacaan: deep-sea mining Teks 1 dan Teks 2 (soal 1-3), precision fermentation (4-8), jaringan jamur mikoriza (9-12), de-extinction (13-16), trophic cascade (17), urban vertical farming (18), neuroplasticity (19), dan kendaraan otonom (20).
+
+- **Pembahasan guru dan siswa sama.** Isi pembahasan ada di field `explain` tiap soal. Mode guru (login `Ferdi`) menampilkannya langsung, dan siswa menerima isi yang sama tepat setelah menjawab soal itu lewat `EXPLAIN_SISWA`, yang dibuat otomatis dari field `explain` di file yang sama (pola yang sama dengan `litinggris` dan `ppu2`). Cukup mengedit satu tempat untuk mengubah keduanya.
+- **Sumber kunci.** Menurut catatan di dokumen, kunci dan pembahasan nomor 1 sampai 5 mengacu pada kunci dan pembahasan resmi di foto, sedangkan nomor 6 sampai 20 tidak menampilkan kunci di foto sehingga dijawab dan dibahas lewat analisis isi teks. Kunci nomor 6 sampai 20 belum dicocokkan dengan kunci resmi. Saat dibaca ulang terhadap teks bacaan, kunci nomor 6 sampai 20 konsisten dengan isi teks.
+- **Label paragraf.** Paragraf tiap bacaan diberi label P1, P2, dan seterusnya (serta Teks 1 dan Teks 2 pada bacaan pertama), karena soal dan pembahasan menyebut "paragraf 2", "kalimat 3 pada paragraf 2", dan sejenisnya. Pemisah paragraf mengikuti dokumen dan cocok dengan keterangan jumlah paragraf di dokumen.
+- **Dua keanehan di teks bacaan** (dibiarkan seperti di dokumen, mungkin perlu dicek dengan sumber aslinya; tidak ada soal yang menanyakannya): pada Teks 1 paragraf 2 ada kalimat "This fundamental disparity => that smaller physical footprints ..." dengan tanda panah di tempat kata kerja (kemungkinan kata yang hilang saat transkripsi, mis. "implies"), dan pada teks urban vertical farming paragraf 1 kata "biocure" kemungkinan salah ketik dari "biosecure".
+- **Susunan pembahasan.** Mengikuti dokumen: "Kunci" (kotak kuning, ditulis "Kunci cepat") lalu alasan tiap pilihan lain salah sebagai kotak merah muda. Judul bacaan ditulis di baris jawaban ("Bacaan: ..."). Penanda di dokumen (kotak hijau jawaban, tanda centang dan silang, keterangan "Soal 1-3 ..." di bawah judul bacaan) tidak ditampilkan di soal.
+- **Kunci.** B B B B A A B B D A A A B A B B B C C C (soal 1 sampai 20). Cocok dengan baris "JAWABAN" di tiap soal dan tabel "Kunci Jawaban Cepat" di dokumen.
+
 ## Tampilan (tema galaksi)
 
 Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
@@ -262,7 +272,8 @@ functions/_lib/questions-ppu2.js            bank soal Pengetahuan dan Pemahaman 
 functions/_lib/questions-tka-mat7.js        bank soal TKA Matematika 7 (30 soal, pilihan A sampai D, 9 soal pilih semua yang benar) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-tka-mat8.js        bank soal TKA Matematika 8 (17 soal, pilihan A sampai D, 8 soal pilih semua yang benar) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-lit-inggris.js     bank soal Literasi Bahasa Inggris (16 soal, 3 teks bacaan berupa ringkasan, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
+functions/_lib/questions-lit-inggris2.js    bank soal Literasi Bahasa Inggris 2 (20 soal, 8 teks bacaan, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, `tka7`, `tka8`, dan `litinggris`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, `tka7`, `tka8`, `litinggris`, dan `litinggris2`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
