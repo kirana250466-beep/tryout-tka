@@ -3,7 +3,7 @@
 //   2) impor di sini, lalu tambahkan satu entri di QUIZZES dengan id singkat yang belum dipakai.
 // Id dipakai sebagai kunci di database, jadi jangan diubah setelah ada data siswa.
 // Parameter terakhir make() (studentExplain) opsional: peta nomor soal -> HTML pembahasan untuk siswa.
-// Quiz yang mengisinya (sekarang "ind", "snbt", "tka2", "tka3", "tka4", "pu", "pbm", "pbm2", "ppu", "ppu2", "tka7", "tka8", dan "litinggris") menampilkan pembahasan ke siswa setelah soal itu dijawab.
+// Quiz yang mengisinya (sekarang "ind", "snbt", "tka2", "tka3", "tka4", "pu", "pbm", "pbm2", "ppu", "ppu2", "tka7", "tka8", "litinggris", dan "litinggris2") menampilkan pembahasan ke siswa setelah soal itu dijawab.
 // Soal yang memuat rumus atau tabel boleh punya field opsional html dan optionsHtml (lihat questions-snbt.js).
 
 import { QUESTIONS as ING, PASSAGES as ING_PASSAGES } from "./questions-inggris.js";
@@ -21,6 +21,7 @@ import { QUESTIONS as TKA4, EXPLAIN_SISWA as TKA4_EXPLAIN } from "./questions-tk
 import { QUESTIONS as TKA7, EXPLAIN_SISWA as TKA7_EXPLAIN } from "./questions-tka-mat7.js";
 import { QUESTIONS as TKA8, EXPLAIN_SISWA as TKA8_EXPLAIN } from "./questions-tka-mat8.js";
 import { QUESTIONS as LIT, PASSAGES as LIT_PASSAGES, EXPLAIN_SISWA as LIT_EXPLAIN } from "./questions-lit-inggris.js";
+import { QUESTIONS as LIT2, PASSAGES as LIT2_PASSAGES, EXPLAIN_SISWA as LIT2_EXPLAIN } from "./questions-lit-inggris2.js";
 import { QUESTIONS as PBM, PASSAGES as PBM_PASSAGES, EXPLAIN_SISWA as PBM_EXPLAIN } from "./questions-pbm.js";
 import { QUESTIONS as PBM2, EXPLAIN_SISWA as PBM2_EXPLAIN } from "./questions-pbm2.js";
 import { QUESTIONS as PPU, PASSAGES as PPU_PASSAGES, EXPLAIN_SISWA as PPU_EXPLAIN } from "./questions-ppu.js";
@@ -164,6 +165,15 @@ export const QUIZZES = {
     LIT,
     LIT_PASSAGES,
     LIT_EXPLAIN
+  ),
+  // Pembahasan guru dan siswa sama: field explain tiap soal di questions-lit-inggris2.js, diteruskan ke siswa lewat LIT2_EXPLAIN.
+  litinggris2: make(
+    "litinggris2",
+    "Literasi Bahasa Inggris 2",
+    "20 soal Literasi Bahasa Inggris (Tryout SNBT Naufal Academy #5) berbasis 8 bacaan: deep-sea mining, precision fermentation, jaringan jamur mikoriza, de-extinction, trophic cascade, urban vertical farming, neuroplasticity, dan kendaraan otonom. Gagasan utama, tujuan dan sikap penulis, struktur teks, rujukan kata ganti, makna kata, analogi, dan inferensi. Pembahasan tampil setelah kamu menjawab.",
+    LIT2,
+    LIT2_PASSAGES,
+    LIT2_EXPLAIN
   ),
 };
 
