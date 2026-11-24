@@ -7,7 +7,7 @@ Website quiz untuk siswa dan guru dengan menu pilihan quiz (Matematika Dasar, Ba
 **Siswa**
 - Login dengan nama bebas. Login lagi dengan nama yang sama melanjutkan ke soal berikutnya.
 - Mode next terus: begitu pilihan diklik, langsung terlihat benar atau salah, lalu klik Lanjut.
-- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, **Pemahaman Bacaan dan Menulis 2**, **Pengetahuan dan Pemahaman Umum**, **Pengetahuan dan Pemahaman Umum 2**, dan **TKA Matematika 7**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, dan `tka7` di bawah).
+- Pembahasan tidak ditampilkan ke siswa, kecuali di quiz **Bahasa Indonesia Lanjutan**, **SNBT Kuantitatif**, **TKA Matematika 2**, **TKA Matematika 3**, **TKA Matematika 4**, **Penalaran Umum**, **Pemahaman Bacaan dan Menulis**, **Pemahaman Bacaan dan Menulis 2**, **Pengetahuan dan Pemahaman Umum**, **Pengetahuan dan Pemahaman Umum 2**, **TKA Matematika 7**, dan **TKA Matematika 8**: di quiz itu pembahasan muncul tepat setelah siswa menjawab setiap soal (lihat bagian quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, `tka7`, dan `tka8` di bawah).
 - Setelah selesai, di quiz yang punya pembahasan siswa, nomor soal di halaman hasil bisa diketuk untuk meninjau lagi soal, jawabannya, dan pembahasannya.
 
 **Guru** (login dengan nama `Ferdi`)
@@ -184,6 +184,22 @@ File: `functions/_lib/questions-tka-mat7.js`. Dibuat dari dokumen "Soal_TKA_SMP_
 - **Catatan kecil dari dokumen.** Soal 28 memuat dua catatan yang isinya sama (12% dari total anggaran), keduanya dipertahankan. Soal 30 menyebut "Keluarga tersebut" tanpa rujukan di soal itu (rujukannya di soal 7), tetapi gambar sudah memuat semua ukuran, jadi teks dibiarkan.
 - **Kunci.** A,C | D | A,C | A | C | A | A,C,D | B | C | D | A | D | A | C | A | A,C | A,C | B | D | A,C,D | D | A | A,B,C | A | D | B | A,B | B | B | B (soal 1 sampai 30). Sama dengan "Rekap Kunci Jawaban" di dokumen, cocok dengan penanda jawaban di tiap soal, dan sudah dihitung ulang satu per satu: 30 dari 30 cocok.
 
+### Quiz TKA Matematika 8 (id `tka8`)
+File: `functions/_lib/questions-tka-mat8.js`. Dibuat dari "TKA_17.pdf" (Simulasi TKA Matematika SMP/MTs, Elemen Bilangan, submateri Bilangan Real). Isinya 17 soal, pilihan A sampai D: operasi hitung dalam transaksi, estimasi, faktorisasi prima, rasio dan proporsi, perbandingan senilai dan berbalik nilai, skala, bilangan berpangkat dan akar, serta bilangan rasional dan irasional.
+
+- **Pembahasan guru dan siswa sama.** Isi pembahasan ada di field `explain` tiap soal. Mode guru (login `Ferdi`) menampilkannya langsung, dan siswa menerima isi yang sama tepat setelah menjawab soal itu lewat `EXPLAIN_SISWA`, yang dibuat otomatis dari field `explain` di file yang sama (pola yang sama dengan `tka7` dan `ppu`). Cukup mengedit satu tempat untuk mengubah keduanya.
+- **Soal 7, 8, dan 9 di PDF tidak ada.** PDF berjudul "20 soal", tetapi halaman soalnya hanya memuat nomor 1-6 dan 10-20. Halaman pembahasan hanya menyebut jawaban ketiganya (no. 7 = C (128), no. 8 = 9,6 m, no. 9 = 7,25 x 10^-5), jadi soalnya tidak dibuat dan tidak ditebak. Nomor di website dibuat berurutan 1 sampai 17 (website 1-6 = PDF 1-6, website 7-17 = PDF 10-20), karena aplikasi menampilkan "Soal n dari total". Bila halaman yang hilang ditemukan, soal 7-9 bisa ditambahkan dan nomornya disusun ulang.
+- **Kunci di PDF yang tidak cocok dengan soal tercetak** (kunci di sini dihitung ulang dari teks soal):
+  - Website no. 3 (PDF 3): pilihan 6, 12, 18, 36, sedangkan pembahasan PDF menyebut "6, 12, dan 36; 72 bukan" dengan kunci A, B, C. Semua pilihan membagi FPB = 36, jadi kuncinya **A, B, C, D**.
+  - Website no. 4 (PDF 4): soal menyebut perbandingan 2 : 5, sedangkan pembahasan PDF memakai 3 : 5 dan menjawab 4,0 liter (C). Untuk soal yang tercetak, jawabannya 3,5 liter, kunci **B**. Bila soal aslinya 3 : 5, ubah teks soal menjadi 3 : 5 dan kunci menjadi C.
+  - Website no. 6 (PDF 6): pembahasan PDF membahas soal lain (5/8 dan 2/3). Pembahasan ditulis baru: 7/16 terbesar, kunci C (Siska).
+  - Website no. 15 (PDF 18): pembahasan PDF memuat koreksi sendiri; hasil 11, 24, 21 membuat A, B, C benar dan D salah. Pembahasan dirapikan tanpa kalimat koreksi.
+  - Website no. 12, 13, 14, 16, dan 17 (PDF 15, 16, 17, 19, dan 20): PDF hanya memuat perhitungan tanpa kunci per huruf, kunci diturunkan dari perhitungan itu.
+- **Pilihan ganda kompleks.** Petunjuk PDF menyebut soal 1-14 dan 18 satu jawaban, tetapi kalimat soal 2, 3, dan 18 sendiri berbunyi "Pilih semua ...", dan kalimat soal yang dipakai. Soal pilih semua (benar hanya jika sama persis dengan kunci): website no. 2, 3, 12, 13, 14, 15, 16, 17.
+- **Soal tabel kategori diubah.** PDF 19 (rasional/irasional) dan PDF 20 (senilai / berbalik nilai / tidak dapat dikategorikan) berupa tabel kategori per baris, padahal website hanya mendukung pilihan ganda. Keduanya dijadikan "pilih semua bilangan yang rasional" (no. 16, kunci A, C) dan "pilih semua situasi yang berbalik nilai" (no. 17, kunci B, D). Kategori semua baris tetap dijelaskan di pembahasan.
+- **Judul soal, rumus, dan gambar.** Judul tiap soal di PDF tidak ditampilkan di soal; topiknya muncul di pembahasan ("Topik: ..."). Rumus ditulis dengan HTML biasa (pecahan bertumpuk, akar dengan garis atas, superskrip), tanpa KaTeX. Gambar keran dan ember (PDF 12, website no. 9) dipotong dari halaman PDF: `public/img/tka8-q09.png`.
+- **Kunci.** C | A,B,C | A,B,C,D | B | C | C | C | B | C | C | D | A,B,D | B,C | A,B,C | A,B,C | A,C | B,D (website no. 1 sampai 17). Semua dihitung ulang satu per satu: 17 dari 17 cocok.
+
 ## Tampilan (tema galaksi)
 
 Warna dan suasana mengikuti foto referensi: latar navy-indigo, kabut magenta dan cyan, kilau emas, bintang, dan planet.
@@ -234,7 +250,8 @@ functions/_lib/questions-pbm2.js            bank soal Pemahaman Bacaan dan Menul
 functions/_lib/questions-ppu.js             bank soal Pengetahuan dan Pemahaman Umum (20 soal, 4 teks bacaan, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-ppu2.js            bank soal Pengetahuan dan Pemahaman Umum 2 (20 soal, tiap soal dengan teks sendiri, pilihan A sampai E) + pembahasan di field explain, dipakai bersama guru dan siswa
 functions/_lib/questions-tka-mat7.js        bank soal TKA Matematika 7 (30 soal, pilihan A sampai D, 9 soal pilih semua yang benar) + pembahasan di field explain, dipakai bersama guru dan siswa
+functions/_lib/questions-tka-mat8.js        bank soal TKA Matematika 8 (17 soal, pilihan A sampai D, 8 soal pilih semua yang benar) + pembahasan di field explain, dipakai bersama guru dan siswa
 schema.sql                   skema tabel (opsional, dibuat otomatis)
 ```
 
-Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, dan `tka7`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
+Kunci dan pembahasan hanya ada di server. Kunci jawaban sebuah soal baru dikirim setelah siswa menjawab soal itu; pembahasan siswa (quiz `ind`, `snbt`, `tka2`, `tka3`, `tka4`, `pu`, `pbm`, `pbm2`, `ppu`, `ppu2`, `tka7`, dan `tka8`) ikut dikirim pada saat yang sama. Pembahasan guru tidak pernah dikirim ke siswa.
